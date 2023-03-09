@@ -82,7 +82,7 @@ function ascIICanvas(paragraph, rows, cols, canvID, background, selectable = tru
     
     this.rendArray = function() {
         if (DEBUG) {
-            console.log('renduring array')
+            console.log('rendering array')
         }
         
         for (let r = 0; r < this.spanArray.length; r ++) {
@@ -137,7 +137,7 @@ function ascIICanvas(paragraph, rows, cols, canvID, background, selectable = tru
     this.typeingStartedAt = 0;
     
     
-    this.createArray()
+    this.createArray() 
     this.rendArray() //necessary for adding the selected tag
     if (DEBUG) {
         console.log('canvas initialized')

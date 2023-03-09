@@ -1,0 +1,23 @@
+Potential extensions of the AscII editor
+
+Mar 9
+
+1) We should make a box selector,
+2) copy and paste, 
+3) download as txt,
+4) download as html,
+5) vertical typing,
+6) ascII paint brush,
+7) Loading a TXT file as a canvas
+8) The ability to interpolate other canvases over each other.
+9) Special characters selector box/selector boxes in general.
+ Kind of like a color picker for characters.
+10) Using this ability to interpolate canvases and upload TXT files, 
+we should make a small library of stock txt "images" and "shapes", 
+just like all sorts of editors tend to have :)
+Of course, another thing to do is figure out 
+	a) how to use OpenCV to load images, 
+	b) how to resize them,
+	c) to make an ability to turn one into an AscII Canvas.
+
+

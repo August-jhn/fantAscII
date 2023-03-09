@@ -2,7 +2,7 @@ const DEBUG = true;
 const BLINKDELAY = 500;
 const BLINKONCOLOR = 'magenta';
 const BACKGROUNDCOLOR = 'black';
-const EDITINGCOLOR = 'yellow';
+const TYPINGCOLOR = 'yellow';
 
 function ascIICanvas(paragraph, rows, cols, canvID, background, selectable = true) {
 
@@ -116,7 +116,8 @@ function ascIICanvas(paragraph, rows, cols, canvID, background, selectable = tru
     }
 
     this.charArray = backgroundToMake;
-    
+    this.rows = rows;
+    this.cols = cols;
     this.spanArray = []
     this.selectable = selectable
     console.log(canvID, 'is',this.selectable)
@@ -129,6 +130,12 @@ function ascIICanvas(paragraph, rows, cols, canvID, background, selectable = tru
     this.toggleBlink = false;
     this.editingToggled = false;
     this.selecterTag = `selectedInCanvas${this.canvID}`;
+
+    this.lastChar = '*';
+
+
+    this.typeingStartedAt = 0;
+    
     
     this.createArray()
     this.rendArray() //necessary for adding the selected tag
@@ -144,7 +151,7 @@ function ascIICanvas(paragraph, rows, cols, canvID, background, selectable = tru
 
                 if (!this.toggleBlink && !this.editingToggled) {
                     document.getElementById(this.selecterTag).style.backgroundColor = BACKGROUNDCOLOR;
-                } else {
+                } else if (!this.editingToggled) {
                     document.getElementById(this.selecterTag).style.backgroundColor = BLINKONCOLOR;
                 }
                 this.toggleBlink = !this.toggleBlink;
@@ -155,7 +162,7 @@ function ascIICanvas(paragraph, rows, cols, canvID, background, selectable = tru
 
         window.addEventListener('keydown', (event) => {
 
-            if (!this.editingToggled) {
+            if (true) {
                 dx = 0;
                 dy = 0;
                 x = this.selected[1];
@@ -181,42 +188,83 @@ function ascIICanvas(paragraph, rows, cols, canvID, background, selectable = tru
                 y += dy;
                 this.selected = [y,x];
                 this.rendArray();
-                document.getElementById(this.selecterTag).style.backgroundColor = BLINKONCOLOR;
+                if (!this.editingToggled){
+                    document.getElementById(this.selecterTag).style.backgroundColor = BLINKONCOLOR;
+                }
+                else {
+                    document.getElementById(this.selecterTag).style.backgroundColor = TYPINGCOLOR;
+                }
             }
         });
 
         for (let r = 0; r < this.spanArray.length; r++) {
             for (let c = 0; c < this.spanArray[0].length; c ++) {
-                this.spanArray[r][c].addEventListener('mousedown', ()=>{
+                this.spanArray[r][c].addEventListener('mousedown', (event)=>{
                     this.selected = [r,c];
                     this.rendArray()
-                    document.getElementById(this.selecterTag).style.backgroundColor = BLINKONCOLOR;
+                    if (!this.editingToggled) {
+                        document.getElementById(this.selecterTag).style.backgroundColor = BLINKONCOLOR;
+                    }
+                    else {
+                        document.getElementById(this.selecterTag).style.backgroundColor = TYPINGCOLOR;
+                    }
+                    if (event.which == 3) {
+                        this.charArray[this.selected[0]][this.selected[1]] = this.lastChar;
+                        this.rendArray()
+                    }
+                    
                 })
             }
         }
 
-        window.addEventListener('keypress', (event) => {
+        window.addEventListener('keydown', (event) => {
             
-            if(event.code == 'Enter'){
+            if(event.code == 'Enter' && event.altKey == true){
                 this.editingToggled = !this.editingToggled;
                 if (DEBUG) {
                     console.log('editing toggled');
                 }
-                document.getElementById(this.selecterTag).style.backgroundColor = EDITINGCOLOR;
+                document.getElementById(this.selecterTag).style.backgroundColor = TYPINGCOLOR;
             }
 
-            if (event.key.length == 1){
-                if (true){ //fix later
-                    if (event.key != " "){
-                        this.charArray[this.selected[0]][this.selected[1]] = event.key;
+            if (!event.altKey) {
+                if (event.key.length == 1){
+                    if (true){ //fix later
+                        if (event.key != " "){
+                            this.charArray[this.selected[0]][this.selected[1]] = event.key;
+                            this.lastChar = event.key;
+                        }
+                        else{
+                            this.charArray[this.selected[0]][this.selected[1]] = '\xa0';
+                            this.lastChar = '\xa0';
+                        }
+                        if (this.editingToggled && this.selected[1] < this.spanArray[0].length - 1){
+                            this.selected[1] += 1
+                            
+                        }
+                        this.rendArray()
+                        if (this.editingToggled){
+                            
+                            document.getElementById(this.selecterTag).style.backgroundColor = TYPINGCOLOR;
+                        }
+
                     }
-                    else{
-                        this.charArray[this.selected[0]][this.selected[1]] = '\xa0';
-                    }
-                    this.rendArray()
-                    document.getElementById(this.selecterTag).style.backgroundColor = EDITINGCOLOR;
+                    
                 }
-                
+                else if (event.code == 'Backspace' && this.selected[1] > 0 && this.editingToggled) {
+                    this.charArray[this.selected[0]][this.selected[1]] = '\xa0';
+                    this.selected[1] -= 1;
+                    this.rendArray()
+                    document.getElementById(this.selecterTag).style.backgroundColor = TYPINGCOLOR;
+                    
+                    
+                }
+            }
+            console.log(event.key == 'c' && event.altKey)
+            if (event.key == 'c' && event.altKey) {
+                this.charArray = spaces(this.rows, this.cols);
+                this.rendArray();
+                console.log('cleared')
             }
             
         })
@@ -239,7 +287,7 @@ function main(){
     height: 60vh;
     width: 60vw;
     left: 20vw;
-    top: 25vh;
+    top: 12vw;
 
     -webkit-touch-callout: none;
     -webkit-user-select: none;
@@ -286,3 +334,4 @@ function main(){
 }
 
 main()
+//want to be able to interpolate one canvas onto another. Similarly for a text file.

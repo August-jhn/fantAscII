@@ -1,6 +1,7 @@
 Potential extensions of the AscII editor
 
-Mar 9
+Mar 9 - Jimmy: I think the best way to implement this is a toolbar style format
+		Jimmy cont: We can use the filled area at the top to put the name of fantaskii
 
 1) We should make a box selector,
 2) copy and paste, 

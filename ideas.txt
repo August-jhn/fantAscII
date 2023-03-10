@@ -29,6 +29,5 @@ Of course, another thing to do is figure out
 
 Jimmy (simple easr of use ideas):
 1) Backspace should delete a character
-2) Typing automatically moving to the next space should be an option (togglable ideally, so people can do what feels best)
-3) Outline showing edges of canvas
+2) Outline showing edges of canvas
 

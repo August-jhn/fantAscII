@@ -16,7 +16,7 @@ function ascIICanvas(paragraph, rows, cols, canvID, background, selectable = tru
             }
             spacesArray.push(row);
         }
-        console.log(this.background)
+        
         return spacesArray;
 
     }
@@ -31,7 +31,7 @@ function ascIICanvas(paragraph, rows, cols, canvID, background, selectable = tru
             }
             spacesArray.push(row);
         }
-        console.log(this.background)
+        
         return spacesArray;
     }
 
@@ -87,23 +87,29 @@ function ascIICanvas(paragraph, rows, cols, canvID, background, selectable = tru
         
         for (let r = 0; r < this.spanArray.length; r ++) {
             
-            for (let c = 0; c< this.spanArray[0].length; c ++){
+            for (let c = 0; c< this.spanArray[0].length; c ++) {
                 
                 let innerHTML = '';
-                let isSelected = false;
-                if (r == this.selected[0] && c == this.selected[1]){
-                    isSelected = true;
-                    innerHTML += `<span id = "${this.selecterTag}">`;
-                }
+                
                 innerHTML += this.charArray[r][c];
-                if (isSelected){
-                    innerHTML += '</span>'
-                }                
+                              
                 this.spanArray[r][c].innerHTML = innerHTML;
             }
             
         }
         
+    }
+
+    this.setCharacter = function(y,x,character) {
+        this.spanArray[y][x].innerText = character
+    }
+
+    this.setSelected = function(y,x) {
+        //sets the selected character to the new value.
+
+        this.spanArray[this.selected[0]][this.selected[1]].style.backgroundColor = 'transparent';
+        this.selected = [y,x];
+        this.spanArray[this.selected[0]][this.selected[1]].style.backgroundColor = BLINKONCOLOR;
     }
 
     this.background = background;
@@ -130,10 +136,7 @@ function ascIICanvas(paragraph, rows, cols, canvID, background, selectable = tru
     this.toggleBlink = false;
     this.editingToggled = false;
     this.selecterTag = `selectedInCanvas${this.canvID}`;
-
     this.lastChar = '*';
-
-
     this.typeingStartedAt = 0;
     
     
@@ -149,10 +152,12 @@ function ascIICanvas(paragraph, rows, cols, canvID, background, selectable = tru
         setInterval(
             ()=>{
 
-                if (!this.toggleBlink && !this.editingToggled) {
-                    document.getElementById(this.selecterTag).style.backgroundColor = BACKGROUNDCOLOR;
-                } else if (!this.editingToggled) {
-                    document.getElementById(this.selecterTag).style.backgroundColor = BLINKONCOLOR;
+                if (!this.toggleBlink) {
+                    this.spanArray[this.selected[0]][this.selected[1]].style.backgroundColor = 'transparent';
+                    
+                } else {
+                    this.spanArray[this.selected[0]][this.selected[1]].style.backgroundColor = BLINKONCOLOR;
+                    
                 }
                 this.toggleBlink = !this.toggleBlink;
 
@@ -186,31 +191,30 @@ function ascIICanvas(paragraph, rows, cols, canvID, background, selectable = tru
                 }
                 x += dx;
                 y += dy;
-                this.selected = [y,x];
-                this.rendArray();
-                if (!this.editingToggled){
-                    document.getElementById(this.selecterTag).style.backgroundColor = BLINKONCOLOR;
-                }
-                else {
-                    document.getElementById(this.selecterTag).style.backgroundColor = TYPINGCOLOR;
-                }
+                this.setSelected(y, x);
+                
             }
         });
 
         for (let r = 0; r < this.spanArray.length; r++) {
             for (let c = 0; c < this.spanArray[0].length; c ++) {
                 this.spanArray[r][c].addEventListener('mousedown', (event)=>{
-                    this.selected = [r,c];
-                    this.rendArray()
+                    
+                    
+                    this.setSelected(r,c);
+
+                    //maybe change
                     if (!this.editingToggled) {
-                        document.getElementById(this.selecterTag).style.backgroundColor = BLINKONCOLOR;
+                        this.spanArray[this.selected[0]][this.selected[1]].style.backgroundColor = BLINKONCOLOR;
                     }
                     else {
-                        document.getElementById(this.selecterTag).style.backgroundColor = TYPINGCOLOR;
+                        this.spanArray[this.selected[0]][this.selected[1]].style.backgroundColor = TYPINGCOLOR;
                     }
+
+
                     if (event.which == 3) {
                         this.charArray[this.selected[0]][this.selected[1]] = this.lastChar;
-                        this.rendArray()
+                        this.setCharacter(this.selected[0], this.selected[1], this.lastChar);
                     }
                     
                 })
@@ -224,11 +228,12 @@ function ascIICanvas(paragraph, rows, cols, canvID, background, selectable = tru
                 if (DEBUG) {
                     console.log('editing toggled');
                 }
-                document.getElementById(this.selecterTag).style.backgroundColor = TYPINGCOLOR;
+                this.spanArray[this.selected[0]][this.selected[1]].style.backgroundColor = TYPINGCOLOR;
             }
 
             if (!event.altKey) {
                 if (event.key.length == 1){
+                    
                     if (true){ //fix later
                         if (event.key != " "){
                             this.charArray[this.selected[0]][this.selected[1]] = event.key;
@@ -237,25 +242,27 @@ function ascIICanvas(paragraph, rows, cols, canvID, background, selectable = tru
                         else{
                             this.charArray[this.selected[0]][this.selected[1]] = '\xa0';
                             this.lastChar = '\xa0';
-                        }
-                        if (this.editingToggled && this.selected[1] < this.spanArray[0].length - 1){
-                            this.selected[1] += 1
                             
                         }
-                        this.rendArray()
+                        this.setCharacter(this.selected[0], this.selected[1], this.lastChar)
+                        if (this.editingToggled && this.selected[1] < this.spanArray[0].length - 1){
+                            this.setSelected(this.selected[0], this.selected[1] + 1);
+                            
+                            
+                        }
+                        
                         if (this.editingToggled){
                             
-                            document.getElementById(this.selecterTag).style.backgroundColor = TYPINGCOLOR;
+                            this.spanArray[this.selected[0]][this.selected[1]].style.backgroundColor = TYPINGCOLOR;
                         }
-
                     }
                     
                 }
                 else if (event.code == 'Backspace' && this.selected[1] > 0 && this.editingToggled) {
-                    this.charArray[this.selected[0]][this.selected[1]] = '\xa0';
-                    this.selected[1] -= 1;
-                    this.rendArray()
-                    document.getElementById(this.selecterTag).style.backgroundColor = TYPINGCOLOR;
+                    this.setCharacter(this.selected[0],this.selected[1], '\xa0');
+                    this.setSelected(this.selected[0], this.selected[1] - 1)
+                    
+                    this.spanArray[this.selected[0]][this.selected[1]].style.backgroundColor = TYPINGCOLOR;
                     
                     
                 }
@@ -263,7 +270,7 @@ function ascIICanvas(paragraph, rows, cols, canvID, background, selectable = tru
             console.log(event.key == 'c' && event.altKey)
             if (event.key == 'c' && event.altKey) {
                 this.charArray = spaces(this.rows, this.cols);
-                this.rendArray();
+                this.rendArray();//this instance of rendArray is necessary
                 console.log('cleared')
             }
             
@@ -302,9 +309,6 @@ function main(){
 
     canv = new ascIICanvas(canvParagraph, 80, 100, 'Editor', background = '\x0a');
     //y,x
-    
-    canv.drawRect(10,10, 20,20, "+");
-    canv.drawRect(20,30, 5,10, "X");
     
     canv.rendArray();
 

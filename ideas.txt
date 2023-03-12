@@ -28,6 +28,5 @@ Of course, another thing to do is figure out
 16) Save canvas into canvas file
 
 Jimmy (simple easr of use ideas):
-1) Backspace should delete a character
-2) Outline showing edges of canvas
+1) Outline showing edges of canvas
 

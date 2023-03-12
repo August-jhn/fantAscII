@@ -1,2 +1,1 @@
 Two -- symbols next to each other start a newline
-Fix lag, find references to rendArray(), and attempt to eliminate them unless absolutely necesesary/

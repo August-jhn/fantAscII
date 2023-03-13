@@ -12,14 +12,13 @@ function ascIICanvas(paragraph, rows, cols, canvID, background, selectable = tru
             let row = [];
             for (let j = 0; j< c; j++) {
                 row.push('\xa0');
-                
             }
             spacesArray.push(row);
         }
-        
         return spacesArray;
-
     }
+
+
     function makeBackground(r,c){ 
         //returns an rxc 2d array of spaces
         let spacesArray = [];
@@ -27,7 +26,6 @@ function ascIICanvas(paragraph, rows, cols, canvID, background, selectable = tru
             let row = [];
             for (let j = 0; j< c; j++) {
                 row.push(this.background);
-                
             }
             spacesArray.push(row);
         }
@@ -54,15 +52,11 @@ function ascIICanvas(paragraph, rows, cols, canvID, background, selectable = tru
         for (let r = 0; r < this.charArray.length; r ++) {
                 let rowText = ""
                 for (let c = 0; c< this.charArray[0].length; c ++){
-                    let is_selected = false;
-                    
                     rowText += `<span id = '${r}x${c}+${this.canvID}'>`;
                     rowText += this.charArray[r][c];
                     rowText += `</span>`;
-
                 }
                 rowText += '<br>';
-    
                 htmlText += rowText;
             }
 
@@ -138,6 +132,8 @@ function ascIICanvas(paragraph, rows, cols, canvID, background, selectable = tru
     this.selecterTag = `selectedInCanvas${this.canvID}`;
     this.lastChar = '*';
     this.typeingStartedAt = 0;
+
+    this.mouseMouseDrag = true;
     
     
     this.createArray() 
@@ -211,13 +207,22 @@ function ascIICanvas(paragraph, rows, cols, canvID, background, selectable = tru
                         this.spanArray[this.selected[0]][this.selected[1]].style.backgroundColor = TYPINGCOLOR;
                     }
 
-
                     if (event.which == 3) {
                         this.charArray[this.selected[0]][this.selected[1]] = this.lastChar;
                         this.setCharacter(this.selected[0], this.selected[1], this.lastChar);
+                        this.mouseMouseDrag = !this.mouseMouseDrag;
                     }
                     
-                })
+                    
+                });
+                this.spanArray[r][c].addEventListener("mouseover", (event) => {
+                    if (this.mouseMouseDrag) {
+                        this.spanArray[r][c].innerText = this.lastChar;
+                    }
+                    
+                    
+
+                });
             }
         }
 

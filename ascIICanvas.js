@@ -3,6 +3,7 @@ const BLINKDELAY = 500;
 const BLINKONCOLOR = 'magenta';
 const BACKGROUNDCOLOR = 'black';
 const TYPINGCOLOR = 'yellow';
+const DEFAULTFILENAME = 'YourBeautifulASCIIArt.txt'
 
 function ascIICanvas(paragraph, rows, cols, canvID, background, selectable = true) {
 
@@ -45,6 +46,39 @@ function ascIICanvas(paragraph, rows, cols, canvID, background, selectable = tru
             }
         }
         this.rendArray();
+    }
+
+    this.saveToTXT = function() {
+
+        if (DEBUG) {
+            console.log('saving to txt...')
+        }
+
+        let textToSave = "";
+
+        for (let r = 0; r < this.charArray.length; r ++ ) {
+            for (let c = 0; c < this.charArray[0].length; c ++ ) {
+                textToSave += this.charArray[r][c];
+            }
+            textToSave += '\n';
+
+        }
+        
+
+        let elt = document.createElement('a');
+        elt.setAttribute('href', 'data:text/plane;charset=utf-8,' + encodeURIComponent(textToSave));
+        elt.setAttribute('download', DEFAULTFILENAME);
+        elt.style.display = 'none';
+        document.body.appendChild(elt) //so you we can 'click' it
+        elt.click();//force click the invisible download link
+        document.body.removeChild(elt);// we don't want this in the document
+
+        if (DEBUG) {
+            console.log('succesfully saved as,',DEFAULTFILENAME);
+        }
+
+
+
     }
 
     this.createArray = function() {
@@ -218,6 +252,7 @@ function ascIICanvas(paragraph, rows, cols, canvID, background, selectable = tru
                 this.spanArray[r][c].addEventListener("mouseover", (event) => {
                     if (this.mouseMouseDrag) {
                         this.spanArray[r][c].innerText = this.lastChar;
+                        this.charArray[r][c] = this.lastChar;
                     }
                     
                     
@@ -225,16 +260,34 @@ function ascIICanvas(paragraph, rows, cols, canvID, background, selectable = tru
                 });
             }
         }
+        
 
         window.addEventListener('keydown', (event) => {
             
-            if(event.code == 'Enter' && event.altKey == true){
-                this.editingToggled = !this.editingToggled;
-                if (DEBUG) {
-                    console.log('editing toggled');
+            //commands
+            if (event.altKey && event.ctrlKey){
+                if(event.code == 'Enter'){
+                    this.editingToggled = !this.editingToggled;
+                    if (DEBUG) {
+                        console.log('editing toggled');
+                    }
+                    this.spanArray[this.selected[0]][this.selected[1]].style.backgroundColor = TYPINGCOLOR;
                 }
-                this.spanArray[this.selected[0]][this.selected[1]].style.backgroundColor = TYPINGCOLOR;
+                
+                if (event.key == 's') {
+                    this.saveToTXT();
+                    console.log('hello there')
+                }
+                if (event.key == 'c') {
+                    this.charArray = spaces(this.rows, this.cols);
+                    this.rendArray();//this instance of rendArray is necessary
+                    console.log('cleared')
+                }
             }
+           
+
+
+
 
             if (!event.altKey) {
                 if (event.key.length == 1){
@@ -273,11 +326,8 @@ function ascIICanvas(paragraph, rows, cols, canvID, background, selectable = tru
                 }
             }
             console.log(event.key == 'c' && event.altKey)
-            if (event.key == 'c' && event.altKey) {
-                this.charArray = spaces(this.rows, this.cols);
-                this.rendArray();//this instance of rendArray is necessary
-                console.log('cleared')
-            }
+
+            
             
         })
 
@@ -339,6 +389,10 @@ function main(){
     headerCanv = new ascIICanvas(headerParagraph, 10, 200,'Header',background = '#', selectable = false);
     headerCanv.drawRect(3,3,3,3,'*');
     headerCanv.rendArray();
+
+    
+    
+
     
 }
 

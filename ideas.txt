@@ -8,8 +8,8 @@ Mar 9 - Jimmy: I think the best way to implement this is a toolbar style format
 3) download as txt,
 4) download as html,
 5) vertical typing,
-6) ascII paint brush,
-7) Loading a TXT file as a canvas
+*6) ascII paint brush,
+*7) Loading a TXT file as a canvas
 8) The ability to interpolate other canvases over each other.
 9) Special characters selector box/selector boxes in general.
  Kind of like a color picker for characters.
@@ -25,7 +25,9 @@ Of course, another thing to do is figure out
 13) Make history with crtZ
 14) Possibly make a seperate Editor class, which inherits from Canvas
 15) Hold down key while using arrow keys to draw with the arrow keys
-16) Save canvas into canvas file
+17) make circle drawer
+18) make rectangle drawer
+
 
 Jimmy (simple easr of use ideas):
 1) Outline showing edges of canvas

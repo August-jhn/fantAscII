@@ -1,3 +1,6 @@
+Key: * means the idea has been implemented
+
+
 Potential extensions of the AscII editor
 
 Mar 9 - Jimmy: I think the best way to implement this is a toolbar style format
@@ -5,11 +8,11 @@ Mar 9 - Jimmy: I think the best way to implement this is a toolbar style format
 
 1) We should make a box selector,
 2) copy and paste, 
-3) download as txt,
+*3) download as txt,
 4) download as html,
 5) vertical typing,
 *6) ascII paint brush,
-*7) Loading a TXT file as a canvas
+7) Loading a TXT file as a canvas
 8) The ability to interpolate other canvases over each other.
 9) Special characters selector box/selector boxes in general.
  Kind of like a color picker for characters.
@@ -20,7 +23,7 @@ Of course, another thing to do is figure out
 	a) how to use OpenCV to load images, 
 	b) how to resize them,
 	c) to make an ability to turn one into an AscII Canvas.
-11) Use Enter to pop back down to the original spot where the typing started, make arrow keys do similar in typing mode. 
+*11) Use Enter to pop back down to the original spot where the typing started, make arrow keys do similar in typing mode. 
 12) Copy and paste of text boxes as well, maybe we could even find a way of interpolating the clip board onto the askii canvas.
 13) Make history with crtZ
 14) Possibly make a seperate Editor class, which inherits from Canvas

@@ -1,0 +1,27 @@
+##################################################
+##################################################
+################ascIICanvas#######################
+##################################################
+##################################################
+
+##################################################
+##################SYNTAX##########################
+##################################################
+
+myCanvas = new Canvas([paragraph], [rows], [cols], [canvID],  [background], [DEFAULT TO TRUE: selectable]
+
+##################################################
+#################ARGUMENTS########################
+##################################################
+
+*paragraph: a document paragraph element.
+rows: integer; the number of rows of text.
+cols: integer; the number of columns of text.
+canvID: a string;  unique name for the canvas, used in naming the spans, so this really must be unique in order for the program to work
+background: character; default ASCII background, usually set to spaces
+selectable: bool; can be true or false 
+
+
+
+
+

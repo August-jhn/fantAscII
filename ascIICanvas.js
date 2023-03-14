@@ -8,6 +8,7 @@ const DEFAULTFILENAME = 'YourBeautifulASCIIArt.txt'
 function ascIICanvas(paragraph, rows, cols, canvID, background, selectable = true) {
 
     function spaces(r,c) {
+	//returns a rxc 2d array of spaces
         let spacesArray = [];
         for (let i = 0; i < r; i ++){
             let row = [];
@@ -35,7 +36,7 @@ function ascIICanvas(paragraph, rows, cols, canvID, background, selectable = tru
     }
 
     this.drawRect = function(x,y,w,h,character) {
-        
+        //edits this.charArray
         for (i = x; i < x + w + 1; i ++){
             for (j = y; j < y + h + 1; j ++){//maybe make these the minimum
                 if (i < this.charArray.length) {
@@ -45,11 +46,11 @@ function ascIICanvas(paragraph, rows, cols, canvID, background, selectable = tru
                 }
             }
         }
-        this.rendArray();
+        this.rendArray(); //then rendurs that array. This is what actually causes the rectangle to show up on the screen.
     }
 
     this.saveToTXT = function() {
-
+	//automatically saves to a txt file which appears in the user's downloads folder. This is a pretty makeshift function, we may want to remake it.
         if (DEBUG) {
             console.log('saving to txt...')
         }
@@ -63,6 +64,8 @@ function ascIICanvas(paragraph, rows, cols, canvID, background, selectable = tru
             textToSave += '\n';
 
         }
+	//since the text content of the  paragraph includes <br> tags et cetera, it's better to recreate a massive string to be the content of the txt file
+
         
 
         let elt = document.createElement('a');
@@ -76,13 +79,18 @@ function ascIICanvas(paragraph, rows, cols, canvID, background, selectable = tru
         if (DEBUG) {
             console.log('succesfully saved as,',DEFAULTFILENAME);
         }
-
-
-
     }
 
+
+
     this.createArray = function() {
-        let htmlText = ''
+	//this function is run upon intialization of the ascii canvas class.
+	//it's job is to strategically label the elements of our paragraph using spans, and store those spans in an array, which is this.spanArray
+        
+
+	//this first loop goes through and labels the span tags, as well as gives them their inner text (usually a space)
+
+	let htmlText = ''
         for (let r = 0; r < this.charArray.length; r ++) {
                 let rowText = ""
                 for (let c = 0; c< this.charArray[0].length; c ++){
@@ -95,6 +103,8 @@ function ascIICanvas(paragraph, rows, cols, canvID, background, selectable = tru
             }
 
         this.paragraph.innerHTML = htmlText;
+
+	/*this second loop  actually creates the reference to said elements in the spanArray. Having these references massively improves the efficiency  */
 
         for (let r = 0; r < this.charArray.length; r ++) {
             let currentRow = []
@@ -109,30 +119,29 @@ function ascIICanvas(paragraph, rows, cols, canvID, background, selectable = tru
 
     
     this.rendArray = function() {
+
+	//While createArray was responsible for actually putting the labels there, this function goes and makes sure the text is up to date
+	//for many operations, however, it is best to avoid doing this, which is possible by directly referencing the pixel using spanArray.
         if (DEBUG) {
             console.log('rendering array')
-        }
-        
-        for (let r = 0; r < this.spanArray.length; r ++) {
-            
-            for (let c = 0; c< this.spanArray[0].length; c ++) {
-                
-                let innerHTML = '';
-                
-                innerHTML += this.charArray[r][c];
-                              
+        }        
+        for (let r = 0; r < this.spanArray.length; r ++) {            
+            for (let c = 0; c< this.spanArray[0].length; c ++) {                
+                let innerHTML = '';                
+                innerHTML += this.charArray[r][c];                              
                 this.spanArray[r][c].innerHTML = innerHTML;
-            }
-            
+            }          
         }
-        
     }
 
+
+
     this.setCharacter = function(y,x,character) {
+	//A simple yet powerful counterpart to rendArray, this directly changes the element. This could be done otherwise, but in my opinion it's more readable otherwise
         this.spanArray[y][x].innerText = character
     }
 
-    this.setSelected = function(y,x) {
+    this.setSelected = function(y,x) { 
         //sets the selected character to the new value.
 
         this.spanArray[this.selected[0]][this.selected[1]].style.backgroundColor = 'transparent';
@@ -168,6 +177,8 @@ function ascIICanvas(paragraph, rows, cols, canvID, background, selectable = tru
     this.typeingStartedAt = 0;
 
     this.mouseMouseDrag = true;
+
+    this.typingBaseX = 0;
     
     
     this.createArray() 
@@ -268,6 +279,7 @@ function ascIICanvas(paragraph, rows, cols, canvID, background, selectable = tru
             if (event.altKey && event.ctrlKey){
                 if(event.code == 'Enter'){
                     this.editingToggled = !this.editingToggled;
+                    this.typingBaseX = this.selected[1];
                     if (DEBUG) {
                         console.log('editing toggled');
                     }
@@ -323,6 +335,10 @@ function ascIICanvas(paragraph, rows, cols, canvID, background, selectable = tru
                     this.spanArray[this.selected[0]][this.selected[1]].style.backgroundColor = TYPINGCOLOR;
                     
                     
+                }
+                else if (event.code == 'Enter' && this.selected[0] < this.spanArray.length - 1 && this.editingToggled) {
+                    this.setSelected(this.selected[0] + 1, this.typingBaseX);
+                    this.spanArray[this.selected[0]][this.selected[1]].style.backgroundColor = TYPINGCOLOR;
                 }
             }
             console.log(event.key == 'c' && event.altKey)

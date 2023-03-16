@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <Title>
+            Real Time Edge Detection with OpenCV.js
+        </Title>
+		<script>
+			const cameraWidth = 500-100;
+			const cameraHeight = 300;
+		</script>
+
+    </head>
+    <body style="background-color:darkslategrey;">
+        <video id="video" playsinline autoplay></video>
+        <!-- <canvas id = "noBackStreamCanvas"></canvas>
+        <canvas id = "noBackEdgeDetectionCanvas"></canvas> -->
+		<div>
+			<canvas id = "streamCanvas"></canvas>
+			<canvas id = "blackAndWhite"></canvas>
+			<canvas id = "edgeDetectionCanvas"></canvas>
+		</div>
+		<div>
+			<button onclick="startVideo()">Start Video</button>
+			<button onclick="pausePlayVideo()">Pause / Play Video</button>
+			<button onclick="stopVideo()">Stop Video</button>
+		</div>
+		<div>
+			<canvas id = "backStreamCanvas"></canvas>
+			<canvas id = "edgeBackStreamCanvas"></canvas>
+		</div>
+        
+		<script>
+			streamCanvas.width = cameraWidth;
+			streamCanvas.height = cameraHeight;
+			blackAndWhite.width = cameraWidth;
+			blackAndWhite.height = cameraHeight;
+			backStreamCanvas.width = cameraWidth;
+			backStreamCanvas.height = cameraHeight;
+			edgeBackStreamCanvas.width = cameraWidth;
+			edgeBackStreamCanvas.height = cameraHeight;
+			edgeDetectionCanvas.width = cameraWidth;
+			edgeDetectionCanvas.height = cameraHeight;
+		</script>
+
+        <script type="text/javascript" src="opencv.js"></script>
+        <script type="text/javascript" src="edgeDetection.js"></script>
+		<!-- <script src="https://cdn.jsdelivr.net/npm/@mediapipe/selfie_segmentation/selfie_segmentation.js" crossorigin="anonymous"></script> -->
+
+	</body>
+</html>

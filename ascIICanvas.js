@@ -46,7 +46,7 @@ function ascIICanvas(paragraph, rows, cols, canvID, background, selectable = tru
                 }
             }
         }
-        this.rendArray(); //then rendurs that array. This is what actually causes the rectangle to show up on the screen.
+        this.rendArray(); //then renders that array. This is what actually causes the rectangle to show up on the screen.
     }
 
     this.saveToTXT = function() {
@@ -107,7 +107,7 @@ function ascIICanvas(paragraph, rows, cols, canvID, background, selectable = tru
 	/*this second loop  actually creates the reference to said elements in the spanArray. Having these references massively improves the efficiency  */
 
         for (let r = 0; r < this.charArray.length; r ++) {
-            let currentRow = []
+            let currentRow = [];
             for (let c = 0; c < this.charArray[0].length; c++) {
                 spanPixel = document.getElementById(`${r}x${c}+${this.canvID}`);
                 currentRow.push(spanPixel);
@@ -163,7 +163,10 @@ function ascIICanvas(paragraph, rows, cols, canvID, background, selectable = tru
     this.cols = cols;
     this.spanArray = []
     this.selectable = selectable
-    console.log(canvID, 'is',this.selectable)
+    if (DEBUG) {
+        console.log(canvID, 'is',this.selectable);
+    }
+    
 
     this.paragraph = paragraph;
     this.canvID = canvID
@@ -176,7 +179,7 @@ function ascIICanvas(paragraph, rows, cols, canvID, background, selectable = tru
     this.lastChar = '*';
     this.typeingStartedAt = 0;
 
-    this.mouseMouseDrag = true;
+    this.mouseMouseDrag = false; //for drawing with mouse
 
     this.typingBaseX = 0;
     
@@ -403,7 +406,6 @@ function main(){
     ;`;
     headerParagraph.style.color = 'green'
     headerCanv = new ascIICanvas(headerParagraph, 10, 200,'Header',background = '#', selectable = false);
-    headerCanv.drawRect(3,3,3,3,'*');
     headerCanv.rendArray();
 
     

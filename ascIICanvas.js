@@ -4,6 +4,7 @@ const BLINKONCOLOR = 'magenta';
 const BACKGROUNDCOLOR = 'black';
 const TYPINGCOLOR = 'yellow';
 const DEFAULTFILENAME = 'YourBeautifulASCIIArt.txt'
+const DRAGCOLOR = 'aqua'
 
 function ascIICanvas(paragraph, rows, cols, canvID, background, selectable = true) {
 
@@ -18,6 +19,89 @@ function ascIICanvas(paragraph, rows, cols, canvID, background, selectable = tru
             spacesArray.push(row);
         }
         return spacesArray;
+    }
+
+    this.clearDragSelected = function() {
+        var startR;
+        var startC;
+        var endR;
+        var endC;
+
+        this.dragSelectedArray = [];
+        this.dragSelectedCoords = [];
+        this.dragSelectedCharArray = [];
+
+        if (this.drag[0] <= this.selected[0]) {
+            startR = this.drag[0];
+            endR = this.selected[0];
+        }
+        else {
+            startR = this.selected[0];
+            endR = this.drag[0];
+        }
+
+        if (this.drag[1] <= this.selected[1]) {
+            startC = this.drag[1];
+            endC = this.selected[1];
+        }
+        else {
+            startC = this.selected[1];
+            endC = this.drag[1];
+        }
+
+        
+        for (let row = startR; row <= endR; row++) {
+            for (let col = startC; col <= endC; col++) {
+                this.spanArray[row][col].style.backgroundColor = 'transparent';
+            }
+        }
+
+        
+
+    }
+
+    this.setDrag = function(r,c) { //handles both turning the drag selected region blue, as well as setting the drag arrays
+
+        this.drag = [r,c];
+
+        var startR;
+        var startC;
+        var endR;
+        var endC;
+
+
+        if (this.drag[0] <= this.selected[0]) {
+            startR = this.drag[0];
+            endR = this.selected[0];
+        }
+        else {
+            startR = this.selected[0];
+            endR = this.drag[0];
+        }
+
+        if (this.drag[1] <= this.selected[1]) {
+            startC = this.drag[1];
+            endC = this.selected[1];
+        }
+        else {
+            startC = this.selected[1];
+            endC = this.drag[1];
+        }
+        
+        for (let row = startR; row <= endR; row++) {
+
+            var dragSelectedArrayRow = [];
+            var dragSelectedCharArrayRow = [];
+            for (let col = startC; col <= endC; col++) {
+                dragSelectedElt = this.spanArray[row][col].style.backgroundColor = DRAGCOLOR;
+                dragSelectedArrayRow.push(dragSelectedElt);
+                dragSelectedCharArrayRow.push(this.charArray[row][col]);
+                this.dragSelectedCoords.push([row,col]);
+            }
+            this.dragSelectedArray.push(dragSelectedArrayRow);
+            this.dragSelectedCharArray.push(dragSelectedCharArrayRow)
+        }
+
     }
 
 
@@ -49,20 +133,36 @@ function ascIICanvas(paragraph, rows, cols, canvID, background, selectable = tru
         this.rendArray(); //then renders that array. This is what actually causes the rectangle to show up on the screen.
     }
 
+    this.fillDrag = function(char) {
+        console.log(this.dragSelectedCoords)
+        for (let index = 0; index < this.dragSelectedCoords.length; index++) {
+            
+            this.setCharacter(this.dragSelectedCoords[index][0], this.dragSelectedCoords[index][1], char)
+        }
+    }
+
     this.saveToTXT = function() {
 	//automatically saves to a txt file which appears in the user's downloads folder. This is a pretty makeshift function, we may want to remake it.
         if (DEBUG) {
             console.log('saving to txt...')
         }
 
-        let textToSave = "";
+        var textToSave = "";
 
-        for (let r = 0; r < this.charArray.length; r ++ ) {
-            for (let c = 0; c < this.charArray[0].length; c ++ ) {
-                textToSave += this.charArray[r][c];
+        if (!this.dragSelector)
+            for (let r = 0; r < this.charArray.length; r ++ ) {
+                for (let c = 0; c < this.charArray[0].length; c ++ ) {
+                    textToSave += this.charArray[r][c];
+                }
+                textToSave += '\n';
+        } else {
+            for (let r = 0; r < this.dragSelectedCharArray.length; r ++ ) {
+                for (let c = 0; c < this.dragSelectedCharArray[0].length; c ++ ) {
+                    textToSave += this.dragSelectedCharArray[r][c];
+                    this.dragSelectedCharArray[r][c]
+                }
+                textToSave += '\n';
             }
-            textToSave += '\n';
-
         }
 	//since the text content of the  paragraph includes <br> tags et cetera, it's better to recreate a massive string to be the content of the txt file
 
@@ -170,7 +270,7 @@ function ascIICanvas(paragraph, rows, cols, canvID, background, selectable = tru
 
     this.paragraph = paragraph;
     this.canvID = canvID
-    this.selected = [10,10];
+    this.selected = [0,0];
 
     this.toggleSelector = false;
     this.toggleBlink = false;
@@ -182,7 +282,14 @@ function ascIICanvas(paragraph, rows, cols, canvID, background, selectable = tru
     this.mouseMouseDrag = false; //for drawing with mouse
 
     this.typingBaseX = 0;
-    
+
+    this.drag = [10,10]; //used for the drag selection
+    this.dragSelector = false;
+    this.dragSelectedArray = [];
+    this.dragSelectedCoords = [];
+    this.dragSelectedCharArray = [];
+
+
     
     this.createArray() 
     this.rendArray() //necessary for adding the selected tag
@@ -210,8 +317,7 @@ function ascIICanvas(paragraph, rows, cols, canvID, background, selectable = tru
         );
 
         window.addEventListener('keydown', (event) => {
-
-            if (true) {
+            if (!this.dragSelector) {
                 dx = 0;
                 dy = 0;
                 x = this.selected[1];
@@ -236,33 +342,57 @@ function ascIICanvas(paragraph, rows, cols, canvID, background, selectable = tru
                 x += dx;
                 y += dy;
                 this.setSelected(y, x);
-                
+
             }
+            
+            
+        
         });
 
         for (let r = 0; r < this.spanArray.length; r++) {
             for (let c = 0; c < this.spanArray[0].length; c ++) {
                 this.spanArray[r][c].addEventListener('mousedown', (event)=>{
                     
-                    
-                    this.setSelected(r,c);
+                    if (!this.dragSelector) {
+                        this.setSelected(r,c);
 
-                    //maybe change
-                    if (!this.editingToggled) {
-                        this.spanArray[this.selected[0]][this.selected[1]].style.backgroundColor = BLINKONCOLOR;
-                    }
-                    else {
-                        this.spanArray[this.selected[0]][this.selected[1]].style.backgroundColor = TYPINGCOLOR;
-                    }
+                        //maybe change
+                        if (!this.editingToggled) {
+                            this.spanArray[this.selected[0]][this.selected[1]].style.backgroundColor = BLINKONCOLOR;
+                        }
+                        else {
+                            this.spanArray[this.selected[0]][this.selected[1]].style.backgroundColor = TYPINGCOLOR;
+                        }
 
-                    if (event.which == 3) {
-                        this.charArray[this.selected[0]][this.selected[1]] = this.lastChar;
-                        this.setCharacter(this.selected[0], this.selected[1], this.lastChar);
-                        this.mouseMouseDrag = !this.mouseMouseDrag;
+                        if (event.which == 3) {
+                            // this.charArray[this.selected[0]][this.selected[1]] = this.lastChar;
+                            // this.setCharacter(this.selected[0], this.selected[1], this.lastChar);
+
+                            //commenting out the above code may have fixed the problem with the selection with the mouse slowing things down.
+                            this.mouseMouseDrag = !this.mouseMouseDrag;
+                        }
+                    } else {
+
+                        this.clearDragSelected()
+                        this.setDrag(r,c);
+                        //clear the last selection's color
+
+
+                        //color stuff blue
+
+
+                        
                     }
                     
                     
                 });
+
+                this.spanArray[r][c].addEventListener('dblclick', (event)=> {
+                    if (this.dragSelector) {
+                        this.clearDragSelected()
+                        this.setSelected(r,c);
+                    }
+                })
                 this.spanArray[r][c].addEventListener("mouseover", (event) => {
                     if (this.mouseMouseDrag) {
                         this.spanArray[r][c].innerText = this.lastChar;
@@ -280,7 +410,10 @@ function ascIICanvas(paragraph, rows, cols, canvID, background, selectable = tru
             
             //commands
             if (event.altKey && event.ctrlKey){
-                if(event.code == 'Enter'){
+
+
+                //most keyboard shortcuts are defined here
+                if(event.code == 'Enter' && !this.dragSelector){
                     this.editingToggled = !this.editingToggled;
                     this.typingBaseX = this.selected[1];
                     if (DEBUG) {
@@ -288,20 +421,27 @@ function ascIICanvas(paragraph, rows, cols, canvID, background, selectable = tru
                     }
                     this.spanArray[this.selected[0]][this.selected[1]].style.backgroundColor = TYPINGCOLOR;
                 }
-                
                 if (event.key == 's') {
                     this.saveToTXT();
-                    console.log('hello there')
+                    console.log('saved to TXT')
                 }
                 if (event.key == 'c') {
                     this.charArray = spaces(this.rows, this.cols);
                     this.rendArray();//this instance of rendArray is necessary
                     console.log('cleared')
                 }
+                if (event.key == 'v') {
+                    this.dragSelector = !this.dragSelector;
+                    if (this.dragSelector) {
+                        this.editingToggled = false;
+                    }
+                    this.clearDragSelected()
+                }
+                if (event.key == 'r' && this.dragSelector) {
+                    this.fillDrag(this.lastChar);
+                    
+                }
             }
-           
-
-
 
 
             if (!event.altKey) {

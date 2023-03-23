@@ -1,1 +1,4 @@
 Two -- symbols next to each other start a newline
+
+
+-- When in selection mode, changing the cursor location causes lag on some browsers

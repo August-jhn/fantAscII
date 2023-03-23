@@ -497,6 +497,40 @@ function ascIICanvas(paragraph, rows, cols, canvID, background, selectable = tru
 
 
 function main(){
+
+
+    ascIICanvasBackgroundParagraph = document.getElementById('ascIICanvasBackground');
+    
+    ascIICanvasBackgroundParagraph.style = 
+    `font-family:'Courier New', Courier, monospace;
+    line-height:0.9;
+    font-size:1vw;
+    overflow: hidden;
+    position: absolute;
+    height: 100vh;
+    width: 100vw;
+    left: 0vw;
+    top: 0vw;
+    background-color : black;
+
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none
+
+    border: solid;
+    border-color: green;
+    ;`;
+    ascIICanvasBackgroundParagraph.style.color = 'green';
+
+
+    backgroundCanv = new ascIICanvas(ascIICanvasBackgroundParagraph, 200, 200, 'Background', background = '*', selectable = false);
+    backgroundCanv.rendArray();
+
+    
+
     canvParagraph = document.getElementById('ascIIEditor');
     canvParagraph.style.color = 'green';
     canvParagraph.style = 
@@ -509,6 +543,7 @@ function main(){
     width: 60vw;
     left: 20vw;
     top: 12vw;
+    background-color : black;
 
     -webkit-touch-callout: none;
     -webkit-user-select: none;

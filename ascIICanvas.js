@@ -194,7 +194,7 @@ function ascIICanvas(paragraph, rows, cols, canvID, background, selectable = tru
         for (let r = 0; r < this.charArray.length; r ++) {
                 let rowText = ""
                 for (let c = 0; c< this.charArray[0].length; c ++){
-                    rowText += `<span id = '${r}x${c}+${this.canvID}'>`;
+                    rowText += `<span id = '${r}x${c}+${this.canvID}' loading="lazy" >`;
                     rowText += this.charArray[r][c];
                     rowText += `</span>`;
                 }
@@ -239,6 +239,7 @@ function ascIICanvas(paragraph, rows, cols, canvID, background, selectable = tru
     this.setCharacter = function(y,x,character) {
 	//A simple yet powerful counterpart to rendArray, this directly changes the element. This could be done otherwise, but in my opinion it's more readable otherwise
         this.spanArray[y][x].innerText = character
+        this.charArray[y][x] = character
     }
 
     this.setSelected = function(y,x) { 
@@ -288,8 +289,6 @@ function ascIICanvas(paragraph, rows, cols, canvID, background, selectable = tru
     this.dragSelectedArray = [];
     this.dragSelectedCoords = [];
     this.dragSelectedCharArray = [];
-
-
     
     this.createArray() 
     this.rendArray() //necessary for adding the selected tag
@@ -499,36 +498,6 @@ function ascIICanvas(paragraph, rows, cols, canvID, background, selectable = tru
 function main(){
 
 
-    ascIICanvasBackgroundParagraph = document.getElementById('ascIICanvasBackground');
-    
-    ascIICanvasBackgroundParagraph.style = 
-    `font-family:'Courier New', Courier, monospace;
-    line-height:0.9;
-    font-size:1vw;
-    overflow: hidden;
-    position: absolute;
-    height: 100vh;
-    width: 100vw;
-    left: 0vw;
-    top: 0vw;
-    background-color : black;
-
-    -webkit-touch-callout: none;
-    -webkit-user-select: none;
-    -khtml-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none
-
-    border: solid;
-    border-color: green;
-    ;`;
-    ascIICanvasBackgroundParagraph.style.color = 'green';
-
-
-    backgroundCanv = new ascIICanvas(ascIICanvasBackgroundParagraph, 200, 200, 'Background', background = '*', selectable = false);
-    backgroundCanv.rendArray();
-
     
 
     canvParagraph = document.getElementById('ascIIEditor');
@@ -550,9 +519,9 @@ function main(){
     -khtml-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
-    user-select: none
+    user-select: none;
 
-    border: solid;
+    border-style: solid;
     border-color: green;
     ;`;
 
@@ -573,7 +542,7 @@ function main(){
     font-size:1vw;
     overflow: hidden;
     position: absolute;
-    height: 30vh;
+    height: 20vh;
     width: 98vw;
     left: 1vw;
     top: 0vh;

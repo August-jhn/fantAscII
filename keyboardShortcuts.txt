@@ -1,0 +1,23 @@
+MODES:
+
+Ctr-Alt-Enter: Toggle between typing mode. 
+**Only possible when not in drag selection mode.
+
+Ctr-Alt-V: Toggle drag-selection mode.
+
+Ctr-Alt-D (right click): Toggle drawing mode
+
+Ctr-Alt-R: fill selected area with last char.
+
+EDITOR:
+Ctr-Alt-C: Clear the editor.
+Ctr-Alt-S: Save. If there is a selection, then that selection only will be saved.
+Ctr-Alt-D: Drawing mode. 
+
+NAVIGATING THE DRAG SELECTOR:
+This can be done either with a arrow keys to move the selected area,
+or with clicks of the mosue.
+
+To select/move the basepoint of the selection, either double 
+click or press Enter in selection mode.
+

@@ -21,7 +21,7 @@ function ascIICanvas(paragraph, rows, cols, canvID, background, selectable = tru
         return spacesArray;
     }
 
-    this.clearDragSelected = function() {
+    this.clearDragSelected = function() {//This function is called to clear the color and data of the previous selection.
         var startR;
         var startC;
         var endR;
@@ -133,7 +133,7 @@ function ascIICanvas(paragraph, rows, cols, canvID, background, selectable = tru
         this.rendArray(); //then renders that array. This is what actually causes the rectangle to show up on the screen.
     }
 
-    this.fillDrag = function(char) {
+    this.fillDrag = function(char) { //this function fills the drag-selected area with a particular character
         console.log(this.dragSelectedCoords)
         for (let index = 0; index < this.dragSelectedCoords.length; index++) {
             
@@ -190,30 +190,30 @@ function ascIICanvas(paragraph, rows, cols, canvID, background, selectable = tru
 
 	//this first loop goes through and labels the span tags, as well as gives them their inner text (usually a space)
 
-	let htmlText = ''
-        for (let r = 0; r < this.charArray.length; r ++) {
-                let rowText = ""
-                for (let c = 0; c< this.charArray[0].length; c ++){
-                    rowText += `<span id = '${r}x${c}+${this.canvID}' loading="lazy" >`;
-                    rowText += this.charArray[r][c];
-                    rowText += `</span>`;
+        let htmlText = ''
+            for (let r = 0; r < this.charArray.length; r ++) {
+                    let rowText = ""
+                    for (let c = 0; c< this.charArray[0].length; c ++){
+                        rowText += `<span id = '${r}x${c}+${this.canvID}' loading="lazy" >`;
+                        rowText += this.charArray[r][c];
+                        rowText += `</span>`;
+                    }
+                    rowText += '<br>';
+                    htmlText += rowText;
                 }
-                rowText += '<br>';
-                htmlText += rowText;
+
+            this.paragraph.innerHTML = htmlText;
+
+        /*this second loop  actually creates the reference to said elements in the spanArray. Having these references massively improves the efficiency  */
+
+            for (let r = 0; r < this.charArray.length; r ++) {
+                let currentRow = [];
+                for (let c = 0; c < this.charArray[0].length; c++) {
+                    spanPixel = document.getElementById(`${r}x${c}+${this.canvID}`);
+                    currentRow.push(spanPixel);
+                }
+                this.spanArray.push(currentRow);
             }
-
-        this.paragraph.innerHTML = htmlText;
-
-	/*this second loop  actually creates the reference to said elements in the spanArray. Having these references massively improves the efficiency  */
-
-        for (let r = 0; r < this.charArray.length; r ++) {
-            let currentRow = [];
-            for (let c = 0; c < this.charArray[0].length; c++) {
-                spanPixel = document.getElementById(`${r}x${c}+${this.canvID}`);
-                currentRow.push(spanPixel);
-            }
-            this.spanArray.push(currentRow);
-        }
         
     }
 
@@ -259,6 +259,8 @@ function ascIICanvas(paragraph, rows, cols, canvID, background, selectable = tru
         backgroundToMake = makeBackground(rows, cols);
     }
 
+
+    //attributes
     this.charArray = backgroundToMake;
     this.rows = rows;
     this.cols = cols;
@@ -268,7 +270,6 @@ function ascIICanvas(paragraph, rows, cols, canvID, background, selectable = tru
         console.log(canvID, 'is',this.selectable);
     }
     
-
     this.paragraph = paragraph;
     this.canvID = canvID
     this.selected = [0,0];
@@ -340,7 +341,39 @@ function ascIICanvas(paragraph, rows, cols, canvID, background, selectable = tru
                 }
                 x += dx;
                 y += dy;
+                if (this.mouseMouseDrag) {
+                    this.setCharacter(y,x, this.lastChar);
+                }
                 this.setSelected(y, x);
+
+            }
+            else {
+
+                dx = 0;
+                dy = 0;
+                x = this.drag[1];
+                y = this.drag[0];
+                if (event.code == 'ArrowLeft') {
+                    if ( x > 0) {
+                        dx = -1;
+                    }
+                } else if (event.code == 'ArrowRight') {
+                    if ( x < this.charArray[0].length - 1){
+                        dx = 1;
+                    }
+                } else if (event.code == 'ArrowDown') {
+                    if (y < this.charArray.length) {
+                        dy = 1;
+                    }
+                } else if (event.code == 'ArrowUp') {
+                    if (y > 0) {
+                        dy = -1;
+                    }
+                }
+                x += dx;
+                y += dy;
+                this.clearDragSelected();
+                this.setDrag(y, x);
 
             }
             
@@ -438,8 +471,15 @@ function ascIICanvas(paragraph, rows, cols, canvID, background, selectable = tru
                 }
                 if (event.key == 'r' && this.dragSelector) {
                     this.fillDrag(this.lastChar);
-                    
                 }
+                if (event.key == 'd') {
+                    this.mouseMouseDrag = !this.mouseMouseDrag;
+                }
+            }
+
+            if (event.key == "Enter" && this.dragSelector) {
+                this.clearDragSelected();
+                this.setSelected(this.drag[0], this.drag[1]);
             }
 
 

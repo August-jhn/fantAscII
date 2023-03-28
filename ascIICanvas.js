@@ -6,6 +6,8 @@ const TYPINGCOLOR = 'yellow';
 const DEFAULTFILENAME = 'YourBeautifulASCIIArt.txt'
 const DRAGCOLOR = 'aqua'
 
+var CLIPBOARD = ""; //this is a makeshift clipboard, to get arround having to deal with a bunch of annoying permision stuff.
+
 function ascIICanvas(paragraph, rows, cols, canvID, background, selectable = true) {
 
     function spaces(r,c) {
@@ -29,9 +31,9 @@ function ascIICanvas(paragraph, rows, cols, canvID, background, selectable = tru
 
         this.dragSelectedArray = [];
         this.dragSelectedCoords = [];
-        this.dragSelectedCharArray = [];
+        this.dragSelectedCharArray = []; //clears the previous arrays
 
-        if (this.drag[0] <= this.selected[0]) {
+        if (this.drag[0] <= this.selected[0]) { //finds the previous corners of the drag box.
             startR = this.drag[0];
             endR = this.selected[0];
         }
@@ -50,7 +52,7 @@ function ascIICanvas(paragraph, rows, cols, canvID, background, selectable = tru
         }
 
         
-        for (let row = startR; row <= endR; row++) {
+        for (let row = startR; row <= endR; row++) { //goes through and removes the blue!
             for (let col = startC; col <= endC; col++) {
                 this.spanArray[row][col].style.backgroundColor = 'transparent';
             }
@@ -70,7 +72,7 @@ function ascIICanvas(paragraph, rows, cols, canvID, background, selectable = tru
         var endC;
 
 
-        if (this.drag[0] <= this.selected[0]) {
+        if (this.drag[0] <= this.selected[0]) { //this sequence of for loops is used to determine the start and end X and Y values of the drag box
             startR = this.drag[0];
             endR = this.selected[0];
         }
@@ -88,7 +90,7 @@ function ascIICanvas(paragraph, rows, cols, canvID, background, selectable = tru
             endC = this.drag[1];
         }
         
-        for (let row = startR; row <= endR; row++) {
+        for (let row = startR; row <= endR; row++) { //then we go and actually create the drag box.
 
             var dragSelectedArrayRow = [];
             var dragSelectedCharArrayRow = [];

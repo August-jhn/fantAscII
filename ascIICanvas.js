@@ -111,8 +111,6 @@ function ascIIEditor(paragraph, rows, cols, canvID, background) {
             }
         }
 
-        
-
     }
 
     this.setDrag = function(r,c) { //handles both turning the drag selected region blue, as well as setting the drag arrays

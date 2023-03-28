@@ -1,0 +1,2 @@
+As more and more modes get added, I think we oughta think about how to manage modes, and the switching between them. I'm of the opinion 
+that it should only be possible to use one mode at a time, and that we build some sort of function for handling "mode switching and setting."

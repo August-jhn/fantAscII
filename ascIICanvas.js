@@ -46,7 +46,7 @@ function ascIIButton(paragraph, borderChar, innerText, funct) {
     this.rend()
 
     this.paragraph.addEventListener('mousedown', ()=> {
-        this.funct;
+        this.funct();
         this.paragraph.style.color = BUTTONCLICKCOLOR;
     });
     this.paragraph.addEventListener('mouseup', ()=> {
@@ -304,6 +304,21 @@ function ascIIEditor(paragraph, rows, cols, canvID, background) {
         this.selected = [y,x];
         this.spanArray[this.selected[0]][this.selected[1]].style.backgroundColor = BLINKONCOLOR;
     }
+
+
+
+    //set modes
+
+    this.setTypingMode = function() {
+        this.editingToggled = !this.editingToggled;
+        this.typingBaseX = this.selected[1];
+        if (DEBUG) {
+            console.log('editing toggled');
+        }
+        this.spanArray[this.selected[0]][this.selected[1]].style.backgroundColor = TYPINGCOLOR;
+    }
+
+
 
     this.background = background;
     let backgroundToMake;
@@ -740,8 +755,11 @@ function main(){
     headerCanv = new ascIICanvas(headerParagraph, 10, 200,'Header',background = '#');
     headerCanv.rendArray();
 
-    buttonParagraph = document.getElementById('testButton');
-    buttonParagraph.style = 
+
+
+    //create typing mode button
+    TypingModeButtonParagraph = document.getElementById('typingMode');
+    TypingModeButtonParagraph.style = 
     `
     
     font-family:'Courier New', Courier, monospace;
@@ -751,8 +769,8 @@ function main(){
     position: absolute;
     height: auto;
     width: auto;
-    left: 1vw;
-    top: 30vh;
+    left: 2vw;
+    top: 10vw;
 
 
     -webkit-touch-callout: none;
@@ -764,18 +782,11 @@ function main(){
 
     ;`;
 
-    button = new ascIIButton(buttonParagraph, "*", "Click Me!", () => {
-        console.log("hi")
+    typingModeButton = new ascIIButton(TypingModeButtonParagraph, "*", "Typing Mode", () => {
+        editor.setTypingMode();
     })
-
-
-    
-    buttonParagraph.style.color = 'green';
-
+    typingModeButton.paragraph.style.color = 'green';
     
 }
 
-
-
 main()
-//want to be able to interpolate one canvas onto another. Similarly for a text file.

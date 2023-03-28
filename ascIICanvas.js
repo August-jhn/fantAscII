@@ -8,7 +8,7 @@ const DRAGCOLOR = 'aqua'
 
 var CLIPBOARD = ""; //this is a makeshift clipboard, to get arround having to deal with a bunch of annoying permision stuff.
 
-function ascIICanvas(paragraph, rows, cols, canvID, background, selectable = true) {
+function ascIIEditor(paragraph, rows, cols, canvID, background) {
 
     function spaces(r,c) {
 	//returns a rxc 2d array of spaces
@@ -267,7 +267,7 @@ function ascIICanvas(paragraph, rows, cols, canvID, background, selectable = tru
     this.rows = rows;
     this.cols = cols;
     this.spanArray = []
-    this.selectable = selectable
+    
     if (DEBUG) {
         console.log(canvID, 'is',this.selectable);
     }
@@ -299,240 +299,333 @@ function ascIICanvas(paragraph, rows, cols, canvID, background, selectable = tru
         console.log('canvas initialized')
     }
 
-    if (this.selectable) {
-        
 
-        setInterval(
-            ()=>{
 
-                if (!this.toggleBlink) {
-                    this.spanArray[this.selected[0]][this.selected[1]].style.backgroundColor = 'transparent';
-                    
-                } else {
-                    this.spanArray[this.selected[0]][this.selected[1]].style.backgroundColor = BLINKONCOLOR;
-                    
-                }
-                this.toggleBlink = !this.toggleBlink;
+    setInterval(
+        ()=>{
 
-            },
-            BLINKDELAY
-        );
-
-        window.addEventListener('keydown', (event) => {
-            if (!this.dragSelector) {
-                dx = 0;
-                dy = 0;
-                x = this.selected[1];
-                y = this.selected[0];
-                if (event.code == 'ArrowLeft') {
-                    if ( x > 0) {
-                        dx = -1;
-                    }
-                } else if (event.code == 'ArrowRight') {
-                    if ( x < this.charArray[0].length - 1){
-                        dx = 1;
-                    }
-                } else if (event.code == 'ArrowDown') {
-                    if (y < this.charArray.length) {
-                        dy = 1;
-                    }
-                } else if (event.code == 'ArrowUp') {
-                    if (y > 0) {
-                        dy = -1;
-                    }
-                }
-                x += dx;
-                y += dy;
-                if (this.mouseMouseDrag) {
-                    this.setCharacter(y,x, this.lastChar);
-                }
-                this.setSelected(y, x);
-
+            if (!this.toggleBlink) {
+                this.spanArray[this.selected[0]][this.selected[1]].style.backgroundColor = 'transparent';
+                
+            } else {
+                this.spanArray[this.selected[0]][this.selected[1]].style.backgroundColor = BLINKONCOLOR;
+                
             }
-            else {
+            this.toggleBlink = !this.toggleBlink;
 
-                dx = 0;
-                dy = 0;
-                x = this.drag[1];
-                y = this.drag[0];
-                if (event.code == 'ArrowLeft') {
-                    if ( x > 0) {
-                        dx = -1;
-                    }
-                } else if (event.code == 'ArrowRight') {
-                    if ( x < this.charArray[0].length - 1){
-                        dx = 1;
-                    }
-                } else if (event.code == 'ArrowDown') {
-                    if (y < this.charArray.length) {
-                        dy = 1;
-                    }
-                } else if (event.code == 'ArrowUp') {
-                    if (y > 0) {
-                        dy = -1;
-                    }
+        },
+        BLINKDELAY
+    );
+
+    window.addEventListener('keydown', (event) => {
+        if (!this.dragSelector) {
+            dx = 0;
+            dy = 0;
+            x = this.selected[1];
+            y = this.selected[0];
+            if (event.code == 'ArrowLeft') {
+                if ( x > 0) {
+                    dx = -1;
                 }
-                x += dx;
-                y += dy;
-                this.clearDragSelected();
-                this.setDrag(y, x);
-
+            } else if (event.code == 'ArrowRight') {
+                if ( x < this.charArray[0].length - 1){
+                    dx = 1;
+                }
+            } else if (event.code == 'ArrowDown') {
+                if (y < this.charArray.length) {
+                    dy = 1;
+                }
+            } else if (event.code == 'ArrowUp') {
+                if (y > 0) {
+                    dy = -1;
+                }
             }
-            
-            
-        
-        });
-
-        for (let r = 0; r < this.spanArray.length; r++) {
-            for (let c = 0; c < this.spanArray[0].length; c ++) {
-                this.spanArray[r][c].addEventListener('mousedown', (event)=>{
-                    
-                    if (!this.dragSelector) {
-                        this.setSelected(r,c);
-
-                        //maybe change
-                        if (!this.editingToggled) {
-                            this.spanArray[this.selected[0]][this.selected[1]].style.backgroundColor = BLINKONCOLOR;
-                        }
-                        else {
-                            this.spanArray[this.selected[0]][this.selected[1]].style.backgroundColor = TYPINGCOLOR;
-                        }
-
-                        if (event.which == 3) {
-                            // this.charArray[this.selected[0]][this.selected[1]] = this.lastChar;
-                            // this.setCharacter(this.selected[0], this.selected[1], this.lastChar);
-
-                            //commenting out the above code may have fixed the problem with the selection with the mouse slowing things down.
-                            this.mouseMouseDrag = !this.mouseMouseDrag;
-                        }
-                    } else {
-
-                        this.clearDragSelected()
-                        this.setDrag(r,c);
-                        //clear the last selection's color
-
-
-                        //color stuff blue
-
-
-                        
-                    }
-                    
-                    
-                });
-
-                this.spanArray[r][c].addEventListener('dblclick', (event)=> {
-                    if (this.dragSelector) {
-                        this.clearDragSelected()
-                        this.setSelected(r,c);
-                    }
-                })
-                this.spanArray[r][c].addEventListener("mouseover", (event) => {
-                    if (this.mouseMouseDrag) {
-                        this.spanArray[r][c].innerText = this.lastChar;
-                        this.charArray[r][c] = this.lastChar;
-                    }
-                    
-                    
-
-                });
+            x += dx;
+            y += dy;
+            if (this.mouseMouseDrag) {
+                this.setCharacter(y,x, this.lastChar);
             }
+            this.setSelected(y, x);
+
+        }
+        else {
+
+            dx = 0;
+            dy = 0;
+            x = this.drag[1];
+            y = this.drag[0];
+            if (event.code == 'ArrowLeft') {
+                if ( x > 0) {
+                    dx = -1;
+                }
+            } else if (event.code == 'ArrowRight') {
+                if ( x < this.charArray[0].length - 1){
+                    dx = 1;
+                }
+            } else if (event.code == 'ArrowDown') {
+                if (y < this.charArray.length) {
+                    dy = 1;
+                }
+            } else if (event.code == 'ArrowUp') {
+                if (y > 0) {
+                    dy = -1;
+                }
+            }
+            x += dx;
+            y += dy;
+            this.clearDragSelected();
+            this.setDrag(y, x);
+
         }
         
+        
+    
+    });
 
-        window.addEventListener('keydown', (event) => {
-            
-            //commands
-            if (event.altKey && event.ctrlKey){
+    for (let r = 0; r < this.spanArray.length; r++) {
+        for (let c = 0; c < this.spanArray[0].length; c ++) {
+            this.spanArray[r][c].addEventListener('mousedown', (event)=>{
+                
+                if (!this.dragSelector) {
+                    this.setSelected(r,c);
 
-
-                //most keyboard shortcuts are defined here
-                if(event.code == 'Enter' && !this.dragSelector){
-                    this.editingToggled = !this.editingToggled;
-                    this.typingBaseX = this.selected[1];
-                    if (DEBUG) {
-                        console.log('editing toggled');
+                    //maybe change
+                    if (!this.editingToggled) {
+                        this.spanArray[this.selected[0]][this.selected[1]].style.backgroundColor = BLINKONCOLOR;
                     }
-                    this.spanArray[this.selected[0]][this.selected[1]].style.backgroundColor = TYPINGCOLOR;
-                }
-                if (event.key == 's') {
-                    this.saveToTXT();
-                    console.log('saved to TXT')
-                }
-                if (event.key == 'c') {
-                    this.charArray = spaces(this.rows, this.cols);
-                    this.rendArray();//this instance of rendArray is necessary
-                    console.log('cleared')
-                }
-                if (event.key == 'v') {
-                    this.dragSelector = !this.dragSelector;
-                    if (this.dragSelector) {
-                        this.editingToggled = false;
+                    else {
+                        this.spanArray[this.selected[0]][this.selected[1]].style.backgroundColor = TYPINGCOLOR;
                     }
+
+                    if (event.which == 3) {
+                        // this.charArray[this.selected[0]][this.selected[1]] = this.lastChar;
+                        // this.setCharacter(this.selected[0], this.selected[1], this.lastChar);
+
+                        //commenting out the above code may have fixed the problem with the selection with the mouse slowing things down.
+                        this.mouseMouseDrag = !this.mouseMouseDrag;
+                    }
+                } else {
+
                     this.clearDragSelected()
-                }
-                if (event.key == 'r' && this.dragSelector) {
-                    this.fillDrag(this.lastChar);
-                }
-                if (event.key == 'd') {
-                    this.mouseMouseDrag = !this.mouseMouseDrag;
-                }
-            }
-
-            if (event.key == "Enter" && this.dragSelector) {
-                this.clearDragSelected();
-                this.setSelected(this.drag[0], this.drag[1]);
-            }
+                    this.setDrag(r,c);
+                    //clear the last selection's color
 
 
-            if (!event.altKey) {
-                if (event.key.length == 1){
+                    //color stuff blue
+
+
                     
-                    if (true){ //fix later
-                        if (event.key != " "){
-                            this.charArray[this.selected[0]][this.selected[1]] = event.key;
-                            this.lastChar = event.key;
-                        }
-                        else{
-                            this.charArray[this.selected[0]][this.selected[1]] = '\xa0';
-                            this.lastChar = '\xa0';
-                            
-                        }
-                        this.setCharacter(this.selected[0], this.selected[1], this.lastChar)
-                        if (this.editingToggled && this.selected[1] < this.spanArray[0].length - 1){
-                            this.setSelected(this.selected[0], this.selected[1] + 1);
-                            
-                            
-                        }
+                }
+                
+                
+            });
+
+            this.spanArray[r][c].addEventListener('dblclick', (event)=> {
+                if (this.dragSelector) {
+                    this.clearDragSelected()
+                    this.setSelected(r,c);
+                }
+            })
+            this.spanArray[r][c].addEventListener("mouseover", (event) => {
+                if (this.mouseMouseDrag) {
+                    this.spanArray[r][c].innerText = this.lastChar;
+                    this.charArray[r][c] = this.lastChar;
+                }
+                
+                
+
+            });
+        }
+    }
+    
+
+    window.addEventListener('keydown', (event) => {
+        
+        //commands
+        if (event.altKey && event.ctrlKey){
+
+
+            //most keyboard shortcuts are defined here
+            if(event.code == 'Enter' && !this.dragSelector){
+                this.editingToggled = !this.editingToggled;
+                this.typingBaseX = this.selected[1];
+                if (DEBUG) {
+                    console.log('editing toggled');
+                }
+                this.spanArray[this.selected[0]][this.selected[1]].style.backgroundColor = TYPINGCOLOR;
+            }
+            if (event.key == 's') {
+                this.saveToTXT();
+                console.log('saved to TXT')
+            }
+            if (event.key == 'c') {
+                this.charArray = spaces(this.rows, this.cols);
+                this.rendArray();//this instance of rendArray is necessary
+                console.log('cleared')
+            }
+            if (event.key == 'v') {
+                this.dragSelector = !this.dragSelector;
+                if (this.dragSelector) {
+                    this.editingToggled = false;
+                }
+                this.clearDragSelected()
+            }
+            if (event.key == 'r' && this.dragSelector) {
+                this.fillDrag(this.lastChar);
+            }
+            if (event.key == 'd') {
+                this.mouseMouseDrag = !this.mouseMouseDrag;
+            }
+        }
+
+        if (event.key == "Enter" && this.dragSelector) {
+            this.clearDragSelected();
+            this.setSelected(this.drag[0], this.drag[1]);
+        }
+
+
+        if (!event.altKey) {
+            if (event.key.length == 1){
+                
+                if (true){ //fix later
+                    if (event.key != " "){
+                        this.charArray[this.selected[0]][this.selected[1]] = event.key;
+                        this.lastChar = event.key;
+                    }
+                    else{
+                        this.charArray[this.selected[0]][this.selected[1]] = '\xa0';
+                        this.lastChar = '\xa0';
                         
-                        if (this.editingToggled){
-                            
-                            this.spanArray[this.selected[0]][this.selected[1]].style.backgroundColor = TYPINGCOLOR;
-                        }
+                    }
+                    this.setCharacter(this.selected[0], this.selected[1], this.lastChar)
+                    if (this.editingToggled && this.selected[1] < this.spanArray[0].length - 1){
+                        this.setSelected(this.selected[0], this.selected[1] + 1);
+                        
+                        
                     }
                     
+                    if (this.editingToggled){
+                        
+                        this.spanArray[this.selected[0]][this.selected[1]].style.backgroundColor = TYPINGCOLOR;
+                    }
                 }
-                else if (event.code == 'Backspace' && this.selected[1] > 0 && this.editingToggled) {
-                    this.setCharacter(this.selected[0],this.selected[1], '\xa0');
-                    this.setSelected(this.selected[0], this.selected[1] - 1)
-                    
-                    this.spanArray[this.selected[0]][this.selected[1]].style.backgroundColor = TYPINGCOLOR;
-                    
-                    
-                }
-                else if (event.code == 'Enter' && this.selected[0] < this.spanArray.length - 1 && this.editingToggled) {
-                    this.setSelected(this.selected[0] + 1, this.typingBaseX);
-                    this.spanArray[this.selected[0]][this.selected[1]].style.backgroundColor = TYPINGCOLOR;
-                }
+                
             }
-            console.log(event.key == 'c' && event.altKey)
+            else if (event.code == 'Backspace' && this.selected[1] > 0 && this.editingToggled) {
+                this.setCharacter(this.selected[0],this.selected[1], '\xa0');
+                this.setSelected(this.selected[0], this.selected[1] - 1)
+                
+                this.spanArray[this.selected[0]][this.selected[1]].style.backgroundColor = TYPINGCOLOR;
+                
+                
+            }
+            else if (event.code == 'Enter' && this.selected[0] < this.spanArray.length - 1 && this.editingToggled) {
+                this.setSelected(this.selected[0] + 1, this.typingBaseX);
+                this.spanArray[this.selected[0]][this.selected[1]].style.backgroundColor = TYPINGCOLOR;
+            }
+        }
+        console.log(event.key == 'c' && event.altKey)
 
-            
-            
-        })
+        
+        
+    })
 
+
+
+
+}
+
+
+
+
+
+function ascIICanvas(paragraph, rows, cols, background) {
+
+    function spaces(r,c) {
+	//returns a rxc 2d array of spaces
+        let spacesArray = [];
+        for (let i = 0; i < r; i ++){
+            let row = [];
+            for (let j = 0; j< c; j++) {
+                row.push('\xa0');
+            }
+            spacesArray.push(row);
+        }
+        return spacesArray;
     }
 
+
+    function makeBackground(r,c){ 
+        //returns an rxc 2d array of spaces
+        let spacesArray = [];
+        for (let i = 0; i < r; i ++){
+            let row = [];
+            for (let j = 0; j< c; j++) {
+                row.push(this.background);
+            }
+            spacesArray.push(row);
+        }
+        
+        return spacesArray;
+    }
+
+    this.drawRect = function(x,y,w,h,character) {
+        //edits this.charArray
+        for (i = x; i < x + w + 1; i ++){
+            for (j = y; j < y + h + 1; j ++){//maybe make these the minimum
+                if (i < this.charArray.length) {
+                    if (j < this.charArray[0].length) {
+                        this.charArray[i][j] = character;
+                    }
+                }
+            }
+        }
+        this.rendArray(); //then renders that array. This is what actually causes the rectangle to show up on the screen.
+    }
+
+
+    
+    this.rendArray = function() {
+        //I actually think the original version is faster for *static* graphics. If we want things like dynamic stuff, we want span tagts 
+        //in order to be able to reference stuff. On the other hand, these span tags take a lot of resources to rendur, even though 
+        //they make renduring faster so long as the page is loaded.
+        if (DEBUG) {
+            console.log('rendering array')
+        }        
+
+        let textToRend = "";
+        for (let r = 0; r < this.charArray.length; r ++) {   
+            let innerHTML = '';    
+            for (let c = 0; c< this.charArray[0].length; c ++) {                
+                            
+                innerHTML += this.charArray[r][c];                 
+            }          
+            textToRend += innerHTML + "\n";
+        }
+        this.paragraph.innerHTML = textToRend;
+    }
+
+    this.background = background;
+    let backgroundToMake;
+    if (background == '\x0a') {
+        backgroundToMake = spaces(rows,cols);
+    }
+    else{
+        backgroundToMake = makeBackground(rows, cols);
+    }
+
+
+    //attributes
+    this.charArray = backgroundToMake;
+    this.rows = rows;
+    this.cols = cols;
+    
+    this.paragraph = paragraph;
+    
+    this.rendArray() 
+    if (DEBUG) {
+        console.log('canvas initialized')
+    }
 
 }
 
@@ -567,10 +660,10 @@ function main(){
     border-color: green;
     ;`;
 
-    canv = new ascIICanvas(canvParagraph, 80, 100, 'Editor', background = '\x0a');
+    editor = new ascIIEditor(canvParagraph, 80, 100, 'Editor', background = '\x0a');
     //y,x
     
-    canv.rendArray();
+    editor.rendArray();
 
     document.body.style.background = 'black';
     canvParagraph.style.color = 'green';
@@ -590,13 +683,9 @@ function main(){
     top: 0vh;
 
     ;`;
-    headerParagraph.style.color = 'green'
-    headerCanv = new ascIICanvas(headerParagraph, 10, 200,'Header',background = '#', selectable = false);
+    headerParagraph.style.color = 'green';
+    headerCanv = new ascIICanvas(headerParagraph, 10, 200,'Header',background = '#');
     headerCanv.rendArray();
-
-    
-    
-
     
 }
 

@@ -5,8 +5,61 @@ const BACKGROUNDCOLOR = 'black';
 const TYPINGCOLOR = 'yellow';
 const DEFAULTFILENAME = 'YourBeautifulASCIIArt.txt'
 const DRAGCOLOR = 'aqua'
+const BUTTONHOVERCOLOR = '#AAFF00';
+const BUTTONCLICKCOLOR = 'yellow';
 
 var CLIPBOARD = ""; //this is a makeshift clipboard, to get arround having to deal with a bunch of annoying permision stuff.
+
+
+
+function ascIIButton(paragraph, borderChar, innerText, funct) {
+    this.paragraph = paragraph;
+    this.borderChar = borderChar;
+    this.innerText = innerText;
+    this.funct = funct;
+
+    if (DEBUG) {
+        console.log("making button")
+    }
+
+    this.rend = function() {
+        let textToRend = "";
+        buttonWidth = this.innerText.length + 2; //the idea is to pad the text with the border character.
+
+        for (let i = 0; i < buttonWidth; i++) {
+            textToRend += this.borderChar;
+        }
+        textToRend += '<br>';
+        
+        textToRend += this.borderChar;
+        textToRend += this.innerText;
+        textToRend += this.borderChar;
+        textToRend += '<br>';
+
+        for (let i = 0; i < buttonWidth; i++) {
+            textToRend += this.borderChar;
+        }
+        textToRend += '<br>';
+        this.paragraph.innerHTML = textToRend;
+    }
+
+    this.rend()
+
+    this.paragraph.addEventListener('mousedown', ()=> {
+        this.funct;
+        this.paragraph.style.color = BUTTONCLICKCOLOR;
+    });
+    this.paragraph.addEventListener('mouseup', ()=> {
+        this.paragraph.style.color = BUTTONHOVERCOLOR;
+    })
+    this.paragraph.addEventListener('mouseenter', ()=>{
+        this.paragraph.style.color = BUTTONHOVERCOLOR;
+    })
+    this.paragraph.addEventListener('mouseleave', ()=> {
+        this.paragraph.style.color = 'green';
+    })
+
+}
 
 function ascIIEditor(paragraph, rows, cols, canvID, background) {
 
@@ -686,8 +739,43 @@ function main(){
     headerParagraph.style.color = 'green';
     headerCanv = new ascIICanvas(headerParagraph, 10, 200,'Header',background = '#');
     headerCanv.rendArray();
+
+    buttonParagraph = document.getElementById('testButton');
+    buttonParagraph.style = 
+    `
+    
+    font-family:'Courier New', Courier, monospace;
+    line-height:0.9;
+    font-size:1vw;
+    overflow: hidden;
+    position: absolute;
+    height: auto;
+    width: auto;
+    left: 1vw;
+    top: 30vh;
+
+
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+
+    ;`;
+
+    button = new ascIIButton(buttonParagraph, "*", "Click Me!", () => {
+        console.log("hi")
+    })
+
+
+    
+    buttonParagraph.style.color = 'green';
+
     
 }
+
+
 
 main()
 //want to be able to interpolate one canvas onto another. Similarly for a text file.

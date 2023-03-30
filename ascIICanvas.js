@@ -310,10 +310,17 @@ function ascIIEditor(paragraph, rows, cols, canvID, background) {
     this.setTypingMode = function() {
         this.editingToggled = !this.editingToggled;
         this.typingBaseX = this.selected[1];
+        this.dragSelector = false;
         if (DEBUG) {
             console.log('editing toggled');
         }
         this.spanArray[this.selected[0]][this.selected[1]].style.backgroundColor = TYPINGCOLOR;
+    }
+
+    this.setDragMode = function() {
+        this.editingToggled = false;
+        this.clearDragSelected()
+        this.dragSelector = !this.dragSelector;
     }
 
 
@@ -344,20 +351,25 @@ function ascIIEditor(paragraph, rows, cols, canvID, background) {
 
     this.toggleSelector = false;
     this.toggleBlink = false;
-    this.editingToggled = false;
+    
     this.selecterTag = `selectedInCanvas${this.canvID}`;
     this.lastChar = '*';
     this.typeingStartedAt = 0;
 
+    this.editingToggled = false;
+    this.dragSelector = false;
     this.mouseMouseDrag = false; //for drawing with mouse
+
+
+    
 
     this.typingBaseX = 0;
 
     this.drag = [10,10]; //used for the drag selection
-    this.dragSelector = false;
     this.dragSelectedArray = [];
     this.dragSelectedCoords = [];
     this.dragSelectedCharArray = [];
+    
     
     this.createArray() 
     this.rendArray() //necessary for adding the selected tag
@@ -812,7 +824,7 @@ function main(){
     dragModeButtonParagraph.style.color = 'green';
     
     dragModeButtonParagraph = new ascIIButton(dragModeButtonParagraph, "*", "Drag Mode (Ctr+Alt+V)", () => {
-        console.log('drag mode button clicked')
+        editor.setDragMode()
     });
 
 

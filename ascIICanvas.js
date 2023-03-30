@@ -742,11 +742,12 @@ function main(){
     line-height:0.9;
     font-size:1vw;
     overflow: hidden;
-    position: absolute;
-    height: 20vh;
+    
+    height: 10vh;
     width: 98vw;
     left: 1vw;
     top: 0vh;
+    float: left
 
     ;`;
     headerParagraph.style.color = 'green';
@@ -767,10 +768,10 @@ function main(){
     position: absolute;
     height: auto;
     width: auto;
-    left: 2vw;
-    top: 10vw;
+    left: 1vw;
+    top: 20vh;
 
-
+    //make it unselectable
     -webkit-touch-callout: none;
     -webkit-user-select: none;
     -khtml-user-select: none;
@@ -780,10 +781,70 @@ function main(){
 
     ;`;
 
-    typingModeButton = new ascIIButton(TypingModeButtonParagraph, "*", "Typing Mode", () => {
+    typingModeButton = new ascIIButton(TypingModeButtonParagraph, "*", "Typing Mode (Ctr+Alt+Enter)", () => {
         editor.setTypingMode();
     })
     typingModeButton.paragraph.style.color = 'green';
+    
+
+    dragModeButtonParagraph = document.getElementById('dragMode');
+    dragModeButtonParagraph.style = `
+
+    font-family:'Courier New', Courier, monospace;
+    line-height:0.9;
+    font-size:1vw;
+    overflow: hidden;
+    position: absolute;
+
+    height: auto;
+    width: auto;
+    left: 1vw;
+    top: 25vh;
+
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    
+    `
+    dragModeButtonParagraph.style.color = 'green';
+    
+    dragModeButtonParagraph = new ascIIButton(dragModeButtonParagraph, "*", "Drag Mode (Ctr+Alt+V)", () => {
+        console.log('drag mode button clicked')
+    });
+
+
+
+    circleModeButtonParagraph = document.getElementById('circleMode');
+    circleModeButtonParagraph.style = `
+
+    font-family:'Courier New', Courier, monospace;
+    line-height:0.9;
+    font-size:1vw;
+    overflow: hidden;
+    position: absolute;
+
+    height: auto;
+    width: auto;
+    left: 1vw;
+    top: 30vh;
+
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    
+    `
+    circleModeButtonParagraph.style.color = 'green';
+    
+    circleModeButtonParagraph = new ascIIButton(circleModeButtonParagraph, "*", "Draw Circle (Ctr+Alt+C)", () => {
+        console.log('cirlce mode button clicked')
+    });
+    
     
 }
 

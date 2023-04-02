@@ -103,14 +103,11 @@ function ascIIEditor(paragraph, rows, cols, canvID, background) {
             startC = this.selected[1];
             endC = this.drag[1];
         }
-
-        
         for (let row = startR; row <= endR; row++) { //goes through and removes the blue!
             for (let col = startC; col <= endC; col++) {
                 this.spanArray[row][col].style.backgroundColor = 'transparent';
             }
         }
-
     }
 
     this.setDrag = function(r,c) { //handles both turning the drag selected region blue, as well as setting the drag arrays
@@ -184,6 +181,18 @@ function ascIIEditor(paragraph, rows, cols, canvID, background) {
             }
         }
         this.rendArray(); //then renders that array. This is what actually causes the rectangle to show up on the screen.
+    }
+
+
+    this.drawElipse = function(centerX, centerY, widthX, widthY, char = " "){
+
+        for (let r = widthY - centerY**2; r <= widthY + centerY**2 ; r++) {
+            for (let c = widthX - centerX**2; c<= widthX + centerX**2; c++) {
+                if (((r- centerY)/(widthY))**2 + ((c-centerX)/(widthX))**2 < 2) { //equiation for an elipse
+                    this.setCharacter(r,c, char);
+                }
+            }
+        }
     }
 
     this.fillDrag = function(char) { //this function fills the drag-selected area with a particular character
@@ -291,8 +300,15 @@ function ascIIEditor(paragraph, rows, cols, canvID, background) {
 
     this.setCharacter = function(y,x,character) {
 	//A simple yet powerful counterpart to rendArray, this directly changes the element. This could be done otherwise, but in my opinion it's more readable otherwise
-        this.spanArray[y][x].innerText = character
-        this.charArray[y][x] = character
+        try {
+            this.spanArray[y][x].innerText = character;
+            this.charArray[y][x] = character;
+        } catch {
+            if (DEBUG) {
+                console.log(`unable to place character at index (${y}, ${x}), probably out of bounds...`)
+            }
+        }
+        
     }
 
     this.setSelected = function(y,x) { 
@@ -369,13 +385,15 @@ function ascIIEditor(paragraph, rows, cols, canvID, background) {
     this.dragSelectedArray = [];
     this.dragSelectedCoords = [];
     this.dragSelectedCharArray = [];
-    
+
     
     this.createArray() 
     this.rendArray() //necessary for adding the selected tag
     if (DEBUG) {
         console.log('canvas initialized')
     }
+
+
 
 
 
@@ -662,6 +680,8 @@ function ascIICanvas(paragraph, rows, cols, background) {
     }
 
 
+
+
     
     this.rendArray = function() {
         //I actually think the original version is faster for *static* graphics. If we want things like dynamic stuff, we want span tagts 
@@ -745,6 +765,9 @@ function main(){
 
     document.body.style.background = 'black';
     canvParagraph.style.color = 'green';
+
+
+
 
     headerParagraph = document.getElementById('ascIIHeader');
     headerParagraph.style = 
@@ -854,7 +877,8 @@ function main(){
     circleModeButtonParagraph.style.color = 'green';
     
     circleModeButtonParagraph = new ascIIButton(circleModeButtonParagraph, "*", "Draw Circle (Ctr+Alt+C)", () => {
-        console.log('cirlce mode button clicked')
+        console.log('cirlce mode button clicked');
+        editor.drawElipse(editor.selected[1], editor.selected[0], 6*2,4*2, editor.lastChar);
     });
     
     

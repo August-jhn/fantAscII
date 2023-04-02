@@ -5,8 +5,9 @@
             Real Time Edge Detection with OpenCV.js
         </Title>
 		<script>
-			const cameraWidth = 500-100;
+			const cameraWidth = 400;
 			const cameraHeight = 300;
+			const scalar = 2;
 		</script>
 
     </head>
@@ -15,31 +16,36 @@
         <!-- <canvas id = "noBackStreamCanvas"></canvas>
         <canvas id = "noBackEdgeDetectionCanvas"></canvas> -->
 		<div>
-			<canvas id = "streamCanvas"></canvas>
-			<canvas id = "blackAndWhite"></canvas>
-			<canvas id = "edgeDetectionCanvas"></canvas>
-		</div>
-		<div>
 			<button onclick="startVideo()">Start Video</button>
 			<button onclick="pausePlayVideo()">Pause / Play Video</button>
 			<button onclick="stopVideo()">Stop Video</button>
 		</div>
 		<div>
-			<canvas id = "backStreamCanvas"></canvas>
-			<canvas id = "edgeBackStreamCanvas"></canvas>
+			<canvas id = "streamCanvas"></canvas>
+			<!-- <canvas id = "blackAndWhite"></canvas> -->
+			<canvas id = "edgeDetectionCanvas"></canvas>
+			<canvas id = "charCanvas"></canvas>
+			<canvas id = "grayCharStreamCanvas"></canvas>
+		</div>
+		<div>
+			<!-- <canvas id = "charStreamCanvas"></canvas> -->
+			<!-- <canvas id = "grayCharStreamCanvas"></canvas>
+			<canvas id = "charCanvas"></canvas> -->
 		</div>
         
 		<script>
 			streamCanvas.width = cameraWidth;
 			streamCanvas.height = cameraHeight;
-			blackAndWhite.width = cameraWidth;
-			blackAndWhite.height = cameraHeight;
-			backStreamCanvas.width = cameraWidth;
-			backStreamCanvas.height = cameraHeight;
-			edgeBackStreamCanvas.width = cameraWidth;
-			edgeBackStreamCanvas.height = cameraHeight;
+			//blackAndWhite.width = cameraWidth;
+			//blackAndWhite.height = cameraHeight;
 			edgeDetectionCanvas.width = cameraWidth;
 			edgeDetectionCanvas.height = cameraHeight;
+			// charStreamCanvas.width = cameraWidth;
+			// charStreamCanvas.height = cameraHeight;
+			grayCharStreamCanvas.width = cameraWidth;
+			grayCharStreamCanvas.height = cameraHeight;
+			charCanvas.width = cameraWidth*scalar*.75;
+			charCanvas.height = cameraHeight*scalar;
 		</script>
 
         <script type="text/javascript" src="opencv.js"></script>

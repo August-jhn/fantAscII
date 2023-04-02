@@ -1,0 +1,11 @@
+
+Something interesting was that Ben noticed the page is very slow and resource intensive every time he reloads.
+
+I believe I know why, and may have actually solved the issue.
+
+The solution was to use the old method of completely re-renduring the entire <p> tag every time we change something for static stuff.
+
+While this is obviously much slower for things like animations and real-time editing, it's actually pretty resource intensive when
+it comes to loading the page. This would make sense, as this is where Chrome was having trouble on Ben's computer.
+
+=

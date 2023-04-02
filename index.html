@@ -7,11 +7,35 @@
     <title>Editor</title>
 </head>
 <body>
-    <p id = 'ascIIHeader'>
-    </p>
+   
+
     <p id = 'ascIIEditor' oncontextmenu="return false;">
     </p>
+
+    <p id = 'ascIIHeader'>
+    </p>
+    <div class = "toolbar" style = "
+    width: 20vw;
+    flex-direction: left;
     
+    ">
+        <p id = "typingMode">
+        </p>
+        <p id = "dragMode"></p>
+        <p id = "selectionMode">
+        </p>
+        <p id = "circleMode">
+        </p>
+        <p id = "fillMode">
+        </p>
+
+    </div>
+
+    <script>
+        document.onkeydown = function (e) {
+            return false;
+        }
+    </script>
     <script src = 'ascIICanvas.js'></script>
 </body>
 </html>

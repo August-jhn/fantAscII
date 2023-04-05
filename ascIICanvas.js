@@ -1002,7 +1002,37 @@ function main(){
         editor.drawElipse(editor.selected[1], editor.selected[0], 6*2,4*2, editor.lastChar);
     });
     
+
+    cameraButtonParagraph = document.getElementById('camera');
+    cameraButtonParagraph.style = 
+    `
+    font-family:'Courier New', Courier, monospace;
+    line-height:0.9;
+    font-size:1vw;
+    overflow: hidden;
+    position: absolute;
+
+    height: auto;
+    width: auto;
+    left: 1vw;
+    top: 35vh;
+
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+
+
+    color : green `
     
+    cameraButton = new ascIIButton(cameraButtonParagraph, '*', 'Camera', ()=>{
+
+        let params = `scrollbars=no,resizable=no,status=no,location=no,toolbar=no,menubar=no,
+        width=0,height=0,left=-1000,top=-1000`;
+            window.open('./BenExperiments/ImgWindow.html', 'test', params);
+    });
 }
 
 main()

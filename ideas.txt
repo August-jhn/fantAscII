@@ -14,10 +14,6 @@ course, another thing to do is figure out
 the askii canvas. 13) Make history with crtZ 14) Possibly make a seperate Editor class, which inherits from Canvas 15) Hold down key while using arrow keys to draw with the arrow keys 17) make circle drawer 18) make rectangle drawer
 
 
-Jimmy (simple easr of use ideas): 1) Outline showing edges of canvas
-
-
-
 Mar 25 - August(how to implement copy and paste)
 
 I've been looking into how to access the user's clipboard, and this may not be as straightforward as it seems. Firefox doesn't suppoert most of the solutions, and the solutions that do exist require special permision from the user 

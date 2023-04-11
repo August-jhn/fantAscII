@@ -58,7 +58,6 @@ function ascIIButton(paragraph, borderChar, innerText, funct) {
     this.paragraph.addEventListener('mouseleave', ()=> {
         this.paragraph.style.color = 'green';
     })
-
 }
 
 function ascIIEditor(paragraph, rows, cols, canvID, background) {
@@ -126,11 +125,6 @@ function ascIIEditor(paragraph, rows, cols, canvID, background) {
         editor.brushMode = false;
     }
 
-
-
-
-
-
     //nice stuff for making things
 
     function spaces(r,c) {
@@ -145,7 +139,6 @@ function ascIIEditor(paragraph, rows, cols, canvID, background) {
         }
         return spacesArray;
     }
-
 
     //methods directly related to renduring stuff.
 
@@ -192,7 +185,6 @@ function ascIIEditor(paragraph, rows, cols, canvID, background) {
 
     }
 
-
     this.clearDragSelected = function() {//This function is called to clear the color and data of the previous selection.
         var startR;
         var startC;
@@ -227,7 +219,6 @@ function ascIIEditor(paragraph, rows, cols, canvID, background) {
         }
     }
 
-
     function makeBackground(r,c){ 
         //returns an rxc 2d array of spaces
         let spacesArray = [];
@@ -255,7 +246,6 @@ function ascIIEditor(paragraph, rows, cols, canvID, background) {
         this.rendArray(); //then renders that array. This is what actually causes the rectangle to show up on the screen.
     }
 
-
     this.paintElipse = function() {
         //paints the area of a given elipse, as well as clears the previous elipse selection
 
@@ -276,7 +266,6 @@ function ascIIEditor(paragraph, rows, cols, canvID, background) {
             }
         }
     }
-
 
     this.drawElipse = function(centerX, centerY, widthX, widthY, char = " "){
 
@@ -721,20 +710,16 @@ function ascIIEditor(paragraph, rows, cols, canvID, background) {
                         
                     }
                     
-                    if (this.typingMode){
-                        
+                    if (this.typingMode) {
                         this.spanArray[this.selected[0]][this.selected[1]].style.backgroundColor = TYPINGCOLOR;
                     }
                 }
-                
             }
             else if (event.code == 'Backspace' && this.selected[1] > 0 && this.typingMode) {
                 this.setCharacter(this.selected[0],this.selected[1], '\xa0');
                 this.setSelected(this.selected[0], this.selected[1] - 1)
                 
                 this.spanArray[this.selected[0]][this.selected[1]].style.backgroundColor = TYPINGCOLOR;
-                
-                
             }
             else if (event.code == 'Enter' && this.selected[0] < this.spanArray.length - 1 && this.typingMode) {
                 this.setSelected(this.selected[0] + 1, this.typingBaseX);
@@ -742,19 +727,8 @@ function ascIIEditor(paragraph, rows, cols, canvID, background) {
             }
         }
         console.log(event.key == 'c' && event.altKey)
-
-        
-        
     })
-
-
-
-
 }
-
-
-
-
 
 function ascIICanvas(paragraph, rows, cols, background) {
 
@@ -771,7 +745,6 @@ function ascIICanvas(paragraph, rows, cols, background) {
         return spacesArray;
     }
 
-
     function makeBackground(r,c){ 
         //returns an rxc 2d array of spaces
         let spacesArray = [];
@@ -782,7 +755,6 @@ function ascIICanvas(paragraph, rows, cols, background) {
             }
             spacesArray.push(row);
         }
-        
         return spacesArray;
     }
 
@@ -799,10 +771,6 @@ function ascIICanvas(paragraph, rows, cols, background) {
         }
         this.rendArray(); //then renders that array. This is what actually causes the rectangle to show up on the screen.
     }
-
-
-
-
     
     this.rendArray = function() {
         //I actually think the original version is faster for *static* graphics. If we want things like dynamic stuff, we want span tagts 
@@ -815,8 +783,7 @@ function ascIICanvas(paragraph, rows, cols, background) {
         let textToRend = "";
         for (let r = 0; r < this.charArray.length; r ++) {   
             let innerHTML = '';    
-            for (let c = 0; c< this.charArray[0].length; c ++) {                
-                            
+            for (let c = 0; c< this.charArray[0].length; c ++) {                            
                 innerHTML += this.charArray[r][c];                 
             }          
             textToRend += innerHTML + "\n";
@@ -833,7 +800,6 @@ function ascIICanvas(paragraph, rows, cols, background) {
         backgroundToMake = makeBackground(rows, cols);
     }
 
-
     //attributes
     this.charArray = backgroundToMake;
     this.rows = rows;
@@ -845,15 +811,9 @@ function ascIICanvas(paragraph, rows, cols, background) {
     if (DEBUG) {
         console.log('canvas initialized')
     }
-
 }
 
-
-function main(){
-
-
-    
-
+function main() {
     canvParagraph = document.getElementById('ascIIEditor');
     canvParagraph.style.color = 'green';
     canvParagraph.style = 
@@ -887,9 +847,6 @@ function main(){
     document.body.style.background = 'black';
     canvParagraph.style.color = 'green';
 
-
-
-
     headerParagraph = document.getElementById('ascIIHeader');
     headerParagraph.style = 
     `
@@ -910,13 +867,10 @@ function main(){
     headerCanv = new ascIICanvas(headerParagraph, 10, 200,'Header',background = '#');
     headerCanv.rendArray();
 
-
-
     //create typing mode button
     TypingModeButtonParagraph = document.getElementById('typingMode');
     TypingModeButtonParagraph.style = 
     `
-    
     font-family:'Courier New', Courier, monospace;
     line-height:0.9;
     font-size:1vw;
@@ -999,7 +953,10 @@ function main(){
     
     circleModeButtonParagraph = new ascIIButton(circleModeButtonParagraph, "*", "Draw Circle (Ctr+Alt+C)", () => {
         console.log('cirlce mode button clicked');
-        editor.drawElipse(editor.selected[1], editor.selected[0], 6*2,4*2, editor.lastChar);
+        scalar_value = 1.5;
+        x_axis = parseInt(scalar_value * prompt("Enter X value"));
+        y_axis = parseInt(prompt("Enter Y value"));
+        editor.drawElipse(editor.selected[1], editor.selected[0], x_axis, y_axis, editor.lastChar);
     });
     
 
@@ -1032,6 +989,39 @@ function main(){
         let params = `scrollbars=no,resizable=no,status=no,location=no,toolbar=no,menubar=no,
         width=0,height=0,left=-1000,top=-1000`;
             window.open('./BenExperiments/ImgWindow.html', 'test', params);
+    });
+
+
+    input = document.getElementById('input');
+    input.style = 
+    `
+    font-family:'Courier New', Courier, monospace;
+    line-height:0.9;
+    font-size:1vw;
+    overflow: hidden;
+    position: absolute;
+
+    height: auto;
+    width: auto;
+    left: 1vw;
+    top: 40vh;
+
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+
+
+    color : green `
+    
+    inputBox = new ascIIButton(input, '*', 'X: Y:', ()=>{
+        console.log('cirlce mode button clicked');
+        scalar_value = 1.5;
+        x_axis = parseInt(scalar_value * prompt("Enter X value"));
+        y_axis = parseInt(prompt("Enter Y value"));
+        editor.drawElipse(editor.selected[1], editor.selected[0], x_axis, y_axis, editor.lastChar); 
     });
 }
 

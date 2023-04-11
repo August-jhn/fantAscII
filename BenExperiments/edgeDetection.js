@@ -1,16 +1,37 @@
 // set a gradient for the char ascii art
-const charGrad = "$@B%8&WM#*oahkbdpqwmZO0QLCJUYXzcvunxrjft/|()1{}[]?-_+~<>i!lI;:,^`'. ";
-const gradLen = charGrad.length;
-const charGrad2 = " .:-=+*#%@" //"@%#*+=-:. "
-const gradLen2 = charGrad2.length
+var charGrad0 = " .'`^,:;I!i<>~+_-?[]{}1()|/tfjrxnuvczXYUJCLQ0)Zmwqpdbkhao*#MW&8%B@$"; 
+var gradLen0 = charGrad0.length;
+var charGrad1 = " .:-=+*#%@"
+var gradLen1 = charGrad1.length
+var charGrad2 = "  .,:-=&"
+var gradLen2 = charGrad2.length
+
+var gradients = [charGrad0, charGrad1, charGrad2];
+var gradLens = [gradLen0, gradLen1, gradLen2];
+
+var gradVal = 1;
 
 // Set of pixalting width and height
-const pxlWidth = cameraWidth/(10/scalar)
-const pxlHeight = cameraHeight/(10/scalar)
+var pxlWidth = cameraWidth/(10/scalar);
+var pxlHeight = cameraHeight/(10/scalar);
 
 // Set a variable for the video tag
 const video = document.getElementById("video");
-var playing = false
+var playing = false;
+
+//Function that copies to text that is currently in the image
+const copyToClipboardAsync = str => {
+    //console.log("function called")
+    if (navigator && navigator.clipboard && navigator.clipboard.writeText){
+        //console.log("if statement called")
+        return navigator.clipboard.writeText(str);
+    }
+    //console.log("did not work")
+    return Promise.reject('The Clipboard API is not available.');
+};
+
+// Where the Ascii art values are stored
+var text = ""
 
 // Function to stream video from the web cam
 async function streamVideo() {
@@ -93,6 +114,21 @@ function edgeDetection() {
         //cv.imshow("blackAndWhite",src);
         cv.Canny(src, src, 60, 100, 3, false);
         cv.imshow("edgeDetectionCanvas", src);
+
+        // var edgeDetected = document.getElementById('edgeDetectionCanvas').getContext('2d');
+        // var imgData = edgeDetected.getImageData(0,0,cameraWidth,cameraHeight);
+        // var array = imgData.data
+        // var edgeImg = []
+        // for (let j=0; j<4*(cameraHeight)-1; j+=4){
+        //     var edgeRow = [];
+        //     for (let i=(j*cameraWidth); i<(j*cameraWidth)+4*cameraWidth; i+=4){
+        //             var pix = array[i];
+        //             edgeRow.push(pix);
+        //         }
+        //     edgeImg.push(edgeRow);
+        // }
+        // console.log(edgeImg)
+
         src.delete();
     }, 42);
 
@@ -100,7 +136,7 @@ function edgeDetection() {
 
 // Function that takes in an array and returns a set of strings split my new line character
 function splitLines(array) {
-    var text = "";
+    text = "";
     for (const element of array) {
         for (const item of element) {
             text = text.concat(item);
@@ -121,18 +157,19 @@ function asciiConvert(){
         var pxlRow = [];
         for (let i=(j*pxlWidth); i<(j*pxlWidth)+4*pxlWidth; i+=4){
                 var pix = array[i];
-                let convertNum = Math.trunc((pix*gradLen2)/255)%gradLen2;
-                var converted = charGrad2[convertNum];
+                let convertNum = Math.trunc((pix*gradLens[gradVal])/255)%gradLens[gradVal];
+                var converted = gradients[gradVal][convertNum];
                 pxlRow.push(converted);
             }
         pxlImg.push(pxlRow);
     }
     var asciiCanvas = document.getElementById('charCanvas');
     var context = asciiCanvas.getContext('2d');
-    context.clearRect(0,0,cameraWidth*scalar,cameraHeight*scalar)
+    context.clearRect(0,0,cameraWidth*scalar,cameraHeight*scalar);
     context.fillStyle = "white";
     context.font = "bold 11px Courier";
-    var characters = splitLines(pxlImg);
+    //var characters = splitLines(pxlImg);
+    characters = splitLines(pxlImg);
     for (var i = 0; i<characters.length; i++) {
         context.fillText(characters[i], 0, 15 + (i*11) );
     }
@@ -147,83 +184,51 @@ function charAscii(){
         cv.cvtColor(src, src, cv.COLOR_RGB2GRAY, 0);
         let dsize = new cv.Size(pxlWidth,pxlHeight);
         //cv.resize(src, src, dsize, 0, 0, cv.INTER_LANCZOS4);
-        cv.resize(src, src, dsize, 0, 0, cv.INTER_CUBIC)
+        cv.resize(src, src, dsize, 0, 0, cv.INTER_CUBIC);
         cv.imshow("grayCharStreamCanvas" ,src);
         asciiConvert();
         src.delete();
     }, 42);
 }
 
+//Copy Ascii button function
+function copyText(){
+    copyToClipboardAsync(text)
+}
 
-// function charFakeAscii() {
-//     setInterval(() => {
-//         drawCanvas();
-//         var src = cv.imread("charStreamCanvas")
-//         cv.cvtColor(src, src, cv.COLOR_RGB2GRAY, 0);
-//         //let dsize = new cv.Size(pxlWidth,pxlHeight);
-//         //cv.resize(src, src, dsize, 0, 0, cv.INTER_LANCZOS4);
-//         //cv.resize(src, src, dsize, 0, 0, cv.INTER_CUBIC)
-//         cv.imshow("grayCharStreamCanvas" ,src);
-//         asciiConvert();
-//         src.delete();
-//     }, 42);
-    
-// }
+//Inverts a string and returns it
+function reverseString(str){
+    var splitString = str.split("");
+    var reverseArray = splitString.reverse();
+    var joinArray = reverseArray.join("");
+    return(joinArray)
+}
 
-// function asciiFakeConvert(){ 
-//     var asciiImage = document.getElementById('grayCharStreamCanvas').getContext('2d');
-//     var imgData = asciiImage.getImageData(0,0,cameraWidth,cameraHeight);
-//     //var pix = imgData.data[0,0];
-//     //console.log(pix)
-//     var pxlImg = []
-//     for (let j=0; j<(cameraHeight)-2; j+=20){
-//         var pxlRow = [];
-//         for (let i=0; i<(cameraWidth)-2; i+=10){
-//                 var pix = imgData.data[i,j];
-//                 //console.log([i,j])
-//                 //console.log(pix)
-//                 let convertNum = Math.round((pix*gradLen)/255)%gradLen;
-//                 var converted = charGrad[convertNum];
-//                 pxlRow.push(converted);
-//             }
-//         pxlImg.push(pxlRow);
-//     }
-//     //console.log(pxlImg)
-//     var asciiCanvas = document.getElementById('charCanvas');
-//     var context = asciiCanvas.getContext('2d');
-//     context.clearRect(0,0,cameraWidth,cameraHeight)
-//     context.fillStyle = "white";
-//     context.font = "bold 16px Courier";
-//     var characters = splitLines(pxlImg);
-//     for (var i = 0; i<characters.length; i++) {
-//         context.fillText(characters[i], 0, 15 + (i*15) );
-//     }
-// }   
+//Inverts the ascii values
+function invertGrad(){
+    gradients[gradVal] = reverseString(gradients[gradVal])
+}
 
-// //Test Function to see if the fillText command and splitLines command were working
-// function test() {
-//     var asciiCanvas = document.getElementById('charCanvas');
-//     var context = asciiCanvas.getContext('2d');
-//     context.fillStyle = "white";
-//     context.font = "bold 18px Arial";
-//     var test = [[1,3,4,3],[5,8,4,2],[7,5,3,2],[9,7,4,2]];
-//     var text = "";
-//     for (const element of test) {
-//         for (const item of element) {
-//             text = text.concat(item);
-//         }
-//         text = text.concat("\n");
-//       }
-//     console.log(text);
-//     var lines = text.split('\n');
-//     for (var i = 0; i<lines.length; i++) {
-//         context.fillText(lines[i], 0, 15 + (i*15) );
-//     }
-        
-//     //context.fillText(text, 0, 15);
+//Loops through the available gradients
+function loopGrad(){
+    gradVal = (gradVal+1)%gradients.length
+}
 
-// }
+//Adds the current gradient in the form to the array of the gradients
+function addGrad(){
+    var newGrad = document.getElementById("addCharGradient").elements[0].value;
+    if (newGrad != null){
+        gradients.push(newGrad);
+        gradLens.push(newGrad.length);
+    }
+}
 
+//Resets the array with all the gradients and the array with the lengths to the default
+function resetGrad(){
+    gradients = [charGrad0, charGrad1, charGrad2];
+    gradLens = [gradLen0, gradLen1, gradLen2];
+    gradVal = 1;
+}
 
 // main function to clean up
 

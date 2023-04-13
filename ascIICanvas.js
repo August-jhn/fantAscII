@@ -149,6 +149,67 @@ function ascIIEditor(paragraph, rows, cols, canvID, background) {
 
     //methods directly related to renduring stuff.
 
+    this.fillWithClipboard = function() {
+        
+
+        //turn the clipboard into an array of characters
+
+        //interpolate that CharArray
+
+    }
+
+    this.interpolateCharArray = function(charArray) {
+        //interpolates an array onto the selction box, or else onto the selected area
+
+        if (this.dragMode) {
+            console.log('hi')
+            
+        }
+        else {
+            startY = this.seleted[0];
+            startX = this.selected[1];
+
+            var R = startY;
+            var C = startX;
+                
+            for (let i = 0; i < CLIPBOARD.length; i ++) {
+                if (CLIPBOARD[i] == "\n") {
+                    R += 1
+                }
+                else {
+                    C += 1
+                }
+            }
+
+        }
+
+    }
+
+    this.copySelected = function() { //if there is a selection (i.e. in drag mode), then copy selected. Otherwise just copy everything
+        var clipboardString = ""
+        if (this.dragMode) {
+            for (let r = 0; r < this.dragSelectedCharArray; r++) {
+                var rowString = ""
+                for (let c = 0; c < this.dragSelectedCharArray[0]; c++) {
+                    rowString += this.dragSelectedCharArray[r][c];
+                }
+                clipboardString += "\n"
+                clipboardString += rowString
+            }
+        }
+        else {
+            for (let r = 0; r < this.charArray; r++) {
+                var rowString = ""
+                for (let c = 0; c < this.charArray[0]; c++) {
+                    rowString += this.charArray[r][c];
+                }
+                clipboardString += "\n"
+                clipboardString += rowString
+            }
+        }
+        CLIPBOARD = clipboardString;
+    }
+
     this.setDrag = function(r,c) { //handles both turning the drag selected region blue, as well as setting the drag arrays
 
         this.drag = [r,c];
@@ -166,7 +227,6 @@ function ascIIEditor(paragraph, rows, cols, canvID, background) {
             startR = this.selected[0];
             endR = this.drag[0];
         }
-
         if (this.drag[1] <= this.selected[1]) {
             startC = this.drag[1];
             endC = this.selected[1];
@@ -189,7 +249,6 @@ function ascIIEditor(paragraph, rows, cols, canvID, background) {
             this.dragSelectedArray.push(dragSelectedArrayRow);
             this.dragSelectedCharArray.push(dragSelectedCharArrayRow)
         }
-
     }
 
 
@@ -361,7 +420,6 @@ function ascIIEditor(paragraph, rows, cols, canvID, background) {
                     console.log(`unable to place character at index (${y}, ${x}), probably out of bounds...`)
                 }
             }
-            
         }
     
         this.setSelected = function(y,x) { 
@@ -465,6 +523,7 @@ function ascIIEditor(paragraph, rows, cols, canvID, background) {
     this.dragSelectedArray = [];
     this.dragSelectedCoords = [];
     this.dragSelectedCharArray = [];
+    
 
 
     this.selectionMode = false
@@ -656,6 +715,15 @@ function ascIIEditor(paragraph, rows, cols, canvID, background) {
 
 
             //most keyboard shortcuts are defined here
+
+            if(event.key == 'U') {
+                this.fillWithClipboard();
+            }
+
+            if(event.key == 'K') {
+                this.copySelected();
+            }
+
             if(event.code == 'Enter'){
                 if (this.typingMode) {
                     this.toggleTypingMode(this);
@@ -712,13 +780,10 @@ function ascIIEditor(paragraph, rows, cols, canvID, background) {
                     else{
                         this.charArray[this.selected[0]][this.selected[1]] = '\xa0';
                         this.lastChar = '\xa0';
-                        
                     }
                     this.setCharacter(this.selected[0], this.selected[1], this.lastChar)
                     if (this.typingMode && this.selected[1] < this.spanArray[0].length - 1){
                         this.setSelected(this.selected[0], this.selected[1] + 1);
-                        
-                        
                     }
                     
                     if (this.typingMode){
@@ -845,14 +910,10 @@ function ascIICanvas(paragraph, rows, cols, background) {
     if (DEBUG) {
         console.log('canvas initialized')
     }
-
 }
 
 
 function main(){
-
-
-    
 
     canvParagraph = document.getElementById('ascIIEditor');
     canvParagraph.style.color = 'green';
@@ -879,7 +940,7 @@ function main(){
     border-color: green;
     ;`;
 
-    editor = new ascIIEditor(canvParagraph, 80, 100, 'Editor', background = '\x0a');
+    editor = new ascIIEditor(canvParagraph, 50, 100, 'Editor', background = '\x0a');
     //y,x
     
     editor.rendArray();

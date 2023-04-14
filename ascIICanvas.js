@@ -1012,12 +1012,10 @@ function main() {
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
-
-
     color : green `
     
     inputBox = new ascIIButton(input, '*', 'X: Y:', ()=>{
-        console.log('cirlce mode button clicked');
+        console.log('input mode button clicked');
         scalar_value = 1.5;
         x_axis = parseInt(scalar_value * prompt("Enter X value"));
         y_axis = parseInt(prompt("Enter Y value"));

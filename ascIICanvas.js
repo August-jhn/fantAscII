@@ -923,37 +923,6 @@ function main() {
         width=0,height=0,left=-1000,top=-1000`;
             window.open('./BenExperiments/ImgWindow.html', 'test', params);
     });
-
-
-    input = document.getElementById('input');
-    input.style = 
-    `
-    font-family:'Courier New', Courier, monospace;
-    line-height:0.9;
-    font-size:1vw;
-    overflow: hidden;
-    position: absolute;
-
-    height: auto;
-    width: auto;
-    left: 1vw;
-    top: 40vh;
-
-    -webkit-touch-callout: none;
-    -webkit-user-select: none;
-    -khtml-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-    color : green `
-    
-    inputBox = new ascIIButton(input, '*', 'X: Y:', ()=>{
-        console.log('input mode button clicked');
-        scalar_value = 1.5;
-        x_axis = parseInt(scalar_value * prompt("Enter X value"));
-        y_axis = parseInt(prompt("Enter Y value"));
-        editor.drawElipse(editor.selected[1], editor.selected[0], x_axis, y_axis, editor.lastChar); 
-    });
 }
 
 main()

@@ -41,7 +41,6 @@ async function streamVideo() {
 function drawCanvas() {
     // Get context and draw frame from video element
     var canvas = document.getElementById("streamCanvas");
-    canvas.style.display = 'none';
     var ctx = canvas.getContext('2d');
     ctx.drawImage(video, 0, 0);
     // var canvas = document.getElementById("charStreamCanvas");
@@ -131,7 +130,7 @@ function asciiConvert(){
     var asciiCanvas = document.getElementById('charCanvas');
     var context = asciiCanvas.getContext('2d');
     context.clearRect(0,0,cameraWidth*scalar,cameraHeight*scalar)
-    context.fillStyle = "green";
+    context.fillStyle = "white";
     context.font = "bold 11px Courier";
     var characters = splitLines(pxlImg);
     for (var i = 0; i<characters.length; i++) {

@@ -124,7 +124,7 @@ function asciiConvert(){
     var asciiCanvas = document.getElementById('charCanvas');
     var context = asciiCanvas.getContext('2d');
     context.clearRect(0,0,cameraWidth*scalar,cameraHeight*scalar)
-    context.fillStyle = "white";
+    context.fillStyle = "green";
     context.font = "bold 11px Courier";
     var characters = splitLines(pxlImg);
     for (var i = 0; i<characters.length; i++) {

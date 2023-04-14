@@ -884,7 +884,7 @@ function main() {
     `
     circleModeButtonParagraph.style.color = 'green';
     
-    circleModeButtonParagraph = new ascIIButton(circleModeButtonParagraph, "*", "Draw Circle (Ctr+Alt+C)", () => {
+    circleModeButtonParagraph = new ascIIButton(circleModeButtonParagraph, "*", "Draw Circle", () => {
         console.log('cirlce mode button clicked');
         scalar_value = 1.5;
         x_axis = parseInt(scalar_value * prompt("Enter X value"));

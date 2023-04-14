@@ -997,7 +997,7 @@ function main(){
     `
     circleModeButtonParagraph.style.color = 'green';
     
-    circleModeButtonParagraph = new ascIIButton(circleModeButtonParagraph, "*", "Draw Circle (Ctr+Alt+C)", () => {
+    circleModeButtonParagraph = new ascIIButton(circleModeButtonParagraph, "*", "Draw Circle", () => {
         console.log('cirlce mode button clicked');
         editor.drawElipse(editor.selected[1], editor.selected[0], 6*2,4*2, editor.lastChar);
     });

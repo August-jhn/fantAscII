@@ -10,8 +10,6 @@ const BUTTONCLICKCOLOR = 'yellow';
 
 var CLIPBOARD = ""; //this is a makeshift clipboard, to get arround having to deal with a bunch of annoying permision stuff.
 
-
-
 function ascIIButton(paragraph, borderChar, innerText, funct) {
     this.paragraph = paragraph;
     this.borderChar = borderChar;
@@ -61,9 +59,6 @@ function ascIIButton(paragraph, borderChar, innerText, funct) {
 }
 
 function ascIIEditor(paragraph, rows, cols, canvID, background) {
-
-
-
     //mode setters
 
     this.setMode = function(modeName) {
@@ -82,8 +77,6 @@ function ascIIEditor(paragraph, rows, cols, canvID, background) {
             console.log('set typing mode');
         }
         this.spanArray[this.selected[0]][this.selected[1]].style.backgroundColor = TYPINGCOLOR;
-
-        
     }
 
     this.setDragMode = function(editor) {
@@ -95,7 +88,6 @@ function ascIIEditor(paragraph, rows, cols, canvID, background) {
     this.setCircleMode = function(editor) {
         editor.setMode('circleMode')
         editor.circleMode = true;
-
     }
 
     this.setBrushMode = function(editor) {
@@ -170,7 +162,6 @@ function ascIIEditor(paragraph, rows, cols, canvID, background) {
         }
         
         for (let row = startR; row <= endR; row++) { //then we go and actually create the drag box.
-
             var dragSelectedArrayRow = [];
             var dragSelectedCharArrayRow = [];
             for (let col = startC; col <= endC; col++) {
@@ -182,7 +173,6 @@ function ascIIEditor(paragraph, rows, cols, canvID, background) {
             this.dragSelectedArray.push(dragSelectedArrayRow);
             this.dragSelectedCharArray.push(dragSelectedCharArrayRow)
         }
-
     }
 
     this.clearDragSelected = function() {//This function is called to clear the color and data of the previous selection.
@@ -286,42 +276,38 @@ function ascIIEditor(paragraph, rows, cols, canvID, background) {
         }
     }
 
-
     this.createArray = function() {
         //this function is run upon intialization of the ascii canvas class.
         //it's job is to strategically label the elements of our paragraph using spans, and store those spans in an array, which is this.spanArray
-            
     
         //this first loop goes through and labels the span tags, as well as gives them their inner text (usually a space)
     
-            let htmlText = ''
-                for (let r = 0; r < this.charArray.length; r ++) {
-                        let rowText = ""
-                        for (let c = 0; c< this.charArray[0].length; c ++){
-                            rowText += `<span id = '${r}x${c}+${this.canvID}' loading="lazy" >`;
-                            rowText += this.charArray[r][c];
-                            rowText += `</span>`;
-                        }
-                        rowText += '<br>';
-                        htmlText += rowText;
+        let htmlText = ''
+            for (let r = 0; r < this.charArray.length; r ++) {
+                    let rowText = ""
+                    for (let c = 0; c< this.charArray[0].length; c ++){
+                        rowText += `<span id = '${r}x${c}+${this.canvID}' loading="lazy" >`;
+                        rowText += this.charArray[r][c];
+                        rowText += `</span>`;
                     }
-    
-                this.paragraph.innerHTML = htmlText;
-    
-            /*this second loop  actually creates the reference to said elements in the spanArray. Having these references massively improves the efficiency  */
-    
-                for (let r = 0; r < this.charArray.length; r ++) {
-                    let currentRow = [];
-                    for (let c = 0; c < this.charArray[0].length; c++) {
-                        spanPixel = document.getElementById(`${r}x${c}+${this.canvID}`);
-                        currentRow.push(spanPixel);
-                    }
-                    this.spanArray.push(currentRow);
+                    rowText += '<br>';
+                    htmlText += rowText;
                 }
-            
+
+            this.paragraph.innerHTML = htmlText;
+
+        /*this second loop  actually creates the reference to said elements in the spanArray. Having these references massively improves the efficiency  */
+
+            for (let r = 0; r < this.charArray.length; r ++) {
+                let currentRow = [];
+                for (let c = 0; c < this.charArray[0].length; c++) {
+                    spanPixel = document.getElementById(`${r}x${c}+${this.canvID}`);
+                    currentRow.push(spanPixel);
+                }
+                this.spanArray.push(currentRow);
+            }
         }
     
-        
         this.rendArray = function() {
     
         //While createArray was responsible for actually putting the labels there, this function goes and makes sure the text is up to date
@@ -338,8 +324,6 @@ function ascIIEditor(paragraph, rows, cols, canvID, background) {
             }
         }
     
-    
-    
         this.setCharacter = function(y,x,character) {
         //A simple yet powerful counterpart to rendArray, this directly changes the element. This could be done otherwise, but in my opinion it's more readable otherwise
             try {
@@ -350,7 +334,6 @@ function ascIIEditor(paragraph, rows, cols, canvID, background) {
                     console.log(`unable to place character at index (${y}, ${x}), probably out of bounds...`)
                 }
             }
-            
         }
     
         this.setSelected = function(y,x) { 
@@ -387,9 +370,6 @@ function ascIIEditor(paragraph, rows, cols, canvID, background) {
             }
         }
 	//since the text content of the  paragraph includes <br> tags et cetera, it's better to recreate a massive string to be the content of the txt file
-
-        
-
         let elt = document.createElement('a');
         elt.setAttribute('href', 'data:text/plane;charset=utf-8,' + encodeURIComponent(textToSave));
         elt.setAttribute('download', DEFAULTFILENAME);
@@ -402,16 +382,7 @@ function ascIIEditor(paragraph, rows, cols, canvID, background) {
             console.log('succesfully saved as,',DEFAULTFILENAME);
         }
     }
-
-
-
-
-
-
-
     //attributes
-
-
 
     this.background = background;
     let backgroundToMake;
@@ -445,9 +416,6 @@ function ascIIEditor(paragraph, rows, cols, canvID, background) {
     this.dragMode = false;
     this.brushMode = false; //for drawing with mouse
 
-
-    
-
     this.typingBaseX = 0;
 
     this.drag = [10,10]; //used for the drag selection
@@ -459,7 +427,6 @@ function ascIIEditor(paragraph, rows, cols, canvID, background) {
     this.selectionMode = false
     this.dragMode = false
     this.circleMode = false
-
 
     this.modeNames = [
         'dragMode',
@@ -482,20 +449,14 @@ function ascIIEditor(paragraph, rows, cols, canvID, background) {
         'brushMode' : this.toggleBrushMode
     };
 
-    
     this.createArray() 
     this.rendArray() //necessary for adding the selected tag
     if (DEBUG) {
         console.log('canvas initialized')
     }
 
-
-
-
-
     setInterval(
         ()=>{
-
             if (!this.toggleBlink) {
                 this.spanArray[this.selected[0]][this.selected[1]].style.backgroundColor = 'transparent';
                 
@@ -504,7 +465,6 @@ function ascIIEditor(paragraph, rows, cols, canvID, background) {
                 
             }
             this.toggleBlink = !this.toggleBlink;
-
         },
         BLINKDELAY
     );
@@ -538,7 +498,6 @@ function ascIIEditor(paragraph, rows, cols, canvID, background) {
                 this.setCharacter(y,x, this.lastChar);
             }
             this.setSelected(y, x);
-
         }
         else {
 
@@ -567,11 +526,7 @@ function ascIIEditor(paragraph, rows, cols, canvID, background) {
             y += dy;
             this.clearDragSelected();
             this.setDrag(y, x);
-
         }
-        
-        
-    
     });
 
     for (let r = 0; r < this.spanArray.length; r++) {
@@ -604,19 +559,11 @@ function ascIIEditor(paragraph, rows, cols, canvID, background) {
                         }
                     }
                 } else {
-
                     this.clearDragSelected()
                     this.setDrag(r,c);
                     //clear the last selection's color
-
-
                     //color stuff blue
-
-
-                    
-                }
-                
-                
+                } 
             });
 
             this.spanArray[r][c].addEventListener('dblclick', (event)=> {
@@ -630,20 +577,13 @@ function ascIIEditor(paragraph, rows, cols, canvID, background) {
                     this.spanArray[r][c].innerText = this.lastChar;
                     this.charArray[r][c] = this.lastChar;
                 }
-                
-                
-
             });
         }
     }
     
-
     window.addEventListener('keydown', (event) => {
-        
         //commands
         if (event.altKey && event.ctrlKey){
-
-
             //most keyboard shortcuts are defined here
             if(event.code == 'Enter'){
                 if (this.typingMode) {
@@ -671,8 +611,7 @@ function ascIIEditor(paragraph, rows, cols, canvID, background) {
                 }
                 else{
                     this.toggleDragMode(this);
-                }
-                
+                }    
             }
             if (event.key == 'r' && this.dragMode) {
                 this.fillDrag(this.lastChar);
@@ -689,7 +628,6 @@ function ascIIEditor(paragraph, rows, cols, canvID, background) {
             this.setSelected(this.drag[0], this.drag[1]);
         }
 
-
         if (!event.altKey) {
             if (event.key.length == 1){
                 
@@ -705,9 +643,7 @@ function ascIIEditor(paragraph, rows, cols, canvID, background) {
                     }
                     this.setCharacter(this.selected[0], this.selected[1], this.lastChar)
                     if (this.typingMode && this.selected[1] < this.spanArray[0].length - 1){
-                        this.setSelected(this.selected[0], this.selected[1] + 1);
-                        
-                        
+                        this.setSelected(this.selected[0], this.selected[1] + 1); 
                     }
                     
                     if (this.typingMode) {
@@ -731,7 +667,6 @@ function ascIIEditor(paragraph, rows, cols, canvID, background) {
 }
 
 function ascIICanvas(paragraph, rows, cols, background) {
-
     function spaces(r,c) {
 	//returns a rxc 2d array of spaces
         let spacesArray = [];
@@ -850,7 +785,6 @@ function main() {
     headerParagraph = document.getElementById('ascIIHeader');
     headerParagraph.style = 
     `
-    
     font-family:'Courier New', Courier, monospace;
     line-height:0.9;
     font-size:1vw;
@@ -866,6 +800,7 @@ function main() {
     headerParagraph.style.color = 'green';
     headerCanv = new ascIICanvas(headerParagraph, 10, 200,'Header',background = '#');
     headerCanv.rendArray();
+    headerCanv.drawRect(2,2,1,10,'\x0a')
 
     //create typing mode button
     TypingModeButtonParagraph = document.getElementById('typingMode');
@@ -917,15 +852,13 @@ function main() {
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
-    
     `
+
     dragModeButtonParagraph.style.color = 'green';
     
     dragModeButtonParagraph = new ascIIButton(dragModeButtonParagraph, "*", "Drag Mode (Ctr+Alt+V)", () => {
         editor.setDragMode(editor)
     });
-
-
 
     circleModeButtonParagraph = document.getElementById('circleMode');
     circleModeButtonParagraph.style = `

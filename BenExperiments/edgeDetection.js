@@ -1,15 +1,18 @@
 // set a gradient for the char ascii art
-var charGrad0 = " .'`^,:;I!i<>~+_-?[]{}1()|/tfjrxnuvczXYUJCLQ0)Zmwqpdbkhao*#MW&8%B@$"; 
+//var charGrad0 = " .'`^,:;I!i<>~+_-?[]{}1()|/tfjrxnuvczXYUJCLQ0)Zmwqpdbkhao*#MW&8%B@$"; 
+//var gradLen0 = charGrad0.length;
+var charGrad0 = " .:-=+*#%@";
 var gradLen0 = charGrad0.length;
-var charGrad1 = " .:-=+*#%@"
-var gradLen1 = charGrad1.length
-var charGrad2 = "  .,:-=&"
+var charGrad1 = "  .,:-=&";
+var gradLen1 = charGrad1.length;
+var charGrad2 = " -=#8";
 var gradLen2 = charGrad2.length
+
 
 var gradients = [charGrad0, charGrad1, charGrad2];
 var gradLens = [gradLen0, gradLen1, gradLen2];
 
-var gradVal = 1;
+var gradVal = 0;
 
 // Set of pixalting width and height
 var pxlWidth = cameraWidth/(10/scalar);
@@ -227,7 +230,7 @@ function addGrad(){
 function resetGrad(){
     gradients = [charGrad0, charGrad1, charGrad2];
     gradLens = [gradLen0, gradLen1, gradLen2];
-    gradVal = 1;
+    gradVal = 0;
 }
 
 // main function to clean up

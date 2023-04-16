@@ -8,9 +8,14 @@
 			var cameraWidth = 400;
 			var cameraHeight = 300;
 			var scalar = 2;
+			var chunksVal = 5;
+			var fontColor = "white"
+			var asciiFont = "bold 11px Courier"
+			var citeFont = " 14px Courier"
 		</script>
 		<script type="text/javascript" src="opencv.js" defer></script>
         <script type="text/javascript" src="edgeDetection.js" defer></script>
+		<script type="text/javascript" src="pachieEdgeCode.js" defer></script>
 
     </head>
     <body style="background-color:darkslategrey;">
@@ -29,38 +34,25 @@
 					Enter Gradient Here: <input type = "text" name = "newGradient">
 				</form>
 			</div>
+			<button onclick="swapAscii()"> Toggle Between Line and Char AscII</button>
 		</div>
 		<div>
-			<canvas id = "streamCanvas"></canvas>
-			<!-- <canvas id = "blackAndWhite"></canvas> -->
+			<canvas id = "streamCanvas" style = "display:none"></canvas>
 			<canvas id = "edgeDetectionCanvas" style = "display:none"></canvas>
-			<canvas id = "grayCharStreamCanvas" ></canvas>
+			<canvas id = "grayCharStreamCanvas" style = "display:none"></canvas>
 			<canvas id = "charCanvas"></canvas>
-		</div>
-		<div>
-			<!-- <canvas id = "charStreamCanvas"></canvas> -->
-			<!-- <canvas id = "grayCharStreamCanvas"></canvas>
-			<canvas id = "charCanvas"></canvas> -->
 		</div>
         
 		<script>
 			streamCanvas.width = cameraWidth;
 			streamCanvas.height = cameraHeight;
-			//blackAndWhite.width = cameraWidth;
-			//blackAndWhite.height = cameraHeight;
 			edgeDetectionCanvas.width = cameraWidth;
 			edgeDetectionCanvas.height = cameraHeight;
-			// charStreamCanvas.width = cameraWidth;
-			// charStreamCanvas.height = cameraHeight;
 			grayCharStreamCanvas.width = cameraWidth;
 			grayCharStreamCanvas.height = cameraHeight;
 			charCanvas.width = cameraWidth*scalar*.75;
 			charCanvas.height = cameraHeight*scalar;
 		</script>
-
-        <!-- <script type="text/javascript" src="opencv.js"></script>
-        <script type="text/javascript" src="edgeDetection.js"></script> -->
-		<!-- <script src="https://cdn.jsdelivr.net/npm/@mediapipe/selfie_segmentation/selfie_segmentation.js" crossorigin="anonymous"></script> -->
 
 	</body>
 </html>

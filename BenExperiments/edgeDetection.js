@@ -70,6 +70,7 @@ function drawCanvas() {
 // Function to start the video stream
 function startVideo() {
     streamVideo();
+    video.play()
     live = true;
 }
 

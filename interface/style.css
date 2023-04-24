@@ -11,7 +11,7 @@ body {
     border-style: solid;
     border-color: green;
     border-width: 1px;
-    padding: 0px 3vw;
+    padding: 5px 3vw;
 }
 
 .content {
@@ -24,14 +24,37 @@ body {
     border-width: 1px;
     padding: 0px 3vw;
     height: 90vh;
+    width: 50px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+}
+
+.toolbar_button {
+    flex-grow: 1;
+    margin: 10px;
 }
 
 .editor {
     border-style: solid;
     border-color: green;
     border-width: 1px;
-    padding: 0px 3vw;
-    flex-grow: 1;
+
+    height: 90vh;
+    width: 90vw;
+    left: 20vw;
+    top: 19vw;
+
+    font-family:'Courier New', Courier, monospace;
+    line-height: 0.9;
+    font-size: 1vw;
+    overflow: hidden;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 }
 
 #top_left {

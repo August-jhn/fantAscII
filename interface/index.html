@@ -6,7 +6,6 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css" />
-    <!--<script src = "script.js"></script>-->
     <title>Editor</title>
 </head>
 <body>
@@ -18,12 +17,25 @@
     </header>
     <div class = "content">
         <div class = "toolbar">
-            Stuff
+            <div class = "toolbar_button" id = "select">Select</div>
+            <div class = "toolbar_button" id = "brush">Brush</div>
+            <div class = "toolbar_button" id = "erase">Erase</div>
+            <div class = "toolbar_button" id = "text">Text</div>
+            <div class = "toolbar_button" id = "fill">Fill</div>
+            <div class = "toolbar_button" id = "typing">Typing</div>
+            <div class = "toolbar_button" id = "shape">Shape</div>
+            <div class = "toolbar_button" id = "mode_switch">Mode</div>
+            <div class = "toolbar_button" id = "clear">Clear</div>
+            <div class = "toolbar_button" id = "settings">Settings</div>
+            <div class = "toolbar_button" id = "info">Info</div>
         </div>
-        <div class = "editor">
-            Stuff
-        </div>
-
+        <p class = "editor"></p>
     </div>
+    <script>
+        document.onkeydown = function (e) {
+            return false;
+        }
+    </script>
+    <script src = "script.js"></script>
 </body>
 </html>

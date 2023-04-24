@@ -799,13 +799,13 @@ function ascIICanvas(paragraph, rows, cols, background) {
 }
 
 function main() {
-    canvas = document.getElementsByClassName("editor");
+    canvas = document.getElementById("editor");
     console.log("Is this working?");
     console.log(canvas);
 
-    editor = new ascIIEditor(canvas, 50, 100, 'Editor', background = '\x0a');
+    editor = new ascIIEditor(canvas, 70, 100, 'Editor', background = '\x0a');
 
-    
+
 }
 
 main()

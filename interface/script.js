@@ -772,7 +772,6 @@ function button(div, funct) {
 
 function main() {
     canvas = document.getElementById("editor");
-    console.log(canvas);
 
     editor = new ascIIEditor(canvas, 70, 100, 'Editor', background = '\x0a');
 

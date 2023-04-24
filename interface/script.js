@@ -7,56 +7,9 @@ const DEFAULTFILENAME = 'YourBeautifulASCIIArt.txt'
 const DRAGCOLOR = 'aqua'
 const BUTTONHOVERCOLOR = '#AAFF00';
 const BUTTONCLICKCOLOR = 'yellow';
+const DEFAULTCOLOR = 'green';
 
 var CLIPBOARD = ""; //this is a makeshift clipboard, to get arround having to deal with a bunch of annoying permision stuff.
-
-function ascIIButton(paragraph, borderChar, innerText, funct) {
-    this.paragraph = paragraph;
-    this.borderChar = borderChar;
-    this.innerText = innerText;
-    this.funct = funct;
-
-    if (DEBUG) {
-        console.log("making button")
-    }
-
-    this.rend = function() {
-        let textToRend = "";
-        buttonWidth = this.innerText.length + 2; //the idea is to pad the text with the border character.
-
-        for (let i = 0; i < buttonWidth; i++) {
-            textToRend += this.borderChar;
-        }
-        textToRend += '<br>';
-        
-        textToRend += this.borderChar;
-        textToRend += this.innerText;
-        textToRend += this.borderChar;
-        textToRend += '<br>';
-
-        for (let i = 0; i < buttonWidth; i++) {
-            textToRend += this.borderChar;
-        }
-        textToRend += '<br>';
-        this.paragraph.innerHTML = textToRend;
-    }
-
-    this.rend()
-
-    this.paragraph.addEventListener('mousedown', ()=> {
-        this.funct();
-        this.paragraph.style.color = BUTTONCLICKCOLOR;
-    });
-    this.paragraph.addEventListener('mouseup', ()=> {
-        this.paragraph.style.color = BUTTONHOVERCOLOR;
-    })
-    this.paragraph.addEventListener('mouseenter', ()=>{
-        this.paragraph.style.color = BUTTONHOVERCOLOR;
-    })
-    this.paragraph.addEventListener('mouseleave', ()=> {
-        this.paragraph.style.color = 'green';
-    })
-}
 
 function ascIIEditor(paragraph, rows, cols, canvID, background) {
     //mode setters
@@ -798,14 +751,99 @@ function ascIICanvas(paragraph, rows, cols, background) {
     }
 }
 
+function button(div, funct) {
+    this.div = div;
+    this.funct = funct;
+
+    this.div.addEventListener('mousedown', ()=> {
+        this.funct();
+        this.div.style.color = BUTTONCLICKCOLOR;
+    });
+    this.div.addEventListener('mouseup', ()=> {
+        this.div.style.color = BUTTONHOVERCOLOR;
+    })
+    this.div.addEventListener('mouseenter', ()=>{
+        this.div.style.color = BUTTONHOVERCOLOR;
+    })
+    this.div.addEventListener('mouseleave', ()=> {
+        this.div.style.color = DEFAULTCOLOR;
+    })
+}
+
 function main() {
     canvas = document.getElementById("editor");
-    console.log("Is this working?");
     console.log(canvas);
 
     editor = new ascIIEditor(canvas, 70, 100, 'Editor', background = '\x0a');
 
+    selectDiv = document.getElementById("select");
+    select = new button(selectDiv, () => {
+        editor.setDragMode(editor);
+    })
 
+    brushDiv = document.getElementById("brush");
+    brush = new button(brushDiv, () => {
+        editor.setBrushMode(editor);
+    })
+
+    eraseDiv = document.getElementById("erase");
+    erase = new button(eraseDiv, () => {
+        //editor.setBrushMode(editor);
+        console.log("TODO");
+    })
+
+    textDiv = document.getElementById("text");
+    text = new button(textDiv, () => {
+        //editor.setBrushMode(editor);
+        console.log("TODO");
+    })
+
+    fillDiv = document.getElementById("fill");
+    fill = new button(fillDiv, () => {
+        //editor.setBrushMode(editor);
+        console.log("TODO");
+    })
+
+    typingDiv = document.getElementById("typing");
+    typing = new button(typingDiv, () => {
+        editor.setTypingMode(editor);
+    })
+
+    shapeDiv = document.getElementById("shape");
+    shape = new button(shapeDiv, () => {
+        editor.drawElipse(editor.selected[1], editor.selected[0], 6*2,4*2, editor.lastChar);
+    })
+
+    switchDiv = document.getElementById("mode_switch");
+    mode_switch = new button(switchDiv, () => {
+        //editor.setTypingMode(editor);
+        console.log("TODO");
+    })
+
+    clearDiv = document.getElementById("clear");
+    clear = new button(clearDiv, () => {
+        editor.charArray = spaces(editor.rows, editor.cols);
+        editor.rendArray();
+        console.log('cleared');
+    })
+
+    cameraDiv = document.getElementById("camera");
+    camera = new button(cameraDiv, () => {
+        // let params = `scrollbars=no,resizable=no,status=no,location=no,toolbar=no,menubar=no,
+        // width=0,height=0,left=-1000,top=-1000`;
+        //     window.open('../BenExperiments/ImgWindow.html', 'test', params);
+        console.log("TODO");
+    })
+
+    settingsDiv = document.getElementById("settings");
+    settings = new button(settingsDiv, () => {
+        console.log("TODO");
+    })
+
+    infoDiv = document.getElementById("info");
+    info = new button(infoDiv, () => {
+        console.log("TODO");
+    })
 }
 
 main()

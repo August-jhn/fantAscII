@@ -1,0 +1,9 @@
+body {
+    background-color: blue;
+}
+
+.header {
+    display: flex;
+    background-color: black;
+    color: white;
+}

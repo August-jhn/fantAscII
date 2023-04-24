@@ -1,9 +1,45 @@
 body {
-    background-color: blue;
+    background-color: black;
+    color: green;
 }
 
 .header {
     display: flex;
-    background-color: black;
-    color: white;
+}
+
+.box {
+    border-style: solid;
+    border-color: green;
+    border-width: 1px;
+    padding: 0px 3vw;
+}
+
+.content {
+    display: flex;
+}
+
+.toolbar {
+    border-style: solid;
+    border-color: green;
+    border-width: 1px;
+    padding: 0px 3vw;
+    height: 90vh;
+}
+
+.editor {
+    border-style: solid;
+    border-color: green;
+    border-width: 1px;
+    padding: 0px 3vw;
+    flex-grow: 1;
+}
+
+#top_left {
+    border-top-left-radius: 6px;
+}
+
+#top_right {
+    border-top-right-radius: 6px;
+    flex-grow: 1;
+    text-align: center;
 }

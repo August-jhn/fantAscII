@@ -773,7 +773,7 @@ function button(div, funct) {
 function main() {
     canvas = document.getElementById("editor");
 
-    editor = new ascIIEditor(canvas, 70, 100, 'Editor', background = '\x0a');
+    editor = new ascIIEditor(canvas, 47, 149, 'Editor', background = '\x0a');
 
     selectDiv = document.getElementById("select");
     select = new button(selectDiv, () => {

@@ -33,7 +33,6 @@ body {
 .toolbar_button {
     flex-grow: 1;
     margin: 5px;
-
     overflow: hidden;
 
     -webkit-touch-callout: none;
@@ -45,14 +44,13 @@ body {
 }
 
 .editor {
-    border-style: solid;
+    flex-grow: 1;
+    /*border-style: solid;
     border-color: green;
     border-width: 1px;
 
     height: 90vh;
     width: 90vw;
-    left: 20vw;
-    top: 19vw;
 
     font-family:'Courier New', Courier, monospace;
     line-height: 0.9;
@@ -63,7 +61,7 @@ body {
     -khtml-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
-    user-select: none;
+    user-select: none;*/
 }
 
 #top_left {

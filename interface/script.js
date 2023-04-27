@@ -11,6 +11,19 @@ const DEFAULTCOLOR = 'green';
 
 var CLIPBOARD = ""; //this is a makeshift clipboard, to get arround having to deal with a bunch of annoying permision stuff.
 
+function spaces(r,c) {
+	//returns a rxc 2d array of spaces
+        let spacesArray = [];
+        for (let i = 0; i < r; i ++){
+            let row = [];
+            for (let j = 0; j< c; j++) {
+                row.push('\xa0');
+            }
+            spacesArray.push(row);
+        }
+        return spacesArray;
+    }
+
 function ascIIEditor(paragraph, rows, cols, canvID, background) {
     //mode setters
     this.setMode = function(modeName) {
@@ -72,18 +85,7 @@ function ascIIEditor(paragraph, rows, cols, canvID, background) {
     }
 
     //nice stuff for making things
-    function spaces(r,c) {
-	//returns a rxc 2d array of spaces
-        let spacesArray = [];
-        for (let i = 0; i < r; i ++){
-            let row = [];
-            for (let j = 0; j< c; j++) {
-                row.push('\xa0');
-            }
-            spacesArray.push(row);
-        }
-        return spacesArray;
-    }
+    
 
     //methods directly related to renduring stuff.
     this.fillWithClipboard = function() {
@@ -347,9 +349,8 @@ function ascIIEditor(paragraph, rows, cols, canvID, background) {
             if (isInArray) {
                 this.spanArray[this.selected[0]][this.selected[1]].style.backgroundColor = 'transparent';
                 this.selected = [y,x];
-                this.spanArray[this.selected[0]][this.selected[1]].style.backgroundColor = BLINKONCOLOR;z
+                this.spanArray[this.selected[0]][this.selected[1]].style.backgroundColor = BLINKONCOLOR;
             }
-            
         }
 
     //file and clipboard related methods
@@ -788,12 +789,23 @@ function main() {
 
     selectDiv = document.getElementById("select");
     select = new button(selectDiv, () => {
-        editor.setDragMode(editor);
+        if (!editor.dragMode) {
+            editor.setDragMode(editor);
+        }
+        else {
+            editor.toggleDragMode(editor)
+        }
+        
     })
 
     brushDiv = document.getElementById("brush");
     brush = new button(brushDiv, () => {
-        editor.setBrushMode(editor);
+        if (!editor.brushMode){
+            editor.setBrushMode(editor);
+        }
+        else {
+            editor.toggleBrushMode(editor)
+        }
     })
 
     eraseDiv = document.getElementById("erase");
@@ -816,7 +828,12 @@ function main() {
 
     typingDiv = document.getElementById("typing");
     typing = new button(typingDiv, () => {
-        editor.setTypingMode(editor);
+        if (!editor.typingMode) {
+            editor.setTypingMode(editor);
+        }
+        else {
+            editor.toggleTypingMode(editor)
+        }
     })
 
     shapeDiv = document.getElementById("shape");

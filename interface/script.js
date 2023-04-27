@@ -336,9 +336,20 @@ function ascIIEditor(paragraph, rows, cols, canvID, background) {
     
         this.setSelected = function(y,x) { 
             //sets the selected character to the new value.
-            this.spanArray[this.selected[0]][this.selected[1]].style.backgroundColor = 'transparent';
-            this.selected = [y,x];
-            this.spanArray[this.selected[0]][this.selected[1]].style.backgroundColor = BLINKONCOLOR;
+            var isInArray = false;
+            try {
+                tryMe = this.spanArray[y][x]
+                isInArray = true;
+            }
+            catch {
+                isInArray = false;
+            }
+            if (isInArray) {
+                this.spanArray[this.selected[0]][this.selected[1]].style.backgroundColor = 'transparent';
+                this.selected = [y,x];
+                this.spanArray[this.selected[0]][this.selected[1]].style.backgroundColor = BLINKONCOLOR;
+            }
+            
         }
 
     //file and clipboard related methods

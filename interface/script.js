@@ -347,7 +347,7 @@ function ascIIEditor(paragraph, rows, cols, canvID, background) {
             if (isInArray) {
                 this.spanArray[this.selected[0]][this.selected[1]].style.backgroundColor = 'transparent';
                 this.selected = [y,x];
-                this.spanArray[this.selected[0]][this.selected[1]].style.backgroundColor = BLINKONCOLOR;
+                this.spanArray[this.selected[0]][this.selected[1]].style.backgroundColor = BLINKONCOLOR;z
             }
             
         }

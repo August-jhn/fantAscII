@@ -45,7 +45,7 @@ body {
 
 .editor {
     flex-grow: 1;
-    /*border-style: solid;
+    border-style: solid;
     border-color: green;
     border-width: 1px;
 
@@ -61,7 +61,7 @@ body {
     -khtml-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
-    user-select: none;*/
+    user-select: none;
 }
 
 #top_left {

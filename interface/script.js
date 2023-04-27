@@ -434,6 +434,8 @@ function ascIIEditor(paragraph, rows, cols, canvID, background) {
     this.dragMode = false
     this.circleMode = false
 
+    this.mouseDown = false
+
     this.modeNames = [
         'dragMode',
         'circleMode',
@@ -545,20 +547,22 @@ function ascIIEditor(paragraph, rows, cols, canvID, background) {
                     else {
                         this.spanArray[this.selected[0]][this.selected[1]].style.backgroundColor = TYPINGCOLOR;
                     }
-                    if (event.which == 3) {
-                        // this.charArray[this.selected[0]][this.selected[1]] = this.lastChar;
-                        // this.setCharacter(this.selected[0], this.selected[1], this.lastChar);
+                    // if (event.which == 1) {
+                    //     // this.charArray[this.selected[0]][this.selected[1]] = this.lastChar;
+                    //     // this.setCharacter(this.selected[0], this.selected[1], this.lastChar);
 
-                        //commenting out the above code may have fixed the problem with the selection with the mouse slowing things down.
-                        if (!this.brushMode) {
-                            this.setBrushMode(this);
-                            console.log('setting brush mode')
-                        }
-                        else {
-                            this.toggleBrushMode(this);
-                            console.log('toggling brush mode')
-                        }
-                    }
+                    //     //commenting out the above code may have fixed the problem with the selection with the mouse slowing things down.
+                    //     // if (!this.brushMode) {
+                    //     //     this.setBrushMode(this);
+                    //     //     console.log('setting brush mode')
+                    //     // }
+                    //     // else {
+                    //     //     this.toggleBrushMode(this);
+                    //     //     console.log('toggling brush mode')
+                    //     // }
+                        
+                    // }
+                    this.mouseDown = true
                 } else {
                     this.clearDragSelected()
                     this.setDrag(r,c);
@@ -573,8 +577,13 @@ function ascIIEditor(paragraph, rows, cols, canvID, background) {
                     this.setSelected(r,c);
                 }
             })
+
+            this.spanArray[r][c].addEventListener('mouseup', (event) => {
+                this.mouseDown = false
+            })
+
             this.spanArray[r][c].addEventListener("mouseover", (event) => {
-                if (this.brushMode) {
+                if (this.brushMode && this.mouseDown) {
                     this.spanArray[r][c].innerText = this.lastChar;
                     this.charArray[r][c] = this.lastChar;
                 }

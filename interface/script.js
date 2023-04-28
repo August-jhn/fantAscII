@@ -607,10 +607,18 @@ function ascIIEditor(paragraph, rows, cols, canvID, background) {
             })
 
             this.spanArray[r][c].addEventListener("mouseover", (event) => {
-                if (this.brushMode && this.mouseDown) {
-                    this.spanArray[r][c].innerText = this.lastChar;
-                    this.charArray[r][c] = this.lastChar;
+                if (this.brushMode) {
+                    this.spanArray[r][c].style.backgroundColor = DRAGCOLOR
+                    if (this.mouseDown) {
+                        this.spanArray[r][c].innerText = this.lastChar;
+                        this.charArray[r][c] = this.lastChar;
+                    }
                 }
+                
+            });
+
+            this.spanArray[r][c].addEventListener('mouseleave', (event) => {
+                this.spanArray[r][c].style.backgroundColor = 'transparent'
             });
         }
     }

@@ -10,11 +10,11 @@ body {
 }
 
 p {
-    margin: 0px;
+    margin: 0;
 }
 
 .box {
-    margin: 0px;
+    margin: 0;
     border-style: solid;
     border-color: green;
     border-width: 1px;
@@ -34,15 +34,18 @@ p {
     padding: 0px 3vw;
     height: 90vh;
     width: 70px;
+
     text-align: center;
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
+    flex-wrap: wrap;
 }
 
 .toolbar_button {
-    flex-grow: 1;
+    flex-grow: 0;
     margin: 5px;
-    /* overflow: hidden; */
+    overflow: visible;
+
 
     -webkit-touch-callout: none;
     -webkit-user-select: none;

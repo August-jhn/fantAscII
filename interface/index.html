@@ -18,20 +18,26 @@
     </header>
     <div class = "content">
         <div id = "toolbar">
-            <div class = "toolbar_button" id = "select">Select</div>
-            <div class = "toolbar_button" id = "brush">Brush</div>
-            <div class = "toolbar_button" id = "erase">Erase</div>
-            <div class = "toolbar_button" id = "text">Text</div>
-            <div class = "toolbar_button" id = "fill">Fill</div>
-            <div class = "toolbar_button" id = "typing">Typing</div>
-            <div class = "toolbar_button" id = "shape">Shape</div>
-            <div class = "toolbar_button" id = "mode_switch">Mode</div>
-            <div class = "toolbar_button" id = "clear">Clear</div>
-            <div class = "toolbar_button" id = "camera">Camera</div>
-            <div class = "toolbar_button" id = "settings">Settings</div>
-            <div class = "toolbar_button" id = "info">Info</div>
+            <div class = "toolbar_button" id = "select">
+                <img src="resources/select.png" alt="paint icon" id = "selectImage" width="50" height="50">
+                Select
+            </div>
+            <div class = "toolbar_button" id = "brush">
+                <img src="resources/paint.png" alt="paint icon" id = "paintImage" width="50" height="50">
+                Brush
+            </div>
+            <div class = "toolbar_button" id = "erase">E</div>
+            <div class = "toolbar_button" id = "text">T</div>
+            <div class = "toolbar_button" id = "fill">F</div>
+            <div class = "toolbar_button" id = "typing">T</div>
+            <div class = "toolbar_button" id = "shape">S</div>
+            <div class = "toolbar_button" id = "mode_switch">M</div>
+            <div class = "toolbar_button" id = "clear">C</div>
+            <div class = "toolbar_button" id = "camera">C</div>
+            <div class = "toolbar_button" id = "settings">S</div>
+            <div class = "toolbar_button" id = "info">I</div>
         </div>
-        <p id = "editor" oncontextmenu="return false;"></p>
+        <strong id = "editor" oncontextmenu="return false;"></strong>
     </div>
     <script>
         document.onkeydown = function (e) {

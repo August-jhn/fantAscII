@@ -1,13 +1,20 @@
 body {
+    margin: none;
     background-color: black;
     color: green;
 }
 
 .header {
+    margin: none;
     display: flex;
 }
 
+p {
+    margin: 0px;
+}
+
 .box {
+    margin: 0px;
     border-style: solid;
     border-color: green;
     border-width: 1px;
@@ -15,10 +22,12 @@ body {
 }
 
 .content {
+    margin: none;
     display: flex;
 }
 
-.toolbar {
+#toolbar {
+    margin: none;
     border-style: solid;
     border-color: green;
     border-width: 1px;
@@ -43,7 +52,7 @@ body {
     user-select: none;
 }
 
-.editor {
+#editor {
     flex-grow: 1;
     border-style: solid;
     border-color: green;
@@ -51,6 +60,8 @@ body {
 
     height: 90vh;
     width: 90vw;
+
+    margin-top: none;
 
     font-family:'Courier New', Courier, monospace;
     line-height: 0.9;
@@ -66,10 +77,16 @@ body {
 
 #top_left {
     border-top-left-radius: 6px;
+    margin: none;
 }
 
 #top_right {
     border-top-right-radius: 6px;
     flex-grow: 1;
     text-align: center;
+    margin: none;
+}
+
+body * {
+    margin: none;
 }

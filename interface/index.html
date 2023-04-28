@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <!-- Copyright Ostler et al. (Jimmy Ostler, Pachie Ackerman, August Bergquist, Benjamin Weber)-->
     <title>FantAscII</title>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -16,7 +17,7 @@
         </div>
     </header>
     <div class = "content">
-        <div class = "toolbar">
+        <div id = "toolbar">
             <div class = "toolbar_button" id = "select">Select</div>
             <div class = "toolbar_button" id = "brush">Brush</div>
             <div class = "toolbar_button" id = "erase">Erase</div>
@@ -30,7 +31,7 @@
             <div class = "toolbar_button" id = "settings">Settings</div>
             <div class = "toolbar_button" id = "info">Info</div>
         </div>
-        <p class = "editor" id = "editor"></p>
+        <p id = "editor" oncontextmenu="return false;"></p>
     </div>
     <script>
         document.onkeydown = function (e) {

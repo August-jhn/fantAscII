@@ -31,9 +31,10 @@ p {
     border-style: solid;
     border-color: green;
     border-width: 1px;
-    padding: 0px 0vw;
-    flex-grow: 1;
-    width: 10vw;
+    padding: 0px 3vw;
+    height: 90vh;
+    width: 70px;
+
     text-align: center;
     display: flex;
     flex-direction: row;
@@ -44,6 +45,7 @@ p {
     flex-grow: 0;
     margin: 5px;
     overflow: visible;
+
 
     -webkit-touch-callout: none;
     -webkit-user-select: none;

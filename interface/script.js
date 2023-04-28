@@ -89,30 +89,42 @@ function ascIIEditor(paragraph, rows, cols, canvID, background) {
 
     //methods directly related to renduring stuff.
     this.fillWithClipboard = function() {
-        //todo
+        this.interpolateCharArray(this.clipboardToCharArray())
+    }
+
+    this.clipboardToCharArray = function() {
+    
+        var charArray = [];
+        var row = [];
+        for (let i = 0; i < CLIPBOARD.length; i ++) {
+            
+            if (CLIPBOARD[i] == "\n") {
+                charArray.push(row);
+                row = [];
+            }
+            else {
+                row.push(CLIPBOARD[i]);
+            }
+        }
+        return charArray;
+    
+            
     }
 
     this.interpolateCharArray = function(charArray) {
         //interpolates an array onto the selction box, or else onto the selected area
         if (this.dragMode) {
-            console.log('hi')       
+            console.log('TODO')
         }
         else {
-            startY = this.seleted[0];
-            startX = this.selected[1];
-
-            var R = startY;
-            var C = startX;
-                
-            for (let i = 0; i < CLIPBOARD.length; i ++) {
-                if (CLIPBOARD[i] == "\n") {
-                    R += 1
-                }
-                else {
-                    C += 1
+            let baseCoord = this.selected
+            for (let i = 0; i < charArray.length; i++) {
+                for (let j = 0; j < charArray[0].length; j++) {
+                    this.setCharacter(baseCoord[0] + i,baseCoord[1] + j,charArray[i][j]);
                 }
             }
         }
+        
     }
 
     this.copySelected = function() { //if there is a selection (i.e. in drag mode), then copy selected. Otherwise just copy everything
@@ -121,25 +133,28 @@ function ascIIEditor(paragraph, rows, cols, canvID, background) {
         if (this.dragMode) {
             
             console.log('in selection mode', this.dragMode)
-            for (let r = 0; r < this.dragSelectedCharArray; r++) {
+            console.log(this.dragSelectedCharArray)
+            for (let r = 0; r < this.dragSelectedCharArray.length; r++) {
                 var rowString = ""
-                for (let c = 0; c < this.dragSelectedCharArray[0]; c++) {
+                for (let c = 0; c < this.dragSelectedCharArray[0].length; c++) {
                     rowString += this.dragSelectedCharArray[r][c];
                 }
+                
+                clipboardString += rowString;
                 clipboardString += "\n"
-                clipboardString += rowString
                 console.log(rowString, 'copied')
             }
         }
         else {
-            console.log('in selection mode')
-            for (let r = 0; r < this.charArray; r++) {
+            console.log('not in selection mode', this.dragMode)
+            for (let r = 0; r < this.charArray.length; r++) {
                 var rowString = ""
-                for (let c = 0; c < this.charArray[0]; c++) {
+                for (let c = 0; c < this.charArray[0].length; c++) {
                     rowString += this.charArray[r][c];
                 }
-                clipboardString += "\n"
+                
                 clipboardString += rowString
+                clipboardString += "\n"
                 console.log(rowString)
                 console.log(rowString, 'copied')
             }
@@ -607,6 +622,7 @@ function ascIIEditor(paragraph, rows, cols, canvID, background) {
             //most keyboard shortcuts are defined here
 
             if(event.key == 'U') {
+                console.log('pasting')
                 this.fillWithClipboard();
             }
 
@@ -650,8 +666,11 @@ function ascIIEditor(paragraph, rows, cols, canvID, background) {
                     this.toggle
                 }
             }
-            if (event.key == 'k') {
+            if (event.key.toUpperCase() == 'K') {
                 this.copySelected()
+            }
+            if (event.key.toUpperCase() == 'U') {
+                this.fillWithClipboard()
             }
         }
 

@@ -31,10 +31,9 @@ p {
     border-style: solid;
     border-color: green;
     border-width: 1px;
-    padding: 0px 3vw;
-    height: 90vh;
-    width: 70px;
-
+    padding: 0px 0vw;
+    flex-grow: 1;
+    width: 10vw;
     text-align: center;
     display: flex;
     flex-direction: row;
@@ -43,9 +42,16 @@ p {
 
 .toolbar_button {
     flex-grow: 0;
-    margin: 5px;
+    padding: 3px;
+    margin: 4px;
+    border: solid;
+    border-width: 1px;
+    border-color: gray;
+    border-radius: 4px;
+    height: fit-content;
+    width: fit-content;
     overflow: visible;
-
+    background-color: rgb(35, 35, 35);
 
     -webkit-touch-callout: none;
     -webkit-user-select: none;
@@ -53,6 +59,10 @@ p {
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
+}
+.toolbar_button:hover {
+    background-color: rgb(34, 34, 34);
+    border-color: rgb(35, 35, 35);
 }
 
 #editor {

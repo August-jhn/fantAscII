@@ -865,11 +865,11 @@ function main() {
         console.log("TODO");
     })
 
-    textDiv = document.getElementById("text");
-    text = new button(textDiv, () => {
-        //editor.setBrushMode(editor);
-        console.log("TODO");
-    })
+    // textDiv = document.getElementById("text");
+    // text = new button(textDiv, () => {
+    //     //editor.setBrushMode(editor);
+    //     console.log("TODO");
+    // })
 
     fillDiv = document.getElementById("fill");
     fill = new button(fillDiv, () => {
@@ -907,10 +907,11 @@ function main() {
 
     cameraDiv = document.getElementById("camera");
     camera = new button(cameraDiv, () => {
-        // let params = `scrollbars=no,resizable=no,status=no,location=no,toolbar=no,menubar=no,
-        // width=0,height=0,left=-1000,top=-1000`;
-        //     window.open('../BenExperiments/ImgWindow.html', 'test', params);
-        console.log("TODO");
+        let params = `scrollbars=no,resizable=no,status=no,location=no,toolbar=no,menubar=no,
+        width=0,height=0,left=-1000,top=-1000`;
+            window.open('ImgWindow.html', 'test', params);
+        console.log('camera window opening')
+        // console.log("TODO");
     })
 
     settingsDiv = document.getElementById("settings");

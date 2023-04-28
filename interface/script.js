@@ -618,7 +618,10 @@ function ascIIEditor(paragraph, rows, cols, canvID, background) {
             });
 
             this.spanArray[r][c].addEventListener('mouseleave', (event) => {
-                this.spanArray[r][c].style.backgroundColor = 'transparent'
+                if (this.brushMode) {
+                    this.spanArray[r][c].style.backgroundColor = 'transparent'
+                }
+                
             });
         }
     }

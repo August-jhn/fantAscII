@@ -24,7 +24,7 @@ body {
     border-width: 1px;
     padding: 0px 3vw;
     height: 90vh;
-    width: 50px;
+    width: 70px;
     text-align: center;
     display: flex;
     flex-direction: column;
@@ -33,7 +33,7 @@ body {
 .toolbar_button {
     flex-grow: 1;
     margin: 5px;
-    overflow: hidden;
+    /* overflow: hidden; */
 
     -webkit-touch-callout: none;
     -webkit-user-select: none;

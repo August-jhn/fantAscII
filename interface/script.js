@@ -41,7 +41,7 @@ function ascIIEditor(paragraph, rows, cols, canvID, background) {
         if (DEBUG) {
             console.log('set typing mode');
         }
-        console.log(this.selected[0],this.selected[1])
+        // console.log(this.selected[0],this.selected[1])
         this.spanArray[this.selected[0]][this.selected[1]].style.backgroundColor = TYPINGCOLOR;  
     }
 
@@ -117,7 +117,10 @@ function ascIIEditor(paragraph, rows, cols, canvID, background) {
 
     this.copySelected = function() { //if there is a selection (i.e. in drag mode), then copy selected. Otherwise just copy everything
         var clipboardString = ""
+        console.log('copying')
         if (this.dragMode) {
+            
+            console.log('in selection mode', this.dragMode)
             for (let r = 0; r < this.dragSelectedCharArray; r++) {
                 var rowString = ""
                 for (let c = 0; c < this.dragSelectedCharArray[0]; c++) {
@@ -125,9 +128,11 @@ function ascIIEditor(paragraph, rows, cols, canvID, background) {
                 }
                 clipboardString += "\n"
                 clipboardString += rowString
+                console.log(rowString, 'copied')
             }
         }
         else {
+            console.log('in selection mode')
             for (let r = 0; r < this.charArray; r++) {
                 var rowString = ""
                 for (let c = 0; c < this.charArray[0]; c++) {
@@ -135,9 +140,13 @@ function ascIIEditor(paragraph, rows, cols, canvID, background) {
                 }
                 clipboardString += "\n"
                 clipboardString += rowString
+                console.log(rowString)
+                console.log(rowString, 'copied')
             }
         }
         CLIPBOARD = clipboardString;
+        console.log(clipboardString)
+        console.log('copied: ', '\n',CLIPBOARD)
     }
 
     this.setDrag = function(r,c) { //handles both turning the drag selected region blue, as well as setting the drag arrays
@@ -273,7 +282,7 @@ function ascIIEditor(paragraph, rows, cols, canvID, background) {
     }
 
     this.fillDrag = function(char) { //this function fills the drag-selected area with a particular character
-        console.log(this.dragSelectedCoords)
+        // console.log(this.dragSelectedCoords)
         for (let index = 0; index < this.dragSelectedCoords.length; index++) {
             
             this.setCharacter(this.dragSelectedCoords[index][0], this.dragSelectedCoords[index][1], char)
@@ -318,7 +327,7 @@ function ascIIEditor(paragraph, rows, cols, canvID, background) {
                 for (let c = 0; c< this.spanArray[0].length; c ++) {                
                     let innerHTML = '';                
                     innerHTML += this.charArray[r][c];
-                    console.log(r,c)
+                    // console.log(r,c)
                     this.spanArray[r][c].innerHTML = innerHTML;
                 }          
             }
@@ -641,6 +650,9 @@ function ascIIEditor(paragraph, rows, cols, canvID, background) {
                     this.toggle
                 }
             }
+            if (event.key == 'k') {
+                this.copySelected()
+            }
         }
 
         if (event.key == "Enter" && this.dragMode) {
@@ -683,7 +695,7 @@ function ascIIEditor(paragraph, rows, cols, canvID, background) {
                 this.spanArray[this.selected[0]][this.selected[1]].style.backgroundColor = TYPINGCOLOR;
             }
         }
-        console.log(event.key == 'c' && event.altKey)
+        // console.log(event.key == 'c' && event.altKey)
     })
 }
 

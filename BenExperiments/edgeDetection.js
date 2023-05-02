@@ -100,6 +100,19 @@ function stopVideo() {
     });
 }
 
+//flip the array horizontally
+function flipArray(array) {
+    out = []
+    for (let y = 0; y < array.length; y++) {
+        let row = []
+        for (let x = array[0].length - 1; x > -1; x--) {
+            row.push(array[y][x])
+        }
+        out.push(row)
+    }
+    return out
+}
+
 function lineToArray(canvas){
     var asciiImage = document.getElementById(canvas).getContext('2d');
     var imgData = asciiImage.getImageData(0,0,cameraWidth,cameraHeight);

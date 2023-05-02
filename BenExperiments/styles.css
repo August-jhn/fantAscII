@@ -1,0 +1,38 @@
+.page {
+    display: flex;
+    flex-direction: row;
+    width: 8.5in;
+    margin: auto;
+}
+
+.menu {
+    display: flex;
+    flex-direction: column;
+    padding: auto;
+    margin-right: 10px;
+}
+
+.spacer {
+    padding: auto;
+}
+
+.menu * {
+    margin-bottom: 5px;
+    margin-top: 5px;
+    border: none;
+    text-decoration: none;
+    padding: 10px;
+}
+
+.canvas-div {
+    margin: 10px none;
+    padding-left: 20px;
+    border-left: 2px solid gray;
+}
+
+#charCanvas {
+    width: fit-content;
+    border: 2px solid red;
+}
+
+

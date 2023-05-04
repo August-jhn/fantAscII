@@ -9,6 +9,7 @@ var charGrad2 = " -=#8";
 var gradLen2 = charGrad2.length;
 
 
+
 var gradients = [charGrad0, charGrad1, charGrad2];
 var gradLens = [gradLen0, gradLen1, gradLen2];
 
@@ -25,9 +26,16 @@ var playing = false;
 
 //Function that copies to text that is currently in the image
 const copyToClipboardAsync = str => {
+    // console.log(window.opener.CLIPBOARD);
+    
+
+    window.opener.sessionStorage.setItem('CLIPBOARD', str)
+    
+    
     if (navigator && navigator.clipboard && navigator.clipboard.writeText){
         return navigator.clipboard.writeText(str);
     }
+
     return Promise.reject('The Clipboard API is not available.');
 };
 

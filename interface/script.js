@@ -9,7 +9,12 @@ const BUTTONHOVERCOLOR = '#AAFF00';
 const BUTTONCLICKCOLOR = 'yellow';
 const DEFAULTCOLOR = 'green';
 
-var CLIPBOARD = ""; //this is a makeshift clipboard, to get arround having to deal with a bunch of annoying permision stuff.
+window.foo = 'hi'
+
+sessionStorage.setItem('CLIPBOARD', '');
+
+// var CLIPBOARD = ""; //this is a makeshift clipboard, to get arround having to deal with a bunch of annoying permision stuff.
+
 
 function spaces(r,c) {
 	//returns a rxc 2d array of spaces
@@ -93,7 +98,8 @@ function ascIIEditor(paragraph, rows, cols, canvID, background) {
     }
 
     this.clipboardToCharArray = function() {
-    
+
+        CLIPBOARD = sessionStorage.getItem('CLIPBOARD')
         var charArray = [];
         var row = [];
         for (let i = 0; i < CLIPBOARD.length; i ++) {
@@ -159,7 +165,8 @@ function ascIIEditor(paragraph, rows, cols, canvID, background) {
                 console.log(rowString, 'copied')
             }
         }
-        CLIPBOARD = clipboardString;
+        sessionStorage.setItem('CLIPBOARD', clipboardString)
+        // CLIPBOARD = clipboardString;clipboard
         console.log(clipboardString)
         console.log('copied: ', '\n',CLIPBOARD)
     }
@@ -907,10 +914,11 @@ function main() {
 
     cameraDiv = document.getElementById("camera");
     camera = new button(cameraDiv, () => {
-        // let params = `scrollbars=no,resizable=no,status=no,location=no,toolbar=no,menubar=no,
-        // width=0,height=0,left=-1000,top=-1000`;
-        //     window.open('../BenExperiments/ImgWindow.html', 'test', params);
-        console.log("TODO");
+        let params = `scrollbars=no,resizable=no,status=no,location=no,toolbar=no,menubar=no,
+        width=0,height=0,left=-1000,top=-1000`;
+            var cameraWindow = window.open('ImgWindow.html', 'test', params);
+            cameraWindow.CLIPBOARD
+        // console.log("TODO");
     })
 
     settingsDiv = document.getElementById("settings");

@@ -5,10 +5,15 @@
             Real Time Edge Detection with OpenCV.js
         </Title>
 		<script>
+			const scalars = [1,2,2.5]
+			const chunks = [10,5,4]
+			var scalarIndex = 0
 			var cameraWidth = 400;
 			var cameraHeight = 300;
-			var scalar = 2;
-			var chunksVal = 5//Math.round();
+			var uploadWidth = 1600
+			var uploadHeight = 1600
+			var scalar = scalars[scalarIndex];
+			var chunksVal = chunks[scalarIndex];
 			var fontColor = "white"
 			var asciiFont = "bold 11px Courier New"
 			var citeFont = " 14px Courier"
@@ -35,12 +40,19 @@
 				</form>
 			</div>
 			<button onclick="swapAscii()"> Toggle Between Line and Char AscII</button>
+			<button onclick="changeAsciiSize()"> Change Canvas Size</button>
+			<button onclick="lightDarkMode()"> Toggle Light/Dark Mode</button>
+			<input type = "file" id = "fileInput" accept="image/*">
+			<output></output>
+			<button onclick="convertImage()"> Convert Uploaded Image</button>
 		</div>
 		<div>
 			<canvas id = "streamCanvas" style = "display:none"></canvas>
 			<canvas id = "edgeDetectionCanvas" style = "display:none"></canvas>
 			<canvas id = "grayCharStreamCanvas" style = "display:none"></canvas>
-			<canvas id = "charCanvas"></canvas>
+			<canvas id = "charCanvas" style="border: 1px solid white;  background-color: black;"></canvas>
+			<canvas id = "imgUpload" style="border: 1px solid white; display:none"></canvas>
+			<canvas id = "grayImgUpload" style="display:none" ></canvas>
 		</div>
         
 		<script>
@@ -50,8 +62,12 @@
 			edgeDetectionCanvas.height = cameraHeight;
 			grayCharStreamCanvas.width = cameraWidth;
 			grayCharStreamCanvas.height = cameraHeight;
-			charCanvas.width = cameraWidth*scalar*.75;
+			charCanvas.width = cameraWidth*scalar*.61;
 			charCanvas.height = cameraHeight*scalar;
+			imgUpload.width = uploadWidth;
+			imgUpload.height = uploadHeight;
+			grayImgUpload.width = uploadWidth/(10/scalars[scalarIndex]);
+			grayImgUpload.height = uploadHeight/(10/scalars[scalarIndex]);
 		</script>
 
 	</body>

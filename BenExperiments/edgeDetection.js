@@ -3,7 +3,7 @@
 //var gradLen0 = charGrad0.length;
 var charGrad0 = " .:-=+*#%@";
 var gradLen0 = charGrad0.length;
-var charGrad1 = "  .,:-=&";
+var charGrad1 = "  .,:-=&&";
 var gradLen1 = charGrad1.length;
 var charGrad2 = " -=#8";
 var gradLen2 = charGrad2.length;
@@ -14,10 +14,14 @@ var gradLens = [gradLen0, gradLen1, gradLen2];
 
 var gradVal = 0;
 var wantCharAscii = true;
+var darkMode = true;
+var cameraToggle = true;
 
 // Set of pixalting width and height
-var pxlWidth = cameraWidth/(10/scalar);
-var pxlHeight = cameraHeight/(10/scalar);
+var pxlWidth = cameraWidth/(10/scalars[scalarIndex]);
+var pxlHeight = cameraHeight/(10/scalars[scalarIndex]);
+var imgWidth = uploadWidth/(10/scalars[scalarIndex])
+var imgHeight = uploadHeight/(10/scalars[scalarIndex])
 
 // Set a variable for the video tag
 const video = document.getElementById("video");
@@ -69,9 +73,12 @@ function drawCanvas() {
 
 // Function to start the video stream
 function startVideo() {
+    cameraToggle = true
     streamVideo();
-    video.play()
+    video.play();
     live = true;
+    charCanvas.width = cameraWidth*scalar*.61;
+	charCanvas.height = cameraHeight*scalar;
 }
 
 // Function that toggles between pausing and playing the video stream
@@ -100,6 +107,7 @@ function stopVideo() {
     });
 }
 
+// Function that takes in the canvas and returns a 2d array
 function lineToArray(canvas){
     var asciiImage = document.getElementById(canvas).getContext('2d');
     var imgData = asciiImage.getImageData(0,0,cameraWidth,cameraHeight);
@@ -120,6 +128,7 @@ function lineToArray(canvas){
 function edgeDetection() {
     // Set interval to repeat function every 42 milliseconds
     setInterval(() => {
+        if (cameraToggle === true){
         if (wantCharAscii === false){
            // Draw frame to the intermediate canvas
             drawCanvas();
@@ -136,7 +145,7 @@ function edgeDetection() {
             var lineArray = to_chrs(array);
             displayArray('charCanvas', lineArray);
             src.delete(); 
-        }
+        }}
     }, 42);
 
 }
@@ -189,6 +198,7 @@ function asciiConvert(canvas){
 //Function that takes in stream to canvas, converts to grays scale, resizes, and then calls asciiConvert
 function charAscii(){
     setInterval(() => {
+        if (cameraToggle === true){
         if (wantCharAscii === true){
             drawCanvas();
             var src = cv.imread("streamCanvas");
@@ -198,7 +208,7 @@ function charAscii(){
             cv.imshow("grayCharStreamCanvas" ,src);
             asciiConvert("grayCharStreamCanvas");
             src.delete(); 
-        }
+        }}
     }, 42);
 }
 
@@ -217,7 +227,9 @@ function reverseString(str){
 
 //Inverts the ascii values
 function invertGrad(){
-    gradients[gradVal] = reverseString(gradients[gradVal]);
+    for (let i=0; i<gradients.length;i++){
+        gradients[i] = reverseString(gradients[i]);
+    }
 }
 
 //Loops through the available gradients
@@ -241,6 +253,7 @@ function resetGrad(){
     gradVal = 0;
 }
 
+//Toggles between Character and Line Ascii
 function swapAscii(){
     var asciiCanvas = document.getElementById('charCanvas');
     var context = asciiCanvas.getContext('2d');
@@ -253,6 +266,76 @@ function swapAscii(){
         context.clearRect(0,0,cameraWidth*scalar,cameraHeight*scalar);
     }
 }
+
+//Resizes the Ascii Canvas to three preset sizes
+function changeAsciiSize(){
+    scalarIndex = (scalarIndex+1)%(scalars.length)
+    scalar = scalars[scalarIndex];
+	chunksVal = chunks[scalarIndex];
+    charCanvas.width = cameraWidth*scalar*.61;
+	charCanvas.height = cameraHeight*scalar;
+    pxlWidth = cameraWidth/(10/scalar);
+    pxlHeight = cameraHeight/(10/scalar);
+}
+
+//Swap Text and background colors
+function lightDarkMode(){
+    if (darkMode === true){
+        fontColor = "black";
+        darkMode = false;
+        document.getElementById("charCanvas").style.backgroundColor="white";
+    }
+    else if (darkMode === false){
+        fontColor = "white";
+        darkMode = true;
+        document.getElementById("charCanvas").style.backgroundColor="black";
+    }
+}
+
+
+function convertImage(){
+    if (document.getElementById("fileInput").files[0]==undefined){
+        alert("No Image Uploaded");
+    }
+    else{
+        cameraToggle = false;
+        var img = new Image();
+        img.onload = () => {
+            // charCanvas.width = uploadWidth
+            // charCanvas.height = uploadHeight
+            var canvas = document.getElementById('imgUpload');
+            var ctx = canvas.getContext('2d');
+            ctx.drawImage(img, 0,0);
+            if (wantCharAscii === true){
+                var src = cv.imread("imgUpload");
+                cv.cvtColor(src, src, cv.COLOR_RGB2GRAY, 0);
+                let dsize = new cv.Size(imgWidth,imgHeight);
+                cv.resize(src, src, dsize, 0, 0, cv.INTER_CUBIC);
+                cv.imshow("grayImgUpload" ,src);
+                asciiConvert("grayImgUpload");
+                src.delete();
+            }
+            else if (wantCharAscii === false){
+                var src = cv.imread("imgUpload");
+                cv.cvtColor(src, src, cv.COLOR_RGB2GRAY, 0);
+                cv.Canny(src, src, 60, 100, 3, false);
+                cv.imshow("grayImgUpload", src);
+                var input = lineToArray("grayImgUpload");
+                var binaryArray = arrayToBinaryArray(input, 0);
+                var chunks = arrayToChunks(binaryArray, chunksVal);
+                var lst = chunksToAscii(chunks);
+                var array = reshape(lst, ROW_LENGTH);
+                var lineArray = to_chrs(array);
+                displayArray('charCanvas', lineArray);
+                src.delete(); 
+            }
+        }
+        var smth = document.getElementById("fileInput").files[0]
+        img.src = URL.createObjectURL(smth);
+        //document.body.appendChild(img)
+    }
+}
+
 // main function to clean up
 
 function main() {

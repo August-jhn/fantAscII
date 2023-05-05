@@ -5,9 +5,11 @@
             Real Time Edge Detection with OpenCV.js
         </Title>
 		<script>
+
 			var cameraWidth = 50;
 			var cameraHeight = 50;
 			var scalar = 1;
+
 			var chunksVal = 2//Math.round();
 			var fontColor = "white"
 			var asciiFont = "bold 11px Courier New"
@@ -16,33 +18,38 @@
 		<script type="text/javascript" src="opencv.js" defer></script>
         <script type="text/javascript" src="edgeDetection.js" defer></script>
 		<script type="text/javascript" src="pachieEdgeCode.js" defer></script>
-
+	<link rel="stylesheet" href="./styles.css">
     </head>
+
     <body style="background-color:darkslategrey;">
         <video id="video" playsinline autoplay></video>
-		<div>
-			<button onclick="startVideo()">Start Video</button>
-			<button onclick="pausePlayVideo()">Pause / Play Video</button>
-			<button onclick="stopVideo()">Stop Video</button>
-			<button onclick="copyText()">Copy Ascii</button>
-			<button onclick="invertGrad()">Invert Gradient</button>
-			<button onclick="loopGrad()">Loop Through Gradients</button>
-			<div>
+
+		<div class="page">
+			<div class="menu">
+				<button onclick="startVideo()">Start Video</button>
+				<button onclick="pausePlayVideo()">Pause / Play Video</button>
+				<button onclick="stopVideo()">Stop Video</button>
+				<button onclick="copyText()">Copy Ascii</button>
+				<button onclick="invertGrad()">Invert Gradient</button>
+				<button onclick="loopGrad()">Loop Through Gradients</button>
 				<button onclick="resetGrad()">Reset to Default Gradients</button>
-				<button onclick="addGrad()">Add Gradient</button>
 				<form id = "addCharGradient">
 					Enter Gradient Here: <input type = "text" name = "newGradient">
 				</form>
+				<button onclick="addGrad()">Add Gradient</button>
+				<button onclick="swapAscii()"> Toggle Between Line and Char AscII</button>
 			</div>
-			<button onclick="swapAscii()"> Toggle Between Line and Char AscII</button>
+			
+			<div>
+				<canvas id = "streamCanvas" style = "display:none"></canvas>
+				<canvas id = "edgeDetectionCanvas" style = "display:none"></canvas>
+				<canvas id = "grayCharStreamCanvas" style = "display:none"></canvas>
+				<div class="canvas-div">
+					<canvas id = "charCanvas"></canvas>
+				</div>
+			</div>
 		</div>
-		<div>
-			<canvas id = "streamCanvas" style = "display:none"></canvas>
-			<canvas id = "edgeDetectionCanvas" style = "display:none"></canvas>
-			<canvas id = "grayCharStreamCanvas" style = "display:none"></canvas>
-			<canvas id = "charCanvas"></canvas>
-		</div>
-        
+
 		<script>
 			streamCanvas.width = cameraWidth;
 			streamCanvas.height = cameraHeight;
@@ -50,7 +57,7 @@
 			edgeDetectionCanvas.height = cameraHeight;
 			grayCharStreamCanvas.width = cameraWidth;
 			grayCharStreamCanvas.height = cameraHeight;
-			charCanvas.width = cameraWidth*scalar*.75;
+			charCanvas.width = cameraWidth*scalar;
 			charCanvas.height = cameraHeight*scalar;
 		</script>
 

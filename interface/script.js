@@ -874,12 +874,14 @@ function main() {
 
     textDiv = document.getElementById("text");
     text = new button(textDiv, () => {
+        alert("This feature is not yet implemented and will be implemented in FantAscII v0.2");
         //editor.setBrushMode(editor);
         console.log("TODO");
     })
 
     fillDiv = document.getElementById("fill");
     fill = new button(fillDiv, () => {
+        alert("This feature is not yet implemented and will be implemented in FantAscII v0.2");
         //editor.setBrushMode(editor);
         console.log("TODO");
     })
@@ -901,6 +903,7 @@ function main() {
 
     switchDiv = document.getElementById("mode_switch");
     mode_switch = new button(switchDiv, () => {
+        alert("This feature is not yet implemented and will be implemented in FantAscII v0.2");
         //editor.setTypingMode(editor);
         console.log("TODO");
     })
@@ -923,11 +926,13 @@ function main() {
 
     settingsDiv = document.getElementById("settings");
     settings = new button(settingsDiv, () => {
+        alert("This feature is not yet implemented and will be implemented in FantAscII v0.2");
         console.log("TODO");
     })
 
     infoDiv = document.getElementById("info");
     info = new button(infoDiv, () => {
+        alert("FantAscII v0.1 Copyright Ostler et al. (Jimmy Ostler, Pachie Ackerman, August Bergquist, Benjamin Weber)");
         console.log("TODO");
     })
 }

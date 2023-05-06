@@ -35,6 +35,8 @@ p {
     flex-grow: 1;
     width: 10vw;
     text-align: center;
+    box-shadow: inset;
+
     
     display: flex;
     flex-direction: row;
@@ -71,6 +73,7 @@ p {
 .toolbar_button:hover {
     background-color: rgb(34, 34, 34);
     border-color: rgb(35, 35, 35);
+    color: limegreen;
 }
 
 #editor {

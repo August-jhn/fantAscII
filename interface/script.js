@@ -945,7 +945,5 @@ function logFile() {
 
     reader.readAsText(file);
 
-    alert(`${reader.result}`);
-
     sessionStorage.setItem('CLIPBOARD', reader.result);
 }

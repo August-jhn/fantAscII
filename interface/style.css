@@ -49,8 +49,17 @@ input {
     width: fit-content;
 }
 
-.top {
-    padding: 3px;
+input::file-selector-button {
+    margin: 4px;
+    border: solid;
+    border-width: 1px;
+    border-color: gray;
+    border-radius: 4px;
+    background-color: rgb(35, 35, 35);
+    color: green;
+}
+
+.saveButton {
     margin: 4px;
     border: solid;
     border-width: 1px;

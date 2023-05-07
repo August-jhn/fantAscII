@@ -938,3 +938,14 @@ function main() {
 }
 
 main()
+
+function logFile() {
+    var file = document.getElementById("imgInput").files[0];
+    let reader = new FileReader();
+
+    reader.readAsText(file);
+
+    alert(`${reader.result}`);
+
+    sessionStorage.setItem('CLIPBOARD', reader.result);
+}

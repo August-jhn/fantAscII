@@ -45,6 +45,36 @@ p {
     column-gap: 0px;
 }
 
+input {
+    width: fit-content;
+}
+
+input::file-selector-button {
+    margin: 4px;
+    border: solid;
+    border-width: 1px;
+    border-color: gray;
+    border-radius: 4px;
+    background-color: rgb(35, 35, 35);
+    color: green;
+}
+
+.saveButton {
+    margin: 4px;
+    border: solid;
+    border-width: 1px;
+    border-color: gray;
+    border-radius: 4px;
+    background-color: rgb(35, 35, 35);
+    color: green;
+}
+
+button:hover {
+    background-color: rgb(34, 34, 34);
+    border-color: rgb(35, 35, 35);
+    color: limegreen;
+}
+
 .toolbar_button {
     flex-grow: 0;
     padding: 3px;

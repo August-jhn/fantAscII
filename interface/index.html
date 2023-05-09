@@ -13,7 +13,9 @@
     <header class = "header">
         <div class = "box" id = "top_left"> Flexybox
         </div>
-        <div class = "box" id = "top_right"> Flexybox 2
+        <div class = "box" id = "top_right"> 
+            <input type = "file" id = "imgInput" />
+            <button class="saveButton" onclick = "logFile()">Save Text File to Clipboard</button>
         </div>
     </header>
     <div class = "content">
@@ -72,6 +74,6 @@
             return false;
         }
     </script>
-    <script src = "script.js"></script>-
+    <script src = "script.js"></script>
 </body>
 </html>

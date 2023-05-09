@@ -252,7 +252,7 @@ function loopGrad(){
 
 //Adds the current gradient in the form to the array of the gradients
 function addGrad(){
-    var newGrad = document.getElementById("addCharGradient").elements[0].value;
+    var newGrad = prompt('enter new gradient:');
     if (newGrad != null){
         gradients.push(newGrad);
         gradLens.push(newGrad.length);

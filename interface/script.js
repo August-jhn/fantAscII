@@ -854,11 +854,9 @@ function main() {
     select = new button(selectDiv, () => {
         if (!editor.dragMode) {
             editor.setDragMode(editor);
-        }
-        else {
-            editor.toggleDragMode(editor)
-        }
-        
+        } else {
+            editor.toggleDragMode(editor);
+        } 
     })
 
     brushDiv = document.getElementById("brush");
@@ -937,7 +935,7 @@ function main() {
 
     infoDiv = document.getElementById("info");
     info = new button(infoDiv, () => {
-        alert("FantAscII v0.1 Copyright Ostler et al. (Jimmy Ostler, Pachie Ackerman, August Bergquist, Benjamin Weber)");
+        window.open("info.html");
         console.log("TODO");
     })
 }
@@ -952,5 +950,8 @@ function logFile() {
     console.log("HI")
     console.log(reader.result)
 
-    sessionStorage.setItem('CLIPBOARD', reader.result);
+    result = reader.result;
+    console.log(result);
+
+    sessionStorage.setItem('CLIPBOARD', result);
 }

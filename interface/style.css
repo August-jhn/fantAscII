@@ -13,6 +13,10 @@ p {
     margin: 0;
 }
 
+ul {
+    margin: 0px;
+}
+
 .box {
     margin: 0;
     border-style: solid;

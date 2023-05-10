@@ -149,7 +149,20 @@ function ascIIEditor(paragraph, rows, cols, canvID, background) {
     this.interpolateCharArray = function(charArray) {
         //interpolates an array onto the selction box, or else onto the selected area
         if (this.dragMode) {
-            console.log('TODO')
+            let baseCoord = this.selected
+            for (let i = 0; i < charArray.length; i++) {
+                for (let j = 0; j < charArray[0].length; j++) {
+                    if (charArray[i][j] == ' '){
+                        console.log('space')
+                        this.setCharacter(baseCoord[0] + i,baseCoord[1] + j,' ');
+                    }
+                    else {
+                        console.log('not space')
+                        this.setCharacter(baseCoord[0] + i,baseCoord[1] + j,charArray[i][j]);
+                    }
+                    
+                }
+            } //will soon be so that only the selected area is filled
         }
         else {
             let baseCoord = this.selected

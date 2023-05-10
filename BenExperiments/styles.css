@@ -61,7 +61,8 @@ body {
 
 
     width: 100%;
-    color:black;
+    color:white;
+    background-color: dimgray;
 
     flex-direction: column;
 }

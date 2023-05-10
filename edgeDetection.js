@@ -68,7 +68,7 @@ function saveToTXT(){
 //since the text content of the  paragraph includes <br> tags et cetera, it's better to recreate a massive string to be the content of the txt file
     let elt = document.createElement('a');
     elt.setAttribute('href', 'data:text/plane;charset=utf-8,' + encodeURIComponent(text));
-    elt.setAttribute('download', 'ASCIIConverterOutput');
+    elt.setAttribute('download', 'ASCIIConverterOutput.txt');
     elt.style.display = 'none';
     document.body.appendChild(elt) //so you we can 'click' it
     elt.click();//force click the invisible download link

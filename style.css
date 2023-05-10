@@ -1,0 +1,150 @@
+body {
+    margin: none;
+    background-color: black;
+    color: green;
+}
+
+.header {
+    margin: none;
+    display: flex;
+}
+
+p {
+    margin: 0;
+}
+
+ul {
+    margin: 0px;
+}
+
+.box {
+    margin: 0;
+    border-style: solid;
+    border-color: green;
+    border-width: 1px;
+    padding: 5px 3vw;
+}
+
+.content {
+    margin: none;
+    display: flex;
+}
+
+#toolbar {
+    margin: none;
+    border-style: solid;
+    border-color: green;
+    border-width: 1px;
+    padding: 0px 0vw;
+    flex-grow: 1;
+    width: 10vw;
+    text-align: center;
+    box-shadow: inset;
+
+    
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 8px;
+    column-gap: 0px;
+}
+
+input {
+    width: fit-content;
+}
+
+input::file-selector-button {
+    margin: 4px;
+    border: solid;
+    border-width: 1px;
+    border-color: gray;
+    border-radius: 4px;
+    background-color: rgb(35, 35, 35);
+    color: green;
+}
+
+.saveButton {
+    margin: 4px;
+    border: solid;
+    border-width: 1px;
+    border-color: gray;
+    border-radius: 4px;
+    background-color: rgb(35, 35, 35);
+    color: green;
+}
+
+button:hover {
+    background-color: rgb(34, 34, 34);
+    border-color: rgb(35, 35, 35);
+    color: limegreen;
+}
+
+.toolbar_button {
+    flex-grow: 0;
+    padding: 3px;
+    margin: 4px;
+    border: solid;
+    border-width: 1px;
+    border-color: gray;
+    border-radius: 4px;
+    height: fit-content;
+    width: 55px;
+    overflow: visible;
+    background-color: rgb(35, 35, 35);
+
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+#mode_switch {
+    width: 130px;
+}
+
+.toolbar_button:hover {
+    background-color: rgb(34, 34, 34);
+    border-color: rgb(35, 35, 35);
+    color: limegreen;
+}
+
+#editor {
+    flex-grow: 1;
+    border-style: solid;
+    border-color: green;
+    border-width: 1px;
+
+    height: 90vh;
+    width: 90vw;
+
+    margin-top: none;
+
+    font-family:'Courier New', Courier, monospace;
+    line-height: 0.9;
+    font-size: 1vw;
+    overflow: hidden;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+#top_left {
+    border-top-left-radius: 6px;
+    margin: none;
+}
+
+#top_right {
+    border-top-right-radius: 6px;
+    flex-grow: 1;
+    text-align: center;
+    margin: none;
+}
+
+body * {
+    margin: none;
+}

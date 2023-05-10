@@ -1,0 +1,46 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+</html>
+		</script>
+
+    </head>
+    <body style="background-color:rgb(0, 0, 0);">
+        <video id="video" playsinline autoplay></video>
+		<div>
+			<button onclick="startVideo()">Start Video</button>
+			<button onclick="pausePlayVideo()">Pause / Play Video</button>
+			<button onclick="stopVideo()">Stop Video</button>
+		</div>
+		<div>
+			<canvas id = "streamCanvas" style = "display: none"></canvas>
+			<canvas id = "edgeDetectionCanvas" style = 'display: none'></canvas>
+			<canvas id = "charCanvas"></canvas>
+			<canvas id = "grayCharStreamCanvas" style = 'display: none'></canvas>
+		</div>
+		
+        
+		<script>
+			streamCanvas.width = cameraWidth;
+			streamCanvas.height = cameraHeight;
+			edgeDetectionCanvas.width = cameraWidth;
+			edgeDetectionCanvas.height = cameraHeight;
+			grayCharStreamCanvas.width = cameraWidth;
+			grayCharStreamCanvas.height = cameraHeight;
+			charCanvas.width = cameraWidth*scalar*.75;
+			charCanvas.height = cameraHeight*scalar;
+		</script>
+
+        <script type="text/javascript" src="opencv.js"></script>
+        <script type="text/javascript" src="edgeDetection.js"></script>
+	</body>
+</html>

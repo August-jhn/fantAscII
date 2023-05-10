@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editor</title>
+</head>
+<body>
+    <p id = 'ascIIEditor' oncontextmenu="return false;"></p>
+    <p id = 'ascIIHeader'></p>
+    <div class = "toolbar" style = "
+    width: 20vw;
+    flex-direction: left;
+    ">
+        <p id = "typingMode"></p>
+        <p id = "dragMode"></p>
+        <p id = "selectionMode"></p>
+        <p id = "circleMode"></p>
+        <p id = "fillMode"></p>
+        <p id = "camera"></p>
+    </div>
+    <script>
+        document.onkeydown = function (e) {
+            return false;
+        }
+    </script>
+    <script src = 'ascIICanvas.js'></script>
+</body>
+</html>

@@ -1,0 +1,124 @@
+body {
+    background-color: black;
+    color:white;
+    margin-top: 30px;
+}
+
+.page {
+    display: flex;
+    flex-direction: row;
+    margin-left: 1in;
+    margin-right: 1in;
+}
+
+.menu {
+    display: flex;
+    flex-direction: column;
+    padding: auto;
+    margin-right: 10px;
+    margin-left: 10px;
+}
+
+
+.settings {
+    margin-top: 5px;
+    margin-bottom: 5px;
+    padding-left: 5px;
+    padding-right: 5px;
+    width: 200px;
+}
+
+#video-settings {
+    border-left: 2px solid green;
+}
+
+#gradient-settings {
+    border-left: 2px solid yellow;
+}
+
+#misc-settings {
+    border-right: 2px solid red;
+}
+
+#upload-image-settings {
+    border-right: 2px solid purple;
+}
+
+.settings p {
+    text-align: center;
+    margin: 0;
+    padding: 0;
+    padding-bottom: 5px;
+}
+
+.settings > button {
+    margin-bottom: 5px;
+    margin-top: 5px;
+    border: none;
+    text-decoration: none;
+    padding-top: 10px;
+    padding-bottom: 10px;
+
+
+    width: 100%;
+    color:white;
+    background-color: dimgray;
+
+    flex-direction: column;
+}
+
+button > * {
+    display: inline-block;
+    vertical-align: middle;
+    margin: 0;
+}
+
+button:hover{
+    background-color: darkgray;
+}
+
+button > img {
+    width: 30px;
+    float:left;
+}
+
+button > p {
+    padding-top: auto;
+    padding-bottom: auto;
+}
+
+
+.settings form {
+    margin-bottom: 5px;
+    margin-top: 5px;
+    color: white;
+    padding: 10px;
+
+    width: 100%;
+
+    display: flex;
+    flex-direction: column;
+}
+
+.settings output {
+    margin: 0;
+    padding: 0;
+}
+
+.canvas-div {
+    margin: 10px none;
+    padding-left: 20px;
+    padding-right: 20px;
+    border-left: 2px solid gray;
+    border-right: 2px solid gray;
+}
+
+
+output {
+    margin: 0;
+    padding: 0;
+}
+
+
+
+

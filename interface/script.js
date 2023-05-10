@@ -30,6 +30,8 @@ function spaces(r,c) {
     }
 
 function ascIIEditor(paragraph, rows, cols, canvID, background) {
+
+
     //mode setters
     this.setMode = function(modeName) {
         //toggles all but one mode; sets that one mode
@@ -41,6 +43,7 @@ function ascIIEditor(paragraph, rows, cols, canvID, background) {
     } 
 
     this.setTypingMode = function(editor) {
+        //sets the typing mode to true, handles other details, as well as sets all other modes to false
         editor.setMode('typingMode');
         editor.typingMode = true;
         if (DEBUG) {
@@ -51,18 +54,21 @@ function ascIIEditor(paragraph, rows, cols, canvID, background) {
     }
 
     this.setDragMode = function(editor) {
+        //sets the drag selection mode to true, handles other details, as well as sets all other modes to false
         editor.setMode('dragMode');
         editor.clearDragSelected();
         editor.dragMode = true;
     }
 
     this.setCircleMode = function(editor) {
+        //sets the circle mode true, handles other details, as well as sets all other modes to false
         editor.setMode('circleMode')
         editor.circleMode = true;
 
     }
 
     this.setBrushMode = function(editor) {
+        //sets the paintbrush mode to true, handles other details, as well as sets all other modes to false
         editor.setMode('brushMode')
         editor.brushMode = true;
     }
@@ -70,6 +76,7 @@ function ascIIEditor(paragraph, rows, cols, canvID, background) {
     //mode togglers
 
     this.toggleTypingMode = function(editor) {
+        //sets typingn mode to false, and handles all other details involved
         editor.typingMode = false;
         if (DEBUG) {
             console.log('toggled typing mode')
@@ -77,17 +84,22 @@ function ascIIEditor(paragraph, rows, cols, canvID, background) {
     }
 
     this.toggleDragMode = function(editor) {
+        //sets drag selection mode to false, and handles all other details involved
         editor.clearDragSelected()
         editor.dragMode = false;
     }
 
     this.toggleCircleMode = function(editor) {
+        //sets circle mode to false, and handles all other details involved
         editor.circleMode = false;
     }
 
     this.toggleBrushMode = function(editor) {
+        //sets paint brush mode to false, and handles all other details involved
         editor.brushMode = false;
     }
+    
+    
 
     //nice stuff for making things
     
@@ -583,25 +595,9 @@ function ascIIEditor(paragraph, rows, cols, canvID, background) {
                     else {
                         this.spanArray[this.selected[0]][this.selected[1]].style.backgroundColor = TYPINGCOLOR;
                     }
-                    // if (event.which == 1) {
-                    //     // this.charArray[this.selected[0]][this.selected[1]] = this.lastChar;
-                    //     // this.setCharacter(this.selected[0], this.selected[1], this.lastChar);
-
-                    //     //commenting out the above code may have fixed the problem with the selection with the mouse slowing things down.
-                    //     // if (!this.brushMode) {
-                    //     //     this.setBrushMode(this);
-                    //     //     console.log('setting brush mode')
-                    //     // }
-                    //     // else {
-                    //     //     this.toggleBrushMode(this);
-                    //     //     console.log('toggling brush mode')
-                    //     // }
-                        
-                    // }
                     this.mouseDown = true
                 } else {
                     this.clearDragSelected()
-                    this.setDrag(r,c);
                     //clear the last selection's color
                     //color stuff blue
                 }

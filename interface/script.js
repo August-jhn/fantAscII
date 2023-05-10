@@ -13,6 +13,19 @@ window.foo = 'hi'
 
 sessionStorage.setItem('CLIPBOARD', '');
 
+reader = new FileReader();
+
+reader.addEventListener('load', () => {
+    sessionStorage.setItem('CLIPBOARD', reader.result);
+});
+
+function logFile() {
+    var file = document.getElementById("imgInput").files[0];
+
+    reader.readAsText(file);
+    console.log("HI")
+}
+
 // var CLIPBOARD = ""; //this is a makeshift clipboard, to get arround having to deal with a bunch of annoying permision stuff.
 
 
@@ -937,17 +950,3 @@ function main() {
 }
 
 main()
-
-function logFile() {
-    var file = document.getElementById("imgInput").files[0];
-    let reader = new FileReader();
-
-    reader.readAsText(file);
-    console.log("HI")
-    console.log(reader.result)
-
-    result = reader.result;
-    console.log(result);
-
-    sessionStorage.setItem('CLIPBOARD', result);
-}

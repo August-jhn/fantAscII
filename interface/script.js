@@ -209,43 +209,50 @@ function ascIIEditor(paragraph, rows, cols, canvID, background) {
     }
 
     this.setDrag = function(r,c) { //handles both turning the drag selected region blue, as well as setting the drag arrays
-        this.drag = [r,c];
+        try {
+            this.drag = [r,c];
 
-        var startR;
-        var startC;
-        var endR;
-        var endC;
-
-        if (this.drag[0] <= this.selected[0]) { //this sequence of for loops is used to determine the start and end X and Y values of the drag box
-            startR = this.drag[0];
-            endR = this.selected[0];
-        }
-        else {
-            startR = this.selected[0];
-            endR = this.drag[0];
-        }
-        if (this.drag[1] <= this.selected[1]) {
-            startC = this.drag[1];
-            endC = this.selected[1];
-        }
-        else {
-            startC = this.selected[1];
-            endC = this.drag[1];
-        }
-        
-        for (let row = startR; row <= endR; row++) { //then we go and actually create the drag box.
-
-            var dragSelectedArrayRow = [];
-            var dragSelectedCharArrayRow = [];
-            for (let col = startC; col <= endC; col++) {
-                dragSelectedElt = this.spanArray[row][col].style.backgroundColor = DRAGCOLOR;
-                dragSelectedArrayRow.push(dragSelectedElt);
-                dragSelectedCharArrayRow.push(this.charArray[row][col]);
-                this.dragSelectedCoords.push([row,col]);
+            var startR;
+            var startC;
+            var endR;
+            var endC;
+    
+            if (this.drag[0] <= this.selected[0]) { //this sequence of for loops is used to determine the start and end X and Y values of the drag box
+                startR = this.drag[0];
+                endR = this.selected[0];
             }
-            this.dragSelectedArray.push(dragSelectedArrayRow);
-            this.dragSelectedCharArray.push(dragSelectedCharArrayRow)
+            else {
+                startR = this.selected[0];
+                endR = this.drag[0];
+            }
+            if (this.drag[1] <= this.selected[1]) {
+                startC = this.drag[1];
+                endC = this.selected[1];
+            }
+            else {
+                startC = this.selected[1];
+                endC = this.drag[1];
+            }
+            
+            for (let row = startR; row <= endR; row++) { //then we go and actually create the drag box.
+    
+                var dragSelectedArrayRow = [];
+                var dragSelectedCharArrayRow = [];
+                for (let col = startC; col <= endC; col++) {
+                    dragSelectedElt = this.spanArray[row][col].style.backgroundColor = DRAGCOLOR;
+                    dragSelectedArrayRow.push(dragSelectedElt);
+                    dragSelectedCharArrayRow.push(this.charArray[row][col]);
+                    this.dragSelectedCoords.push([row,col]);
+                }
+                this.dragSelectedArray.push(dragSelectedArrayRow);
+                this.dragSelectedCharArray.push(dragSelectedCharArrayRow)
+            }
+        } catch {
+            console.log(
+                'something went wrong when navigating with the drag selector'
+            )
         }
+
     }
 
     this.clearDragSelected = function() {//This function is called to clear the color and data of the previous selection.

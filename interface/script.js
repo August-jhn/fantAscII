@@ -1,4 +1,4 @@
-const DEBUG = true;
+const DEBUG = false;
 const BLINKDELAY = 500;
 const BLINKONCOLOR = 'magenta';
 const BACKGROUNDCOLOR = 'black';
@@ -17,6 +17,7 @@ reader = new FileReader();
 
 reader.addEventListener('load', () => {
     sessionStorage.setItem('CLIPBOARD', reader.result);
+    console.log(sessionStorage.getItem('CLIPBOARD'))
 });
 
 function logFile() {
@@ -133,6 +134,9 @@ function ascIIEditor(paragraph, rows, cols, canvID, background) {
                 charArray.push(row);
                 row = [];
             }
+            else if (CLIPBOARD[i] == " ") {
+                row.push(' ')
+            }
             else {
                 row.push(CLIPBOARD[i]);
             }
@@ -151,7 +155,15 @@ function ascIIEditor(paragraph, rows, cols, canvID, background) {
             let baseCoord = this.selected
             for (let i = 0; i < charArray.length; i++) {
                 for (let j = 0; j < charArray[0].length; j++) {
-                    this.setCharacter(baseCoord[0] + i,baseCoord[1] + j,charArray[i][j]);
+                    if (charArray[i][j] == ' '){
+                        console.log('space')
+                        this.setCharacter(baseCoord[0] + i,baseCoord[1] + j,' ');
+                    }
+                    else {
+                        console.log('not space')
+                        this.setCharacter(baseCoord[0] + i,baseCoord[1] + j,charArray[i][j]);
+                    }
+                    
                 }
             }
         }
@@ -341,6 +353,7 @@ function ascIIEditor(paragraph, rows, cols, canvID, background) {
         //it's job is to strategically label the elements of our paragraph using spans, and store those spans in an array, which is this.spanArray
         //this first loop goes through and labels the span tags, as well as gives them their inner text (usually a space)
             let htmlText = '';
+            htmlText += '<pre>'
             for (let r = 0; r < this.charArray.length; r ++) {
                     let rowText = ""
                     for (let c = 0; c< this.charArray[0].length; c ++){
@@ -351,6 +364,7 @@ function ascIIEditor(paragraph, rows, cols, canvID, background) {
                     rowText += '<br>';
                     htmlText += rowText;
                 }
+            htmlText += '</pre>'
             this.paragraph.innerHTML = htmlText;
             /*this second loop  actually creates the reference to said elements in the spanArray. Having these references massively improves the efficiency  */
             for (let r = 0; r < this.charArray.length; r ++) {
@@ -611,6 +625,7 @@ function ascIIEditor(paragraph, rows, cols, canvID, background) {
                     this.mouseDown = true
                 } else {
                     this.clearDragSelected()
+                    this.setDrag(r, c);
                     //clear the last selection's color
                     //color stuff blue
                 }

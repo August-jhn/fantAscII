@@ -5,10 +5,15 @@
             Real Time Edge Detection with OpenCV.js
         </Title>
 		<script>
+			const scalars = [1,2,2.5]
+			const chunks = [10,5,4]
+			var scalarIndex = 0
 			var cameraWidth = 400;
 			var cameraHeight = 300;
-			var scalar = 2;
-			var chunksVal = 5//Math.round();
+			var uploadWidth = 1600
+			var uploadHeight = 1600
+			var scalar = scalars[scalarIndex];
+			var chunksVal = chunks[scalarIndex];
 			var fontColor = "white"
 			var asciiFont = "bold 11px Courier New"
 			var citeFont = " 14px Courier"
@@ -16,33 +21,104 @@
 		<script type="text/javascript" src="opencv.js" defer></script>
         <script type="text/javascript" src="edgeDetection.js" defer></script>
 		<script type="text/javascript" src="pachieEdgeCode.js" defer></script>
-
+	<link rel="stylesheet" href="./styles.css">
     </head>
-    <body style="background-color:darkslategrey;">
+
+    <body>
         <video id="video" playsinline autoplay></video>
-		<div>
-			<button onclick="startVideo()">Start Video</button>
-			<button onclick="pausePlayVideo()">Pause / Play Video</button>
-			<button onclick="stopVideo()">Stop Video</button>
-			<button onclick="copyText()">Copy Ascii</button>
-			<button onclick="invertGrad()">Invert Gradient</button>
-			<button onclick="loopGrad()">Loop Through Gradients</button>
-			<div>
-				<button onclick="resetGrad()">Reset to Default Gradients</button>
-				<button onclick="addGrad()">Add Gradient</button>
-				<form id = "addCharGradient">
-					Enter Gradient Here: <input type = "text" name = "newGradient">
-				</form>
+
+		<div class="page">
+			<!-- left menu -->
+			<div class="menu" id="left-menu">
+				<!-- video settings-->
+				<div class="settings" id="video-settings">
+					<p>Video</p>
+					<button onclick="startVideo()">
+						<img src="cameraIcons/Camera_On.png">
+						<p>Start</p>
+					</button>
+					<button onclick="pausePlayVideo()">
+						<img src="cameraIcons/Pause-Play.png">
+						<p>Pause / Play</p>
+					</button>
+					<button onclick="stopVideo()">
+						<img src="cameraIcons/Stop_Video.png">
+						<p>Stop</p>
+					</button>
+				</div>
+				
+				<div class="settings" id="gradient-settings">
+					<!-- gradient settings-->
+					<p>Gradient</p>
+					<button onclick="invertGrad()">
+						<img src="cameraIcons/Invert_Gradient.png">
+						<p>Invert</p>
+					</button>
+					<button onclick="loopGrad()">
+						<img src="cameraIcons/Loop_Through_Gradients.png">
+						<p>Loop Through</p>
+					</button>
+					<button onclick="resetGrad()">
+						<img src="cameraIcons/Reset_to_Default_Gradient.png">
+						<p>Reset to Default</p>
+					</button>
+					<button onclick="addGrad()">
+						<img src="cameraIcons/Add_Gradient.png">
+						<p>Add</p>
+					</button>
+				</div>
 			</div>
-			<button onclick="swapAscii()"> Toggle Between Line and Char AscII</button>
+			
+			<div>
+				<canvas id = "streamCanvas" style = "display:none"></canvas>
+				<canvas id = "edgeDetectionCanvas" style = "display:none"></canvas>
+				<canvas id = "grayCharStreamCanvas" style = "display:none"></canvas>
+				<canvas id = "imgUpload" style="border: 1px solid white; display:none"></canvas>
+				<canvas id = "grayImgUpload" style="display:none" ></canvas>
+				<div class="canvas-div">
+					<canvas id = "charCanvas"></canvas>
+				</div>
+			</div>
+
+			<!-- right menu -->
+			<div class="menu" id="right-menu">
+				<!-- upload image settings-->
+				<div class="settings" id="upload-image-settings">
+					<p>Upload Image</p>
+					<input type = "file" id = "fileInput" accept="image/*">
+					<output></output>
+					<button onclick="convertImage()">
+						<img src="cameraIcons/Convert_Image.png">
+						<p>Convert</p>
+					</button>
+				</div>
+
+				<!-- misc settings-->
+				<div class="settings" id="misc-settings">
+					<p></p>
+					<button onclick="swapAscii()">
+						<img src="cameraIcons/Toggle_Line_Char_Ascii.png">
+						<p>Toggle Line / Char AscII</p>
+					</button>
+					<button onclick="changeAsciiSize()">
+						<img src="cameraIcons/Change_Canvas_Size.png">
+						<p>Change Canvas Size</p>
+					</button>
+					<button onclick="lightDarkMode()">
+						<img src="cameraIcons/Light_Dark_Mode.png">
+						<p>Toggle Light/Dark Mode</p>
+					</button>
+					<button onclick="copyText()">
+						<img src="cameraIcons/Copy.png">
+						<p>Copy Ascii</p>
+					</button>
+					<button onclick="saveToTXT()">
+						<p>Save as TXT</p>
+					</button>
+				</div>
+			</div>
 		</div>
-		<div>
-			<canvas id = "streamCanvas" style = "display:none"></canvas>
-			<canvas id = "edgeDetectionCanvas" style = "display:none"></canvas>
-			<canvas id = "grayCharStreamCanvas" style = "display:none"></canvas>
-			<canvas id = "charCanvas"></canvas>
-		</div>
-        
+
 		<script>
 			streamCanvas.width = cameraWidth;
 			streamCanvas.height = cameraHeight;
@@ -50,8 +126,12 @@
 			edgeDetectionCanvas.height = cameraHeight;
 			grayCharStreamCanvas.width = cameraWidth;
 			grayCharStreamCanvas.height = cameraHeight;
-			charCanvas.width = cameraWidth*scalar*.75;
+			charCanvas.width = cameraWidth*scalar*.61;
 			charCanvas.height = cameraHeight*scalar;
+			imgUpload.width = uploadWidth;
+			imgUpload.height = uploadHeight;
+			grayImgUpload.width = uploadWidth/(10/scalars[scalarIndex]);
+			grayImgUpload.height = uploadHeight/(10/scalars[scalarIndex]);
 		</script>
 
 	</body>

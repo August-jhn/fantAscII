@@ -422,7 +422,8 @@ function ascIIEditor(paragraph, rows, cols, canvID, background) {
 
     //attributes
 
-    this.background = background;
+    this.background = background; //basic background array, usually set to a space bar
+
     let backgroundToMake;
     if (background == '\x0a') {
         backgroundToMake = spaces(rows,cols);
@@ -431,70 +432,74 @@ function ascIIEditor(paragraph, rows, cols, canvID, background) {
         backgroundToMake = makeBackground(rows, cols);
     }
     this.charArray = backgroundToMake;
-    this.rows = rows;
-    this.cols = cols;
-    this.spanArray = []
-    
-    if (DEBUG) {
-        console.log(canvID, 'is',this.selectable);
-    }
-    
-    this.paragraph = paragraph;
-    this.canvID = canvID
-    this.selected = [0,0];
 
-    this.toggleSelector = false;
-    this.toggleBlink = false;
+
+    this.rows = rows; //the rows of the array of ascii characters
+    this.cols = cols; //the cols of the same
+    this.spanArray = [] //an array of HTML span elements, which allows for easy access to the text without having to recreate each time
     
-    this.selecterTag = `selectedInCanvas${this.canvID}`;
-    this.lastChar = '*';
-    this.typeingStartedAt = 0;
+    this.paragraph = paragraph;// the paragraph element on which the text actually is in the document.
+    this.canvID = canvID // an id which should be unique to each isntantiation of the editor class.
 
-    this.typingMode = false;
-    this.dragMode = false;
-    this.brushMode = false; //for drawing with mouse
 
+    this.selected = [0,0]; // the 'pointer' or selected pixel in the span-array
+
+    this.toggleSelector = false;//should the selected pixel be displayed
+    this.toggleBlink = false;// should the selected pixel blink
+    
+    this.selecterTag = `selectedInCanvas${this.canvID}`; //a unique character to append to the selected HTML span
+
+    this.lastChar = '*'; // the key the user last pressed, default to *
+
+    this.typeingStartedAt = 0; //these variables are used to determine where the typing starts in typing mode
     this.typingBaseX = 0;
+
+
+    this.typingMode = false;//various modes
+    this.dragMode = false;
+    this.brushMode = false; 
+    this.selectionMode = false
+    this.dragMode = false
+    this.circleMode = false
+
 
     this.drag = [10,10]; //used for the drag selection
     this.dragSelectedArray = [];
     this.dragSelectedCoords = [];
     this.dragSelectedCharArray = [];
     
-    this.selectionMode = false
-    this.dragMode = false
-    this.circleMode = false
+    this.mouseDown = false //is the mouse down
 
-    this.mouseDown = false
-
-    this.modeNames = [
+    this.modeNames = [// used in mode handling
         'dragMode',
         'circleMode',
         'typingMode',
         'brushMode'
     ];
 
-    this.modeSetters = {
+    this.modeSetters = { //various functions for handling the details of turning modes on
         'dragMode' : this.setDragMode,
         'circleMode'  : this.setCircleMode,
         'typingMode' : this.setTypingMode,
         'brushMode' : this.setBrushMode
     };
 
-    this.modeTogglers = {
+    this.modeTogglers = { //various functions for handling the details of turning modes off
         'dragMode' : this.toggleDragMode,
         'circleMode' : this.toggleCircleMode,
         'typingMode' : this.toggleTypingMode,
         'brushMode' : this.toggleBrushMode
     };
 
+
+
     this.createArray() 
     this.rendArray() //necessary for adding the selected tag
     if (DEBUG) {
         console.log('canvas initialized')
-    }
+    }//create the initial canvas
 
-    setInterval(
+    setInterval(//make the selection pointer blink
         ()=>{
 
             if (!this.toggleBlink) {
@@ -507,7 +512,7 @@ function ascIIEditor(paragraph, rows, cols, canvID, background) {
         BLINKDELAY
     );
 
-    window.addEventListener('keydown', (event) => {
+    window.addEventListener('keydown', (event) => {//arrow key navigation
         if (!this.dragMode) {
             dx = 0;
             dy = 0;
@@ -634,7 +639,7 @@ function ascIIEditor(paragraph, rows, cols, canvID, background) {
     }
     
 
-    window.addEventListener('keydown', (event) => {
+    window.addEventListener('keydown', (event) => {//
         //commands
         if (event.altKey && event.ctrlKey){
             //most keyboard shortcuts are defined here
@@ -944,6 +949,8 @@ function logFile() {
     let reader = new FileReader();
 
     reader.readAsText(file);
+    console.log("HI")
+    console.log(reader.result)
 
     sessionStorage.setItem('CLIPBOARD', reader.result);
 }

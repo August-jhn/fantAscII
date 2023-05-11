@@ -1,3 +1,4 @@
+//FantAscII v0.1 Copyright Ostler et al. (Jimmy Ostler, Pachie Ackerman, August Bergquist, Benjamin Weber)
 var ROW_LENGTH;
 var indexes = {0: '-', 1:'/', 2:'|', 3:'\\', 4:' '}
 

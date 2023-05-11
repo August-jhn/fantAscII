@@ -79,7 +79,7 @@ ASCII art in the editor.
 
 
 
-#Camera
+# Camera Tool (ImgWindow.html, edgeDetection.js)
 
 Our second feature is the camera interface. This is a tool which allows the user to either convert direct input from their webcam 
 into ASCII, or to upload an image.

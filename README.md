@@ -3,8 +3,8 @@ A dynamic editor and image converter for ASCII art.
 
 The main interface of this software can be found at either of the two addresses:
 
-<a href = 'tinyurl.com/FantAscI'>tinyurl.com/FantAscI</a> OR <a href = 
-'august-jhn.github.io/fantAscII'>august-jhn.github.io/fantAscI</a>
+<a href = 'https://tinyurl.com/FantAscI'>tinyurl.com/FantAscI</a> OR <a href = 
+'https://august-jhn.github.io/fantAscII'>august-jhn.github.io/fantAscI</a>
 
 These links will take you to the editor.
 
